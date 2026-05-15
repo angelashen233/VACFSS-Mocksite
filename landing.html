@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caregivers · Seeking Support · Youth Advisory Council — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ============================================================
+       LANDING PAGE — page-scoped styles
+       (extends css/style.css without modifying it)
+       ============================================================ */
+
+    /* ---- Hero ---- */
+    .lp-hero {
+      position: relative;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      background-image: url('https://www.vacfss.com/wp-content/uploads/2021/04/Indigenous-Family.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      overflow: hidden;
+    }
+
+    .lp-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.60) 100%
+      );
+      z-index: 0;
+    }
+
+    .lp-hero__content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+      padding: var(--space-20) var(--space-6);
+    }
+
+    .lp-hero__eyebrow {
+      color: var(--color-teal);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+
+    .lp-hero__headline {
+      color: var(--color-white);
+      font-family: var(--font-heading);
+      font-size: clamp(3.2rem, 5vw, 5.8rem);
+      line-height: 1.12;
+      margin-bottom: var(--space-6);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+      max-width: 700px;
+    }
+
+    .lp-hero__sub {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: var(--font-size-md);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: var(--space-10);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+
+    .lp-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    /* ---- Stats band ---- */
+    .lp-stats-band {
+      background: var(--color-black);
+      padding: var(--space-10) var(--space-6);
+    }
+
+    .lp-stats {
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+
+    .lp-stat {
+      background: var(--color-black);
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+    }
+
+    .lp-stat__number {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 4.2rem;
+      color: var(--color-teal);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .lp-stat__label {
+      font-size: var(--font-size-sm);
+      color: rgba(255, 255, 255, 0.65);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ---- Generic section ---- */
+    .lp-section {
+      padding: var(--space-20) var(--space-6);
+    }
+
+    .lp-section--cream  { background: var(--color-cream); }
+    .lp-section--white  { background: var(--color-white); }
+    .lp-section--dark   { background: var(--color-black); }
+    .lp-section--teal   { background: var(--color-teal); }
+    .lp-section--red    { background: var(--color-red-primary); }
+
+    .lp-section__inner {
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+    }
+
+    /* ---- Eyebrow labels ---- */
+    .lp-eyebrow {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+
+    .lp-eyebrow--red   { color: var(--color-red-primary); }
+    .lp-eyebrow--teal  { color: var(--color-teal); }
+    .lp-eyebrow--white { color: rgba(255, 255, 255, 0.80); }
+
+    /* ---- Split layout (image + content) ---- */
+    .lp-split {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .lp-split {
+        grid-template-columns: 1fr 1fr;
+        min-height: 500px;
+      }
+
+      .lp-split--reversed .lp-split__media { order: 2; }
+      .lp-split--reversed .lp-split__body  { order: 1; }
+    }
+
+    .lp-split__media {
+      position: relative;
+      min-height: 320px;
+      overflow: hidden;
+    }
+
+    .lp-split__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lp-split__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-12) var(--space-10);
+    }
+
+    .lp-split__body h2 {
+      font-size: clamp(2.4rem, 3vw, 3.6rem);
+      margin-bottom: var(--space-5);
+      line-height: 1.2;
+    }
+
+    .lp-split__body p {
+      font-size: var(--font-size-md);
+      color: var(--color-grey-dim);
+      line-height: 1.75;
+      margin-bottom: var(--space-5);
+    }
+
+    /* White body text variant for dark sections */
+    .lp-split__body--white h2,
+    .lp-split__body--white p {
+      color: var(--color-white);
+    }
+
+    .lp-split__body--white p {
+      color: rgba(255, 255, 255, 0.80);
+    }
+
+    /* ---- Feature list (checkmarks) ---- */
+    .lp-feature-list {
+      list-style: none;
+      margin: var(--space-6) 0 var(--space-8);
+      padding: 0;
+    }
+
+    .lp-feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: var(--font-size-md);
+      color: var(--color-grey-dim);
+      margin-bottom: var(--space-4);
+      line-height: 1.5;
+    }
+
+    .lp-feature-list li i {
+      color: var(--color-teal);
+      font-size: 1.6rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ---- Process steps ---- */
+    .lp-steps-heading {
+      text-align: center;
+      margin-bottom: var(--space-3);
+    }
+
+    .lp-steps-sub {
+      text-align: center;
+      color: var(--color-grey-dim);
+      font-size: var(--font-size-md);
+      max-width: 600px;
+      margin: 0 auto var(--space-12);
+    }
+
+    .lp-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: var(--space-2);
+      position: relative;
+    }
+
+    .lp-step {
+      text-align: center;
+      padding: var(--space-8) var(--space-5);
+      background: var(--color-white);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-card);
+    }
+
+    .lp-step__icon {
+      width: 60px;
+      height: 60px;
+      background: var(--color-red-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      color: var(--color-white);
+      font-size: 2.2rem;
+    }
+
+    .lp-step__num {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      color: var(--color-red-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+
+    .lp-step__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-base);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-2);
+    }
+
+    .lp-step__desc {
+      font-size: var(--font-size-base);
+      color: var(--color-grey-dim);
+      line-height: 1.6;
+    }
+
+    /* ---- Contact section on teal ---- */
+    .lp-contact {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    @media (min-width: 768px) {
+      .lp-contact {
+        grid-template-columns: 5fr 7fr;
+        align-items: start;
+      }
+    }
+
+    .lp-section--teal h2,
+    .lp-section--teal h3,
+    .lp-section--teal label {
+      color: var(--color-white);
+    }
+
+    .lp-contact-details p {
+      color: rgba(255, 255, 255, 0.80);
+      font-size: var(--font-size-md);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+
+    .lp-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .lp-contact-item__icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-size: 1.6rem;
+    }
+
+    .lp-contact-item__text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      margin-bottom: 2px;
+    }
+
+    .lp-contact-item__text span,
+    .lp-contact-item__text a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: var(--font-size-md);
+      text-decoration: none;
+    }
+
+    .lp-contact-item__text a:hover {
+      color: var(--color-white);
+      text-decoration: underline;
+    }
+
+    /* ---- Contact form panel ---- */
+    .lp-contact-form {
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(4px);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-10) var(--space-8);
+    }
+
+    .lp-contact-form h3 {
+      margin-bottom: var(--space-6);
+    }
+
+    .lp-contact-form label {
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-2);
+    }
+
+    .lp-contact-form input,
+    .lp-contact-form select,
+    .lp-contact-form textarea {
+      background: var(--color-white);
+      border-color: transparent;
+      border-radius: var(--border-radius-sm);
+      margin-bottom: var(--space-4);
+    }
+
+    .lp-contact-form input:focus,
+    .lp-contact-form select:focus,
+    .lp-contact-form textarea:focus {
+      outline: 2px solid var(--color-white);
+      outline-offset: 2px;
+    }
+
+    .lp-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 480px) {
+      .lp-form-row { grid-template-columns: 1fr; }
+    }
+
+    .lp-form-group { margin-bottom: 0; }
+
+    /* ---- YAC cards (3 roles) ---- */
+    .lp-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+
+    .lp-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .lp-card__accent {
+      height: 4px;
+    }
+
+    .lp-card__accent--red  { background: var(--color-red-primary); }
+    .lp-card__accent--teal { background: var(--color-teal); }
+    .lp-card__accent--dark { background: var(--color-black); }
+
+    .lp-card__body {
+      padding: var(--space-6);
+    }
+
+    .lp-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .lp-card__icon--red  { background: rgba(228, 29, 56, 0.10);  color: var(--color-red-primary); }
+    .lp-card__icon--teal { background: rgba(113, 203, 211, 0.15); color: #3fa8b2; }
+    .lp-card__icon--dark { background: rgba(0, 0, 0, 0.06);       color: var(--color-black); }
+
+    .lp-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-3);
+    }
+
+    .lp-card__desc {
+      font-size: var(--font-size-base);
+      color: var(--color-grey-dim);
+      line-height: 1.6;
+    }
+
+    /* ---- Testimonial ---- */
+    .lp-testimonial {
+      max-width: 740px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .lp-testimonial__quote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+      line-height: 1.5;
+      color: var(--color-black);
+      border: none;
+      padding: 0;
+      margin: 0 0 var(--space-6);
+      position: relative;
+    }
+
+    .lp-testimonial__quote::before {
+      content: '\201C';
+      font-size: 8rem;
+      color: var(--color-teal);
+      line-height: 0;
+      position: absolute;
+      top: 28px;
+      left: -24px;
+      font-family: Georgia, serif;
+    }
+
+    .lp-testimonial__attr {
+      font-size: var(--font-size-base);
+      color: var(--color-grey-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .lp-testimonial__attr strong {
+      color: var(--color-red-primary);
+    }
+
+    /* ---- Newsletter / CTA band ---- */
+    .lp-newsletter {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+    }
+
+    .lp-newsletter__text h2 {
+      color: var(--color-white);
+      font-size: clamp(2.2rem, 3vw, 3.2rem);
+      margin-bottom: var(--space-2);
+    }
+
+    .lp-newsletter__text p {
+      color: rgba(255, 255, 255, 0.60);
+      font-size: var(--font-size-md);
+      margin: 0;
+    }
+
+    .lp-newsletter__form {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .lp-newsletter__form input[type="email"] {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.30);
+      color: var(--color-white);
+      padding: 11px var(--space-5);
+      border-radius: var(--border-radius-md);
+      font-size: var(--font-size-md);
+    }
+
+    .lp-newsletter__form input[type="email"]::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .lp-newsletter__form input[type="email"]:focus {
+      outline: 2px solid var(--color-teal);
+      outline-offset: 2px;
+    }
+
+    /* ---- Single-banner: nav inline inside header ---- */
+    .site-header__logo {
+      flex-shrink: 0;
+    }
+
+    .site-header__title {
+      font-size: var(--font-size-base);
+      line-height: 1.3;
+      max-width: 220px;
+    }
+
+    .nav-primary {
+      border-top: none;
+      background: transparent;
+      flex: 1;
+    }
+
+    .nav-primary__list {
+      justify-content: flex-end;
+      max-width: none;
+      margin-inline: 0;
+    }
+
+    /* ---- Header search bar (desktop only) ---- */
+    .header-search {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: #f0f0f0;
+      border-radius: var(--border-radius-md);
+      padding: 6px var(--space-3);
+      margin-left: var(--space-4);
+      flex-shrink: 0;
+    }
+
+    .header-search i {
+      color: var(--color-grey-dim);
+      font-size: 1.3rem;
+    }
+
+    .header-search__input {
+      border: none;
+      background: transparent;
+      font-size: var(--font-size-sm);
+      outline: none;
+      width: 160px;
+      font-family: var(--font-body);
+      color: var(--color-black);
+    }
+
+    .header-search__input::placeholder {
+      color: var(--color-grey-dim);
+    }
+
+    /* ---- Sticky wrapper so mobile menu anchors below header ---- */
+    .header-wrap {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+    }
+
+    /* ---- Mobile menu panel ---- */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      padding: var(--space-6);
+      z-index: 9999;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.is-open {
+      display: block;
+    }
+
+    .mobile-menu__nav {
+      list-style: none;
+      margin: 0 0 var(--space-6);
+      padding: 0;
+      border-bottom: 1px solid var(--color-grey-mark);
+      padding-bottom: var(--space-6);
+    }
+
+    .mobile-menu__nav li a {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-black);
+      text-decoration: none;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-menu__nav li a:hover,
+    .mobile-menu__nav li a[aria-current="page"] {
+      color: var(--color-red-primary);
+    }
+
+    .mobile-menu__quick {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .mobile-menu__quick-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-red-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--border-radius-sm);
+      flex: 1;
+      text-align: center;
+    }
+
+    .mobile-menu__quick-item i {
+      font-size: 1.6rem;
+    }
+
+    .mobile-menu__social {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .mobile-menu__social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-teal);
+      border-radius: 50%;
+      color: var(--color-white);
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
+
+    .mobile-menu__social a:hover {
+      background: var(--color-black);
+    }
+
+    /* ---- Mobile: hide nav + search + sidebar; shrink title ---- */
+    @media (max-width: 767px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .sidebar-actions { display: none; }
+      .site-header__title {
+        font-size: 1.1rem;
+        max-width: 180px;
+        line-height: 1.3;
+      }
+    }
+
+    /* ---- Desktop: hide hamburger + sidebar + mobile menu ---- */
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+      .sidebar-actions { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+
+    /* ---- Red divider stripe ---- */
+    .lp-stripe {
+      height: 5px;
+      background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%);
+    }
+
+    /* ---- Responsive tweaks ---- */
+    @media (max-width: 767px) {
+      .lp-split__body {
+        padding: var(--space-10) var(--space-6);
+      }
+
+      .lp-contact-form {
+        padding: var(--space-8) var(--space-6);
+      }
+
+      .lp-testimonial__quote::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SKIP LINK ==================== -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ==================== SIDEBAR QUICK ACCESS ==================== -->
+  <nav class="sidebar-actions" aria-label="Quick access">
+    <a href="#" class="sidebar-actions__item" title="Careers">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/02/Careers@2x.png" alt="Careers" width="24" height="21">
+    </a>
+    <a href="#" class="sidebar-actions__item" title="News">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/02/news@2x.png" alt="News" width="24" height="15">
+    </a>
+    <a href="#" class="sidebar-actions__item" title="Reports">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/02/reports@2x.png" alt="Reports" width="21" height="25">
+    </a>
+    <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="Facebook">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/02/FB@2x.png" alt="Facebook" style="width:auto;height:auto;max-width:26px;max-height:24px;">
+    </a>
+    <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="Instagram">
+      <img src="https://www.vacfss.com/wp-content/uploads/2019/11/inst@2x.png" alt="Instagram" style="width:auto;height:auto;max-width:26px;max-height:24px;">
+    </a>
+    <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="LinkedIn">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/02/LI@2x.png" alt="LinkedIn" style="width:auto;height:auto;max-width:26px;max-height:24px;">
+    </a>
+  </nav>
+
+  <!-- ==================== SITE HEADER ==================== -->
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="/" class="site-header__logo" aria-label="VACFSS home">
+        <img src="https://www.vacfss.com/wp-content/uploads/2019/11/logo@2x.png" alt="VACFSS Logo" width="72">
+        <span class="site-header__title">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="#caregiver" aria-current="page">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="#">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="#">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <!-- ==================== MOBILE MENU ==================== -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="#">Children &amp; Youth</a></li>
+        <li><a href="#">Families</a></li>
+        <li><a href="#caregiver" aria-current="page">Caregivers</a></li>
+        <li><a href="#">Indigenous Communities</a></li>
+        <li><a href="#">Programs &amp; Services</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="#" class="mobile-menu__quick-item">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers
+        </a>
+        <a href="#" class="mobile-menu__quick-item">
+          <i class="fa-solid fa-newspaper" aria-hidden="true"></i>News
+        </a>
+        <a href="#" class="mobile-menu__quick-item">
+          <i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports
+        </a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN ==================== -->
+  <main id="main-content">
+
+    <!-- ========== HERO ========== -->
+    <section class="lp-hero" aria-label="Welcome to VACFSS">
+      <div class="lp-hero__content">
+        <span class="lp-hero__eyebrow">
+          <i class="fa-solid fa-heart" aria-hidden="true" style="margin-right:8px;"></i>Rooted in Community
+        </span>
+        <h1 class="lp-hero__headline">Caring for Our Children.<br>Strengthening Our Families.</h1>
+        <p class="lp-hero__sub">
+          VACFSS provides culturally grounded child and family services to the Indigenous community
+          in Vancouver. Whether you want to open your home, seek support, or give youth a voice —
+          there is a place for you here.
+        </p>
+        <div class="lp-hero__actions">
+          <a href="#contact" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">
+            Seek Support
+          </a>
+          <a href="#caregiver" class="btn btn--teal" style="font-size:var(--font-size-md); padding:13px 28px;">
+            Become a Caregiver
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STATS BAND ========== -->
+    <div class="lp-stats-band" role="region" aria-label="VACFSS at a glance">
+      <div class="lp-stats">
+        <div class="lp-stat">
+          <span class="lp-stat__number">1,800+</span>
+          <span class="lp-stat__label">Families Served Annually</span>
+        </div>
+        <div class="lp-stat">
+          <span class="lp-stat__number">30+</span>
+          <span class="lp-stat__label">Years of Service</span>
+        </div>
+        <div class="lp-stat">
+          <span class="lp-stat__number">50+</span>
+          <span class="lp-stat__label">Programs &amp; Services</span>
+        </div>
+        <div class="lp-stat">
+          <span class="lp-stat__number">200+</span>
+          <span class="lp-stat__label">Dedicated Staff</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lp-stripe" role="presentation"></div>
+
+    <!-- ==================== SECTION 1: SEEKING SUPPORT / CONTACT ==================== -->
+    <section id="contact" class="lp-section lp-section--teal" aria-labelledby="contact-heading">
+      <div class="lp-section__inner">
+        <div class="lp-contact">
+
+          <!-- Left: contact details -->
+          <div class="lp-contact-details">
+            <span class="lp-eyebrow lp-eyebrow--white">
+              <i class="fa-solid fa-hand-holding-heart" aria-hidden="true" style="margin-right:6px;"></i>We Are Here For You
+            </span>
+            <h2 id="contact-heading">Seeking Support?<br>Contact Us.</h2>
+            <p>
+              If your family is experiencing child safety concerns, or if you are voluntarily
+              seeking support services, our team is ready to help. You do not have to navigate
+              this alone.
+            </p>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>Main Office</strong>
+                <a href="tel:+16046892421">(604) 689-2421</a>
+              </div>
+            </div>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-phone-volume"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>24-Hour Crisis Line</strong>
+                <a href="tel:+16046041212">(604) 604-1212</a>
+              </div>
+            </div>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>Address</strong>
+                <span>803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8</span>
+              </div>
+            </div>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>Office Hours</strong>
+                <span>Monday – Friday, 8:30 am – 4:30 pm</span>
+              </div>
+            </div>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>General Enquiries</strong>
+                <a href="mailto:info@vacfss.com">info@vacfss.com</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: quick contact form -->
+          <div class="lp-contact-form" role="form" aria-labelledby="form-heading">
+            <h3 id="form-heading">Send Us a Message</h3>
+
+            <form action="#" method="post" novalidate>
+              <div class="lp-form-row">
+                <div class="lp-form-group">
+                  <label for="fname">First Name</label>
+                  <input type="text" id="fname" name="fname" autocomplete="given-name" required>
+                </div>
+                <div class="lp-form-group">
+                  <label for="lname">Last Name</label>
+                  <input type="text" id="lname" name="lname" autocomplete="family-name" required>
+                </div>
+              </div>
+
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel">
+
+              <label for="topic">I Am Reaching Out About</label>
+              <select id="topic" name="topic">
+                <option value="">— Please select —</option>
+                <option value="family-support">Family Support Services</option>
+                <option value="child-safety">Child Safety Concern</option>
+                <option value="caregiver">Becoming a Caregiver</option>
+                <option value="youth">Youth &amp; Children Programs</option>
+                <option value="yac">Youth Advisory Council</option>
+                <option value="other">Other / General Enquiry</option>
+              </select>
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell us how we can help…"></textarea>
+
+              <button type="submit" class="btn btn--red" style="width:100%; font-size:var(--font-size-md); padding:13px;">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true" style="margin-right:8px;"></i>Send Message
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="lp-stripe" role="presentation"></div>
+
+    <!-- ==================== SECTION 2: BECOME A CAREGIVER ==================== -->
+    <section id="caregiver" class="lp-section lp-section--white" aria-labelledby="caregiver-heading">
+      <div class="lp-split">
+        <!-- Photo -->
+        <div class="lp-split__media">
+          <img
+            src="https://www.vacfss.com/wp-content/uploads/2019/12/adult-child-daughter-1683975.jpg"
+            alt="A caregiver and child sharing a moment together"
+            loading="lazy">
+        </div>
+
+        <!-- Content -->
+        <div class="lp-split__body" style="background:var(--color-white);">
+          <span class="lp-eyebrow lp-eyebrow--red">
+            <i class="fa-solid fa-house-heart" aria-hidden="true" style="margin-right:6px;"></i>Open Your Home
+          </span>
+          <h2 id="caregiver-heading">Become a Caregiver</h2>
+          <p>
+            Caregivers provide safe, nurturing homes for Indigenous children and youth who are
+            temporarily or permanently unable to live with their birth families. As a VACFSS caregiver,
+            you are supported every step of the way.
+          </p>
+          <ul class="lp-feature-list" aria-label="Caregiver highlights">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Foster care for children needing a temporary home</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kinship care keeping children connected to family</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Respite care offering planned short-term relief</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Ongoing training, support, and financial assistance</li>
+          </ul>
+          <a href="#caregiver-steps" class="btn btn--red" style="align-self:flex-start;">
+            See How It Works <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:8px;"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Process Steps ---- -->
+    <section id="caregiver-steps" class="lp-section lp-section--cream" aria-labelledby="steps-heading">
+      <div class="lp-section__inner">
+        <h2 class="lp-steps-heading" id="steps-heading">Your Path to Becoming a Caregiver</h2>
+        <p class="lp-steps-sub">
+          We walk with you at every stage. The process typically takes 3–6 months from your first
+          enquiry to welcoming a child into your home.
+        </p>
+
+        <div class="lp-steps" role="list">
+          <div class="lp-step" role="listitem">
+            <div class="lp-step__icon" aria-hidden="true">
+              <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <span class="lp-step__num">Step 1</span>
+            <div class="lp-step__title">Enquire</div>
+            <p class="lp-step__desc">Contact our Caregiver Recruitment team to ask questions and express your interest.</p>
+          </div>
+
+          <div class="lp-step" role="listitem">
+            <div class="lp-step__icon" aria-hidden="true">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+            </div>
+            <span class="lp-step__num">Step 2</span>
+            <div class="lp-step__title">Assessment</div>
+            <p class="lp-step__desc">A home study and background screening helps us understand your family and home environment.</p>
+          </div>
+
+          <div class="lp-step" role="listitem">
+            <div class="lp-step__icon" aria-hidden="true">
+              <i class="fa-solid fa-chalkboard-user"></i>
+            </div>
+            <span class="lp-step__num">Step 3</span>
+            <div class="lp-step__title">Training</div>
+            <p class="lp-step__desc">Complete the PRIDE training program designed to prepare you for the rewards and challenges ahead.</p>
+          </div>
+
+          <div class="lp-step" role="listitem">
+            <div class="lp-step__icon" aria-hidden="true">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+            <span class="lp-step__num">Step 4</span>
+            <div class="lp-step__title">Placement</div>
+            <p class="lp-step__desc">We work collaboratively to match a child whose needs align with your home and family strengths.</p>
+          </div>
+
+          <div class="lp-step" role="listitem">
+            <div class="lp-step__icon" aria-hidden="true">
+              <i class="fa-solid fa-hands-holding-child"></i>
+            </div>
+            <span class="lp-step__num">Step 5</span>
+            <div class="lp-step__title">Ongoing Support</div>
+            <p class="lp-step__desc">Dedicated support workers, respite funding, training, and a community of caregivers are always there for you.</p>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:var(--space-12);">
+          <a href="#contact" class="btn btn--red" style="font-size:var(--font-size-md); padding:13px 32px;">
+            Start Your Application <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:8px;"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Caregiver Testimonial ---- -->
+    <section class="lp-section lp-section--white" aria-label="Caregiver story">
+      <div class="lp-section__inner">
+        <div class="lp-testimonial">
+          <blockquote class="lp-testimonial__quote">
+            <p>
+              "Being a VACFSS caregiver has been the most meaningful thing I've ever done.
+              The support team made me feel like I was never doing it alone — and the children
+              I've cared for have changed my life forever."
+            </p>
+          </blockquote>
+          <p class="lp-testimonial__attr">
+            <strong>Maria, Foster Caregiver</strong> — Vancouver, BC
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="lp-stripe" role="presentation"></div>
+
+    <!-- ==================== SECTION 3: YOUTH ADVISORY COUNCIL ==================== -->
+    <section id="yac" class="lp-section lp-section--cream" aria-labelledby="yac-heading">
+      <div class="lp-split lp-split--reversed">
+
+        <!-- Content -->
+        <div class="lp-split__body" style="background:var(--color-cream);">
+          <span class="lp-eyebrow lp-eyebrow--red">
+            <i class="fa-solid fa-users" aria-hidden="true" style="margin-right:6px;"></i>Youth-Led. Community-Driven.
+          </span>
+          <h2 id="yac-heading">Youth Advisory Council</h2>
+          <p>
+            The VACFSS Youth Advisory Council (YAC) is a group of young people aged 16–24
+            who have lived experience in the child welfare system. They advise VACFSS on
+            services, programs, and policies — ensuring the voices of youth are heard and
+            respected.
+          </p>
+          <p>
+            YAC members participate in meetings, events, and advocacy work, receiving
+            mentorship, honorariums, and the chance to make a real difference for
+            future generations of Indigenous youth.
+          </p>
+          <a href="#contact" class="btn btn--red" style="align-self:flex-start; margin-top:var(--space-2);">
+            Express Your Interest <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:8px;"></i>
+          </a>
+        </div>
+
+        <!-- Photo -->
+        <div class="lp-split__media">
+          <img
+            src="https://www.vacfss.com/wp-content/uploads/2019/12/Youth-and-children-rotated.jpg"
+            alt="Indigenous youth gathering and connecting as a community"
+            loading="lazy">
+        </div>
+
+      </div>
+
+      <!-- YAC role cards -->
+      <div class="lp-section__inner">
+        <div class="lp-cards" role="list">
+
+          <article class="lp-card" role="listitem">
+            <div class="lp-card__accent lp-card__accent--red"></div>
+            <div class="lp-card__body">
+              <div class="lp-card__icon lp-card__icon--red" aria-hidden="true">
+                <i class="fa-solid fa-microphone-lines"></i>
+              </div>
+              <div class="lp-card__title">Advisory Role</div>
+              <p class="lp-card__desc">
+                Share your lived experience to shape VACFSS policies, service delivery,
+                and cultural programming that affects youth in care.
+              </p>
+            </div>
+          </article>
+
+          <article class="lp-card" role="listitem">
+            <div class="lp-card__accent lp-card__accent--teal"></div>
+            <div class="lp-card__body">
+              <div class="lp-card__icon lp-card__icon--teal" aria-hidden="true">
+                <i class="fa-solid fa-people-group"></i>
+              </div>
+              <div class="lp-card__title">Community Events</div>
+              <p class="lp-card__desc">
+                Participate in cultural gatherings, workshops, and community events that
+                celebrate Indigenous identity and build belonging.
+              </p>
+            </div>
+          </article>
+
+          <article class="lp-card" role="listitem">
+            <div class="lp-card__accent lp-card__accent--dark"></div>
+            <div class="lp-card__body">
+              <div class="lp-card__icon lp-card__icon--dark" aria-hidden="true">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <div class="lp-card__title">Mentorship &amp; Growth</div>
+              <p class="lp-card__desc">
+                Gain leadership skills, access mentors, earn honorariums, and build a
+                foundation for your personal and professional future.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== NEWSLETTER / CTA BAND ==================== -->
+    <section class="lp-section lp-section--dark" aria-labelledby="newsletter-heading">
+      <div class="lp-newsletter">
+        <div class="lp-newsletter__text">
+          <span class="lp-eyebrow lp-eyebrow--teal" style="margin-bottom:var(--space-3);">
+            Stay Connected
+          </span>
+          <h2 id="newsletter-heading">Get the Latest News<br>from VACFSS</h2>
+          <p>Program updates, community events, and stories of resilience — delivered to your inbox.</p>
+        </div>
+        <form class="lp-newsletter__form" action="#" method="post" aria-label="Email newsletter signup">
+          <label for="newsletter-email" class="visually-hidden">Email address</label>
+          <input
+            type="email"
+            id="newsletter-email"
+            name="email"
+            placeholder="Your email address"
+            autocomplete="email"
+            required>
+          <button type="submit" class="btn btn--teal" style="white-space:nowrap; padding:11px 28px;">
+            Subscribe <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+
+      <div>
+        <img src="https://www.vacfss.com/wp-content/uploads/2019/11/logo@2x.png"
+             alt="VACFSS Logo" width="80" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">
+          Vancouver Aboriginal Child &amp; Family Services Society<br>
+          803 East Hastings Street<br>
+          Vancouver, BC &nbsp;V6A 1R8
+        </p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;">
+          <a href="tel:+16046892421" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">
+            (604) 689-2421
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h3 class="site-footer__heading">Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="#">Children &amp; Youth</a></li>
+          <li><a href="#">Family Support</a></li>
+          <li><a href="#">Foster Care</a></li>
+          <li><a href="#">Kinship Care</a></li>
+          <li><a href="#">Cultural Programs</a></li>
+          <li><a href="#">Prevention Services</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="#caregiver">Become a Caregiver</a></li>
+          <li><a href="#yac">Youth Advisory Council</a></li>
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="#">Our Mission</a></li>
+          <li><a href="#">Board of Directors</a></li>
+          <li><a href="#">Annual Reports</a></li>
+          <li><a href="#">News &amp; Events</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="VACFSS on Facebook"
+             style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;transition:background 0.2s;">
+            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="#" aria-label="VACFSS on Instagram"
+             style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;transition:background 0.2s;">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="#" aria-label="VACFSS on LinkedIn"
+             style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;transition:background 0.2s;">
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="site-footer__acknowledgement">
+      <p>
+        VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories
+        of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh)
+        Nations. We are grateful to live, work, and serve on this land.
+      </p>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
+        &nbsp;·&nbsp; <a href="#">Terms of Use</a>
+        &nbsp;·&nbsp; <a href="#">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+
+      // Close menu when a link inside it is tapped
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
