@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Caregiver — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ---- Header / nav (shared) ---- */
+    .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
+    .site-header__logo { flex-shrink: 0; }
+    .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; }
+    .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: 160px; font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input::placeholder { color: var(--color-grey-dim); }
+    .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu__nav { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-bottom: 1px solid var(--color-grey-mark); padding-bottom: var(--space-6); }
+    .mobile-menu__nav li a { display: block; font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); text-decoration: none; padding: var(--space-3) 0; border-bottom: 1px solid #f0f0f0; }
+    .mobile-menu__nav li a:hover, .mobile-menu__nav li a[aria-current="page"] { color: var(--color-red-primary); }
+    .mobile-menu__quick { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .mobile-menu__quick-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: var(--color-red-primary); color: var(--color-white); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: var(--space-3) var(--space-4); border-radius: var(--border-radius-sm); flex: 1; text-align: center; }
+    .mobile-menu__quick-item i { font-size: 1.6rem; }
+    .mobile-menu__social { display: flex; gap: var(--space-3); }
+    .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
+    .mobile-menu__social a:hover { background: var(--color-black); }
+    @media (max-width: 767px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
+    }
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+
+    /* ---- Page hero ---- */
+    .pg-hero {
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      background-image: url('https://www.vacfss.com/wp-content/uploads/2019/12/adult-child-daughter-1683975.jpg');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .pg-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 100%);
+    }
+    .pg-hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+      padding: var(--space-16) var(--space-6);
+    }
+    .pg-hero__eyebrow { display: block; color: var(--color-teal); font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-hero__title { color: var(--color-white); font-family: var(--font-heading); font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: var(--space-4); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .pg-hero__sub { color: rgba(255,255,255,0.85); font-size: var(--font-size-md); max-width: 540px; line-height: 1.7; margin-bottom: var(--space-8); }
+    .pg-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+    /* ---- Generic sections ---- */
+    .pg-section { padding: var(--space-20) var(--space-6); }
+    .pg-section--white { background: var(--color-white); }
+    .pg-section--cream { background: var(--color-cream); }
+    .pg-section--dark  { background: var(--color-black); }
+    .pg-section--teal  { background: var(--color-teal); }
+    .pg-inner { max-width: var(--max-width-content); margin-inline: auto; }
+    .pg-eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-eyebrow--red   { color: var(--color-red-primary); }
+    .pg-eyebrow--teal  { color: var(--color-teal); }
+    .pg-eyebrow--white { color: rgba(255,255,255,0.80); }
+    .pg-heading { font-size: clamp(2.4rem, 3.5vw, 4rem); margin-bottom: var(--space-5); line-height: 1.15; }
+    .pg-lead { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; max-width: 680px; margin-bottom: var(--space-10); }
+    .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+
+    /* ---- Care type cards ---- */
+    .care-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    .care-card {
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .care-card__top {
+      padding: var(--space-8) var(--space-6) var(--space-6);
+      color: var(--color-white);
+    }
+    .care-card__top--red  { background: var(--color-red-primary); }
+    .care-card__top--teal { background: var(--color-teal); }
+    .care-card__top--dark { background: var(--color-black); }
+    .care-card__icon { font-size: 3rem; margin-bottom: var(--space-4); display: block; }
+    .care-card__name { font-family: var(--font-heading); font-size: var(--font-size-lg); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+    .care-card__tagline { font-size: var(--font-size-md); opacity: 0.88; line-height: 1.5; }
+    .care-card__body { background: var(--color-white); padding: var(--space-6); }
+    .care-card__body p { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.65; margin-bottom: var(--space-4); }
+    .care-card__body ul { list-style: none; padding: 0; margin: 0; }
+    .care-card__body ul li { display: flex; align-items: flex-start; gap: var(--space-2); font-size: var(--font-size-base); color: var(--color-grey-dim); margin-bottom: var(--space-2); }
+    .care-card__body ul li i { color: var(--color-teal); margin-top: 3px; flex-shrink: 0; }
+
+    /* ---- Eligibility split ---- */
+    .eligibility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+      margin-top: var(--space-8);
+    }
+    @media (max-width: 767px) { .eligibility-grid { grid-template-columns: 1fr; } }
+    .eligibility-group h3 { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-5); padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-teal); }
+    .check-list { list-style: none; padding: 0; margin: 0; }
+    .check-list li { display: flex; align-items: flex-start; gap: var(--space-3); font-size: var(--font-size-md); color: var(--color-grey-dim); margin-bottom: var(--space-4); line-height: 1.5; }
+    .check-list li i { color: var(--color-teal); font-size: 1.6rem; margin-top: 2px; flex-shrink: 0; }
+
+    /* ---- Support band ---- */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    .support-item { text-align: center; padding: var(--space-8) var(--space-5); background: rgba(255,255,255,0.12); border-radius: var(--border-radius-md); }
+    .support-item__icon { font-size: 2.6rem; color: var(--color-white); margin-bottom: var(--space-4); }
+    .support-item__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-white); margin-bottom: var(--space-2); }
+    .support-item__desc { font-size: var(--font-size-base); color: rgba(255,255,255,0.72); line-height: 1.6; }
+
+    /* ---- Process steps ---- */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-10);
+    }
+    .step { text-align: center; background: var(--color-white); border-radius: var(--border-radius-md); padding: var(--space-8) var(--space-5); box-shadow: var(--shadow-card); }
+    .step__icon { width: 60px; height: 60px; background: var(--color-red-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); color: var(--color-white); font-size: 2.2rem; }
+    .step__num { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); color: var(--color-red-primary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-2); }
+    .step__title { font-family: var(--font-heading); font-size: var(--font-size-base); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+    .step__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.6; }
+
+    /* ---- FAQ ---- */
+    .faq { margin-top: var(--space-10); }
+    .faq-item { border-bottom: 1px solid var(--color-grey-mark); padding: var(--space-6) 0; }
+    .faq-item:first-child { border-top: 1px solid var(--color-grey-mark); }
+    .faq-item__q { font-family: var(--font-heading); font-size: var(--font-size-md); margin-bottom: var(--space-3); display: flex; align-items: flex-start; gap: var(--space-3); }
+    .faq-item__q i { color: var(--color-teal); margin-top: 4px; flex-shrink: 0; }
+    .faq-item__a { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; padding-left: calc(var(--space-3) + 1.4rem); }
+
+    /* ---- Testimonial ---- */
+    .testimonial { max-width: 720px; margin-inline: auto; text-align: center; }
+    .testimonial__quote { font-family: var(--font-heading); font-size: clamp(1.8rem, 2.5vw, 2.4rem); line-height: 1.5; color: var(--color-white); margin-bottom: var(--space-6); position: relative; }
+    .testimonial__attr { font-size: var(--font-size-base); color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.1em; }
+    .testimonial__attr strong { color: var(--color-teal); }
+
+    /* ---- Contact form on teal ---- */
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-12); }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 5fr 7fr; align-items: start; } }
+    .pg-section--teal h2, .pg-section--teal h3, .pg-section--teal label { color: var(--color-white); }
+    .contact-detail p { color: rgba(255,255,255,0.80); font-size: var(--font-size-md); line-height: 1.7; margin-bottom: var(--space-8); }
+    .contact-info-item { display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-6); }
+    .contact-info-item__icon { width: 42px; height: 42px; flex-shrink: 0; background: rgba(255,255,255,0.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: 1.6rem; }
+    .contact-info-item__text strong { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-white); margin-bottom: 2px; }
+    .contact-info-item__text span, .contact-info-item__text a { color: rgba(255,255,255,0.88); font-size: var(--font-size-md); text-decoration: none; }
+    .contact-info-item__text a:hover { color: var(--color-white); text-decoration: underline; }
+    .contact-form-panel { background: rgba(255,255,255,0.14); backdrop-filter: blur(4px); border-radius: var(--border-radius-lg); padding: var(--space-10) var(--space-8); }
+    .contact-form-panel input, .contact-form-panel select, .contact-form-panel textarea { background: var(--color-white); border-color: transparent; border-radius: var(--border-radius-sm); margin-bottom: var(--space-4); }
+    .contact-form-panel label { font-size: var(--font-size-sm); margin-bottom: var(--space-2); }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="landing.html" class="site-header__logo" aria-label="VACFSS home">
+        <img src="https://www.vacfss.com/wp-content/uploads/2019/11/logo@2x.png" alt="VACFSS Logo" width="72">
+        <span class="site-header__title">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="caregiver.html" aria-current="page">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="#">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="#">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="#">Children &amp; Youth</a></li>
+        <li><a href="#">Families</a></li>
+        <li><a href="caregiver.html" aria-current="page">Caregivers</a></li>
+        <li><a href="#">Indigenous Communities</a></li>
+        <li><a href="#">Programs &amp; Services</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-newspaper" aria-hidden="true"></i>News</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports</a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="pg-hero" aria-label="Become a Caregiver">
+      <div class="pg-hero__content">
+        <span class="pg-hero__eyebrow"><i class="fa-solid fa-house-heart" aria-hidden="true" style="margin-right:8px;"></i>Open Your Home</span>
+        <h1 class="pg-hero__title">Become a Caregiver.<br>Change a Life.</h1>
+        <p class="pg-hero__sub">Caregivers are the heart of our community. By opening your home, you give an Indigenous child safety, belonging, and a connection to culture during a critical time in their life.</p>
+        <div class="pg-hero__actions">
+          <a href="#apply" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">Apply Now</a>
+          <a href="#process" class="btn btn--teal" style="font-size:var(--font-size-md); padding:13px 28px;">See How It Works</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- TYPES OF CARE -->
+    <section class="pg-section pg-section--white" aria-labelledby="types-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-heart" aria-hidden="true" style="margin-right:6px;"></i>Ways to Care</span>
+        <h2 class="pg-heading" id="types-heading">Types of Caregiving</h2>
+        <p class="pg-lead">There are several ways to become a VACFSS caregiver. Each path provides a meaningful opportunity to support Indigenous children and youth in different ways.</p>
+        <div class="care-types" role="list">
+
+          <article class="care-card" role="listitem">
+            <div class="care-card__top care-card__top--red">
+              <span class="care-card__icon"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i></span>
+              <div class="care-card__name">Foster Care</div>
+              <p class="care-card__tagline">A temporary home while family healing happens</p>
+            </div>
+            <div class="care-card__body">
+              <p>Foster caregivers provide a safe, stable home for children who cannot live with their birth family, often while parents work toward reunification with support from VACFSS.</p>
+              <ul>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Short or long-term placements</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Children of all ages</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Monthly financial support provided</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Dedicated support worker assigned</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="care-card" role="listitem">
+            <div class="care-card__top care-card__top--teal">
+              <span class="care-card__icon"><i class="fa-solid fa-people-roof" aria-hidden="true"></i></span>
+              <div class="care-card__name">Kinship Care</div>
+              <p class="care-card__tagline">Keeping children connected to family and community</p>
+            </div>
+            <div class="care-card__body">
+              <p>Kinship care places children with relatives, extended family, or close community members — preserving cultural identity, family bonds, and a sense of belonging.</p>
+              <ul>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Extended family or community members</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Maintains cultural connections</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Priority placement option</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Financial and training support</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="care-card" role="listitem">
+            <div class="care-card__top care-card__top--dark">
+              <span class="care-card__icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></span>
+              <div class="care-card__name">Respite Care</div>
+              <p class="care-card__tagline">Short-term relief for caregivers who need a break</p>
+            </div>
+            <div class="care-card__body">
+              <p>Respite caregivers offer planned short-term care — a weekend, a week — giving primary caregivers rest while ensuring children remain in a safe, culturally appropriate setting.</p>
+              <ul>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Flexible, planned short stays</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Great starting point for new caregivers</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Hourly compensation provided</li>
+                <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Full training and support included</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- ELIGIBILITY -->
+    <section class="pg-section pg-section--cream" aria-labelledby="eligibility-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-clipboard-check" aria-hidden="true" style="margin-right:6px;"></i>Eligibility</span>
+        <h2 class="pg-heading" id="eligibility-heading">Who Can Become a Caregiver?</h2>
+        <p class="pg-lead">VACFSS welcomes caregivers from all backgrounds. We prioritize Indigenous caregivers to keep children connected to their culture, but we welcome all who are committed to the well-being of Indigenous children.</p>
+        <div class="eligibility-grid">
+          <div class="eligibility-group">
+            <h3>You May Be Eligible If You…</h3>
+            <ul class="check-list">
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Are 19 years of age or older</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Have a safe and suitable home environment</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Are able to provide a stable, nurturing environment</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Have sufficient income to meet your own household needs</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Are willing to complete required training</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Can pass a criminal record check</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Are committed to supporting a child's cultural identity</li>
+            </ul>
+          </div>
+          <div class="eligibility-group">
+            <h3>We Welcome…</h3>
+            <ul class="check-list">
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Single caregivers and couples</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Families with or without children</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Renters and homeowners</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Retired individuals with capacity and commitment</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> LGBTQ2S+ caregivers</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Indigenous and non-Indigenous applicants</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Those with lived experience in the child welfare system</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT PROVIDED -->
+    <section class="pg-section pg-section--dark" aria-labelledby="support-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-hands-holding-child" aria-hidden="true" style="margin-right:6px;"></i>Our Support</span>
+        <h2 class="pg-heading" id="support-heading" style="color:var(--color-white);">You Won't Walk This Path Alone</h2>
+        <p class="pg-lead" style="color:rgba(255,255,255,0.70);">VACFSS provides comprehensive support to every caregiver — because when caregivers thrive, children thrive.</p>
+        <div class="support-grid">
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-person-chalkboard" aria-hidden="true"></i></div>
+            <div class="support-item__title">PRIDE Training</div>
+            <p class="support-item__desc">Comprehensive pre-service training to prepare you for the rewards and challenges of caregiving.</p>
+          </div>
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i></div>
+            <div class="support-item__title">Financial Support</div>
+            <p class="support-item__desc">Monthly maintenance rates, clothing allowances, and additional funding for children with complex needs.</p>
+          </div>
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div>
+            <div class="support-item__title">Dedicated Worker</div>
+            <p class="support-item__desc">A VACFSS support worker is assigned to you — available to guide, advocate, and assist throughout your journey.</p>
+          </div>
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-moon" aria-hidden="true"></i></div>
+            <div class="support-item__title">Respite Funding</div>
+            <p class="support-item__desc">Access planned respite care so you can rest, recharge, and continue providing quality care.</p>
+          </div>
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-drum" aria-hidden="true"></i></div>
+            <div class="support-item__title">Cultural Support</div>
+            <p class="support-item__desc">Resources, guidance, and programming to help you honour and nurture a child's Indigenous cultural identity.</p>
+          </div>
+          <div class="support-item">
+            <div class="support-item__icon"><i class="fa-solid fa-people-group" aria-hidden="true"></i></div>
+            <div class="support-item__title">Caregiver Community</div>
+            <p class="support-item__desc">Connect with other VACFSS caregivers through peer support groups, events, and shared experiences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="pg-section pg-section--white" aria-labelledby="process-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-route" aria-hidden="true" style="margin-right:6px;"></i>The Process</span>
+        <h2 class="pg-heading" id="process-heading">Your Path to Becoming a Caregiver</h2>
+        <p class="pg-lead">We walk with you at every stage. The process typically takes 3–6 months from your first enquiry to welcoming a child into your home.</p>
+        <div class="steps-grid" role="list">
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></div>
+            <span class="step__num">Step 1</span>
+            <div class="step__title">Enquire</div>
+            <p class="step__desc">Contact our Caregiver Recruitment team to ask questions and express your interest.</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></div>
+            <span class="step__num">Step 2</span>
+            <div class="step__title">Orientation</div>
+            <p class="step__desc">Attend an information session to learn about what caregiving involves and whether it's the right fit for your family.</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i></div>
+            <span class="step__num">Step 3</span>
+            <div class="step__title">Assessment</div>
+            <p class="step__desc">A home study and background screening helps us understand your family, home environment, and strengths.</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i></div>
+            <span class="step__num">Step 4</span>
+            <div class="step__title">Training</div>
+            <p class="step__desc">Complete the PRIDE training program designed to prepare you for the rewards and challenges ahead.</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></div>
+            <span class="step__num">Step 5</span>
+            <div class="step__title">Placement</div>
+            <p class="step__desc">We work collaboratively to match a child whose needs align with your home and family strengths.</p>
+          </div>
+          <div class="step" role="listitem">
+            <div class="step__icon"><i class="fa-solid fa-hands-holding-child" aria-hidden="true"></i></div>
+            <span class="step__num">Step 6</span>
+            <div class="step__title">Ongoing Support</div>
+            <p class="step__desc">Dedicated workers, respite funding, training, and a community of caregivers are always there for you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- FAQ -->
+    <section class="pg-section pg-section--cream" aria-labelledby="faq-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-circle-question" aria-hidden="true" style="margin-right:6px;"></i>Questions</span>
+        <h2 class="pg-heading" id="faq-heading">Frequently Asked Questions</h2>
+        <div class="faq" role="list">
+          <div class="faq-item" role="listitem">
+            <p class="faq-item__q"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Do I need to be Indigenous to become a VACFSS caregiver?</p>
+            <p class="faq-item__a">No. While we prioritize Indigenous caregivers to support cultural continuity, we welcome all applicants who are committed to nurturing a child's Indigenous identity and supporting their connection to culture, language, and community.</p>
+          </div>
+          <div class="faq-item" role="listitem">
+            <p class="faq-item__q"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Can I be a caregiver if I rent my home?</p>
+            <p class="faq-item__a">Yes. You do not need to own your home to become a caregiver. What matters most is that your home is safe, stable, and has adequate space for a child. A home visit is part of the assessment process.</p>
+          </div>
+          <div class="faq-item" role="listitem">
+            <p class="faq-item__q"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Will I receive financial support as a caregiver?</p>
+            <p class="faq-item__a">Yes. VACFSS provides monthly maintenance rates to cover the costs of caring for a child, including food, clothing, transportation, and activities. Additional funding may be available for children with higher support needs.</p>
+          </div>
+          <div class="faq-item" role="listitem">
+            <p class="faq-item__q"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> What if I already have children at home?</p>
+            <p class="faq-item__a">Having children already is not a barrier. Many VACFSS caregivers have their own children at home. We assess the dynamics of your household to ensure a placement would be a positive fit for everyone involved.</p>
+          </div>
+          <div class="faq-item" role="listitem">
+            <p class="faq-item__q"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> How long does the application process take?</p>
+            <p class="faq-item__a">The process typically takes 3–6 months from your initial enquiry to being approved and ready for a placement. The timeline depends on how quickly documents are submitted, scheduling for training, and completion of the home study.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="pg-section pg-section--dark" aria-label="Caregiver story">
+      <div class="pg-inner">
+        <div class="testimonial">
+          <blockquote class="testimonial__quote">
+            "Being a VACFSS caregiver has been the most meaningful thing I've ever done. The support team made me feel like I was never doing it alone — and the children I've cared for have changed my life forever."
+          </blockquote>
+          <p class="testimonial__attr"><strong>Maria, Foster Caregiver</strong> — Vancouver, BC</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPLY -->
+    <section id="apply" class="pg-section pg-section--teal" aria-labelledby="apply-heading">
+      <div class="pg-inner">
+        <div class="contact-grid">
+          <div class="contact-detail">
+            <span class="pg-eyebrow pg-eyebrow--white"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true" style="margin-right:6px;"></i>Get Started</span>
+            <h2 id="apply-heading">Ready to Open Your Home?</h2>
+            <p>Reach out to our Caregiver Recruitment team. We will answer your questions, walk you through the process, and support you every step of the way.</p>
+            <div class="contact-info-item">
+              <div class="contact-info-item__icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
+              <div class="contact-info-item__text"><strong>Caregiver Recruitment</strong><a href="tel:+16046892421">(604) 689-2421</a></div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-item__icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
+              <div class="contact-info-item__text"><strong>Email Us</strong><a href="mailto:caregivers@vacfss.com">caregivers@vacfss.com</a></div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-item__icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
+              <div class="contact-info-item__text"><strong>Office Hours</strong><span>Monday – Friday, 8:30 am – 4:30 pm</span></div>
+            </div>
+          </div>
+          <div class="contact-form-panel" role="form" aria-labelledby="form-heading">
+            <h3 id="form-heading">Express Your Interest</h3>
+            <form action="#" method="post" novalidate>
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="fname" autocomplete="given-name" required>
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" autocomplete="family-name" required>
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel">
+              <label for="care-type">Type of Caregiving I'm Interested In</label>
+              <select id="care-type" name="care-type">
+                <option value="">— Please select —</option>
+                <option value="foster">Foster Care</option>
+                <option value="kinship">Kinship Care</option>
+                <option value="respite">Respite Care</option>
+                <option value="unsure">Not Sure Yet</option>
+              </select>
+              <label for="message">Questions or Comments</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about yourself and your interest…"></textarea>
+              <button type="submit" class="btn btn--red" style="width:100%; font-size:var(--font-size-md); padding:13px;">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true" style="margin-right:8px;"></i>Submit Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+      <div>
+        <img src="https://www.vacfss.com/wp-content/uploads/2019/11/logo@2x.png" alt="VACFSS Logo" width="80" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">Vancouver Aboriginal Child &amp; Family Services Society<br>803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8</p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;"><a href="tel:+16046892421" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">(604) 689-2421</a></p>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="#">Children &amp; Youth</a></li>
+          <li><a href="#">Family Support</a></li>
+          <li><a href="caregiver.html">Foster Care</a></li>
+          <li><a href="caregiver.html">Kinship Care</a></li>
+          <li><a href="#">Cultural Programs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="caregiver.html">Become a Caregiver</a></li>
+          <li><a href="yac.html">Youth Advisory Council</a></li>
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="#">Our Mission</a></li>
+          <li><a href="#">Board of Directors</a></li>
+          <li><a href="#">Annual Reports</a></li>
+          <li><a href="#">News &amp; Events</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__acknowledgement">
+      <p>VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh) Nations.</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Use</a> &nbsp;·&nbsp; <a href="#">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
