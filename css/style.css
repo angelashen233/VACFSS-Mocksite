@@ -197,14 +197,16 @@ hr {
 .site-header__logo {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  min-width: 0;
   text-decoration: none;
   color: var(--color-black);
 }
 
 .site-header__logo img {
-  width: 72px;
+  width: clamp(168px, 18vw, 240px);
   height: auto;
+  object-fit: contain;
 }
 
 .site-header__title {
