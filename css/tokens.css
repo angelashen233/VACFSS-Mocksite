@@ -38,7 +38,7 @@
   --font-mono:    monospace;
 
   /* Base scale: root = 62.5% → 1rem = 10px */
-  --font-size-base:   1.4rem;   /* 14 px */
+  --font-size-base:   1.6rem;   /* 16 px */
   --font-size-sm:     1.2rem;   /* 12 px */
   --font-size-md:     1.6rem;   /* 16 px */
   --font-size-lg:     1.8rem;   /* 18 px */
@@ -54,8 +54,8 @@
   --font-size-h5: var(--font-size-lg);
   --font-size-h6: var(--font-size-md);
 
-  --line-height-body:    1.5;
-  --line-height-heading: 1.5;
+  --line-height-body:    1.7;
+  --line-height-heading: 1.4;
 
   /* ----------------------------------------------------------
      SPACING

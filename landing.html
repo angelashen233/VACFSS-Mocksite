@@ -737,6 +737,91 @@
       background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%);
     }
 
+    /* ---- Contact section: turquoise→white gradient, dark text ---- */
+    #contact.lp-section {
+      background: linear-gradient(160deg, #a8e6ec 0%, #d4f3f7 35%, #edfbfc 65%, #ffffff 100%);
+    }
+
+    #contact h2,
+    #contact h3 {
+      color: var(--color-black);
+    }
+
+    #contact .lp-eyebrow--white {
+      color: #0c636d;
+    }
+
+    #contact .lp-contact-details p {
+      color: var(--color-grey-dim);
+    }
+
+    #contact .lp-contact-item__icon {
+      background: var(--color-teal);
+      color: var(--color-white);
+    }
+
+    #contact .lp-contact-item__text strong {
+      color: var(--color-black);
+      font-size: var(--font-size-base);
+    }
+
+    #contact .lp-contact-item__text span {
+      display: block;
+      color: var(--color-grey-dim);
+      font-size: var(--font-size-base);
+    }
+
+    #contact .lp-contact-item__text a {
+      display: block;
+      color: var(--color-red-link);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+    }
+
+    #contact .lp-contact-item__text a:hover {
+      color: var(--color-red-dark);
+      text-decoration: underline;
+    }
+
+    #contact .lp-contact-form {
+      background: var(--color-white);
+      backdrop-filter: none;
+      border: 2px solid rgba(113, 203, 211, 0.45);
+      box-shadow: 0 4px 28px rgba(113, 203, 211, 0.18);
+    }
+
+    #contact .lp-contact-form h3,
+    #contact .lp-contact-form label {
+      color: var(--color-black);
+    }
+
+    #contact .lp-contact-form input:focus,
+    #contact .lp-contact-form select:focus,
+    #contact .lp-contact-form textarea:focus {
+      outline: 2px solid var(--color-teal);
+    }
+
+    /* ---- 911 Emergency notice ---- */
+    .lp-emergency-notice {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      background: var(--color-red-primary);
+      color: var(--color-white);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-8);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      letter-spacing: 0.02em;
+    }
+
+    .lp-emergency-notice i {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
     /* ---- Responsive tweaks ---- */
     @media (max-width: 767px) {
       .lp-split__body {
@@ -793,7 +878,7 @@
           <li class="nav-primary__item"><a href="#">Families</a></li>
           <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
           <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
-          <li class="nav-primary__item"><a href="#">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
           <li class="nav-primary__item"><a href="#">About Us</a></li>
         </ul>
       </nav>
@@ -902,23 +987,41 @@
               this alone.
             </p>
 
+            <div class="lp-emergency-notice" role="alert">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <strong>If a child is in immediate danger, call 911.</strong>
+            </div>
+
             <div class="lp-contact-item">
               <div class="lp-contact-item__icon" aria-hidden="true">
                 <i class="fa-solid fa-phone"></i>
               </div>
               <div class="lp-contact-item__text">
-                <strong>Main Office</strong>
-                <a href="tel:+16046892421">(604) 689-2421</a>
+                <strong>Report a Child Safety Concern</strong>
+                <span>Monday – Friday, 8:30 am – 4:30 pm</span>
+                <a href="tel:+17783314500">778.331.4500</a>
               </div>
             </div>
 
             <div class="lp-contact-item">
               <div class="lp-contact-item__icon" aria-hidden="true">
-                <i class="fa-solid fa-phone-volume"></i>
+                <i class="fa-solid fa-moon"></i>
               </div>
               <div class="lp-contact-item__text">
-                <strong>24-Hour Crisis Line</strong>
-                <a href="tel:+16046041212">(604) 604-1212</a>
+                <strong>Provincial Centralized Screening</strong>
+                <span>After Hours</span>
+                <a href="tel:+18006639122">1.800.663.9122</a>
+              </div>
+            </div>
+
+            <div class="lp-contact-item">
+              <div class="lp-contact-item__icon" aria-hidden="true">
+                <i class="fa-solid fa-child-reaching"></i>
+              </div>
+              <div class="lp-contact-item__text">
+                <strong>Helpline for Children</strong>
+                <span>Area code not required</span>
+                <a href="tel:3101234">310.1234</a>
               </div>
             </div>
 
