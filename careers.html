@@ -12,11 +12,12 @@
     .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
     .site-header__logo { flex-shrink: 0; }
     .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
-    .nav-primary { border-top: none; background: transparent; flex: 1; }
-    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; }
-    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
     .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
-    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: 160px; font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
     .header-search__input::placeholder { color: var(--color-grey-dim); }
     .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
     .mobile-menu.is-open { display: block; }
@@ -29,14 +30,18 @@
     .mobile-menu__social { display: flex; gap: var(--space-3); }
     .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
     .mobile-menu__social a:hover { background: var(--color-black); }
-    @media (max-width: 767px) {
+    @media (max-width: 1099px) {
       .nav-primary { display: none; }
       .header-search { display: none; }
       .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
     }
-    @media (min-width: 768px) {
+    @media (min-width: 1100px) {
       .menu-toggle { display: none; }
       .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
     }
 
     /* ---- Page hero ---- */
@@ -262,6 +267,25 @@
 
     /* ---- Red stripe ---- */
     .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+
+    /* ---- EasyApply portal CTA ---- */
+    .portal-cta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      background: var(--color-white);
+      border: 2px solid var(--color-teal);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-8);
+      margin-top: var(--space-10);
+    }
+    .portal-cta__text h3 { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+    .portal-cta__text p { font-size: var(--font-size-base); color: var(--color-grey-dim); margin: 0; }
+    .job-card__apply--portal { background: var(--color-teal); border-color: var(--color-teal); }
+    .job-tag--temp { background: rgba(0,0,0,0.07); color: var(--color-black); }
+    .salary-note { font-size: var(--font-size-sm); color: var(--color-teal); font-family: var(--font-heading); margin-bottom: var(--space-3); }
   </style>
 </head>
 <body>
@@ -276,12 +300,12 @@
       </a>
       <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
         <ul class="nav-primary__list">
-          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
-          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
           <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
-          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
-          <li class="nav-primary__item"><a href="#">Programs &amp; Services</a></li>
-          <li class="nav-primary__item"><a href="#">About Us</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
         </ul>
       </nav>
       <div class="header-search" role="search">
@@ -295,12 +319,12 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul class="mobile-menu__nav">
-        <li><a href="#">Children &amp; Youth</a></li>
-        <li><a href="#">Families</a></li>
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
         <li><a href="caregiver.html">Caregivers</a></li>
-        <li><a href="#">Indigenous Communities</a></li>
-        <li><a href="#">Programs &amp; Services</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
       </ul>
       <div class="mobile-menu__quick">
         <a href="careers.html" class="mobile-menu__quick-item" aria-current="page">
@@ -372,99 +396,156 @@
       <div class="pg-inner">
         <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-magnifying-glass" aria-hidden="true" style="margin-right:6px;"></i>Current Openings</span>
         <h2 class="pg-heading" id="openings-heading">Open Positions</h2>
-        <p class="pg-lead">We are actively hiring passionate individuals who are committed to Indigenous child and family well-being. All positions are based in Vancouver, BC.</p>
+        <p class="pg-lead">We are actively hiring passionate individuals who are committed to Indigenous child and family well-being. All positions are based in Vancouver, BC. Postings below are updated from our official careers portal.</p>
         <div class="jobs-grid" role="list">
 
           <article class="job-card" role="listitem">
             <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-laptop-code"></i></div>
+              <span class="job-card__dept">Information Technology</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">Information Technology Coordinator</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--full">Full-Time</span>
+                <span class="job-tag job-tag--full">Permanent</span>
+              </div>
+              <p class="salary-note">$96,326.65 – $109,999.53 / year</p>
+              <p class="job-card__desc">Manage and support VACFSS's IT infrastructure, systems, and end-user technology needs across the organization.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
               <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-child-reaching"></i></div>
-              <span class="job-card__dept">Children &amp; Youth Services</span>
+              <span class="job-card__dept">Child Safety</span>
             </div>
             <div class="job-card__body">
-              <h3 class="job-card__title">Social Worker — Children &amp; Youth</h3>
-              <div class="job-card__meta">
-                <span class="job-tag job-tag--full">Full-Time</span>
-              </div>
-              <p class="job-card__desc">Provide front-line child protection and family support services, conduct assessments, and develop culturally appropriate care plans in partnership with families and communities.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
-            </div>
-          </article>
-
-          <article class="job-card" role="listitem">
-            <div class="job-card__header">
-              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-house-chimney-heart"></i></div>
-              <span class="job-card__dept">Family Support</span>
-            </div>
-            <div class="job-card__body">
-              <h3 class="job-card__title">Family Support Worker</h3>
-              <div class="job-card__meta">
-                <span class="job-tag job-tag--full">Full-Time</span>
-              </div>
-              <p class="job-card__desc">Deliver in-home and community-based support to families experiencing challenges, helping build parenting skills, safety, and family resilience in a culturally safe way.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
-            </div>
-          </article>
-
-          <article class="job-card" role="listitem">
-            <div class="job-card__header">
-              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-drum"></i></div>
-              <span class="job-card__dept">Cultural Programs</span>
-            </div>
-            <div class="job-card__body">
-              <h3 class="job-card__title">Cultural Coordinator</h3>
+              <h3 class="job-card__title">Intake Social Worker</h3>
               <div class="job-card__meta">
                 <span class="job-tag job-tag--part">Part-Time</span>
               </div>
-              <p class="job-card__desc">Design and lead cultural programming for Indigenous children and youth in care, including land-based activities, ceremonies, language revitalization, and community connection.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
-            </div>
-          </article>
-
-          <article class="job-card" role="listitem">
-            <div class="job-card__header">
-              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-house-user"></i></div>
-              <span class="job-card__dept">Foster &amp; Kinship Care</span>
-            </div>
-            <div class="job-card__body">
-              <h3 class="job-card__title">Foster Care Coordinator</h3>
-              <div class="job-card__meta">
-                <span class="job-tag job-tag--full">Full-Time</span>
-              </div>
-              <p class="job-card__desc">Recruit, assess, train, and support VACFSS foster caregivers. Match children with appropriate homes and provide ongoing guidance and advocacy throughout placements.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
+              <p class="job-card__desc">Respond to and assess initial reports of child safety concerns, conducting intake processes with care and cultural sensitivity.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
             </div>
           </article>
 
           <article class="job-card" role="listitem">
             <div class="job-card__header">
               <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-file-pen"></i></div>
-              <span class="job-card__dept">Administration</span>
+              <span class="job-card__dept">Child Safety</span>
             </div>
             <div class="job-card__body">
-              <h3 class="job-card__title">Administrative Assistant</h3>
+              <h3 class="job-card__title">Child Safety Administrative Assistant</h3>
               <div class="job-card__meta">
                 <span class="job-tag job-tag--full">Full-Time</span>
               </div>
-              <p class="job-card__desc">Support day-to-day administrative operations including scheduling, correspondence, records management, and front desk reception in a welcoming, culturally safe environment.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
+              <p class="job-card__desc">Provide administrative support to the Child Safety team, including records management, scheduling, and correspondence.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
             </div>
           </article>
 
           <article class="job-card" role="listitem">
             <div class="job-card__header">
-              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-brain"></i></div>
-              <span class="job-card__dept">Mental Health &amp; Wellness</span>
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-desktop"></i></div>
+              <span class="job-card__dept">Administration</span>
             </div>
             <div class="job-card__body">
-              <h3 class="job-card__title">Youth Wellness Counsellor</h3>
+              <h3 class="job-card__title">Front Desk Administrative Assistant</h3>
               <div class="job-card__meta">
-                <span class="job-tag job-tag--contract">Contract</span>
+                <span class="job-tag job-tag--full">Full-Time</span>
               </div>
-              <p class="job-card__desc">Provide trauma-informed, culturally grounded counselling and mental health support to Indigenous youth aged 6–24 involved with VACFSS programs and services.</p>
-              <a href="#apply" class="btn btn--red job-card__apply">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:6px;"></i></a>
+              <p class="job-card__desc">Be the welcoming first point of contact for visitors, families, and staff at our Vancouver office, supporting day-to-day reception duties.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
             </div>
           </article>
 
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-arrows-rotate"></i></div>
+              <span class="job-card__dept">Administration</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">Float Administrative Assistant</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--full">Full-Time</span>
+              </div>
+              <p class="job-card__desc">Provide flexible administrative coverage across departments, stepping in wherever support is needed across the organization.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-user"></i></div>
+              <span class="job-card__dept">Child Safety</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">Child Safety Social Work Assistant</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--full">Full-Time</span>
+              </div>
+              <p class="job-card__desc">Support Child Safety Social Workers with case documentation, family contact coordination, and day-to-day program tasks.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></div>
+              <span class="job-card__dept">Child Safety</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">Child Safety Social Worker</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--full">Full-Time</span>
+              </div>
+              <p class="job-card__desc">Provide front-line child protection and family support services, conduct assessments, and develop culturally appropriate care plans in partnership with families and communities.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-van-shuttle"></i></div>
+              <span class="job-card__dept">Support Services</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">Transportation Support Worker</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--temp">Temporary · 2 Years</span>
+              </div>
+              <p class="job-card__desc">Provide safe, reliable transportation support for children and youth to appointments, visits, and program activities.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+          <article class="job-card" role="listitem">
+            <div class="job-card__header">
+              <div class="job-card__dept-icon" aria-hidden="true"><i class="fa-solid fa-folder-open"></i></div>
+              <span class="job-card__dept">General</span>
+            </div>
+            <div class="job-card__body">
+              <h3 class="job-card__title">General Applications</h3>
+              <div class="job-card__meta">
+                <span class="job-tag job-tag--temp">Open Pool</span>
+              </div>
+              <p class="job-card__desc">Don't see the exact role you're looking for? Submit a general application to be considered for future opportunities at VACFSS.</p>
+              <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red job-card__apply">View &amp; Apply <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:6px;"></i></a>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="portal-cta">
+          <div class="portal-cta__text">
+            <h3><i class="fa-solid fa-circle-info" aria-hidden="true" style="color:var(--color-teal); margin-right:6px;"></i>Looking for full details and the latest postings?</h3>
+            <p>All current openings, full job descriptions, and online applications are managed through our official careers portal.</p>
+          </div>
+          <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red" style="font-size:var(--font-size-md); padding:13px 28px; white-space:nowrap;">
+            Visit VACFSS Careers Portal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-left:8px;"></i>
+          </a>
         </div>
       </div>
     </section>
@@ -515,18 +596,18 @@
         <div class="apply-steps">
           <div class="apply-step">
             <div class="apply-step__num">1</div>
-            <div class="apply-step__title">Submit Your Application</div>
-            <p class="apply-step__desc">Email your résumé and cover letter to <a href="mailto:hr@vacfss.com" style="color:var(--color-red-primary);">hr@vacfss.com</a> with the position title in the subject line.</p>
+            <div class="apply-step__title">Find a Posting</div>
+            <p class="apply-step__desc">Browse all current openings on our official careers portal at <strong>vacfsscareers.easyapply.co</strong>.</p>
           </div>
           <div class="apply-step">
             <div class="apply-step__num">2</div>
-            <div class="apply-step__title">Phone Screen</div>
-            <p class="apply-step__desc">Our HR team will contact shortlisted candidates for a brief introductory call to discuss your background and the role.</p>
+            <div class="apply-step__title">Apply Online</div>
+            <p class="apply-step__desc">Submit your résumé and application directly through the portal for the position you're interested in.</p>
           </div>
           <div class="apply-step">
             <div class="apply-step__num">3</div>
             <div class="apply-step__title">Interview</div>
-            <p class="apply-step__desc">Participate in a panel interview with program staff. We use strength-based, culturally informed interview practices.</p>
+            <p class="apply-step__desc">Shortlisted candidates are invited to a panel interview with program staff, using strength-based, culturally informed practices.</p>
           </div>
           <div class="apply-step">
             <div class="apply-step__num">4</div>
@@ -535,10 +616,14 @@
           </div>
         </div>
         <div style="text-align:center; margin-top:var(--space-12);">
-          <p style="font-size:var(--font-size-md); color:var(--color-grey-dim); margin-bottom:var(--space-4);">Questions about a position or the process?</p>
-          <a href="mailto:hr@vacfss.com" class="btn btn--red" style="font-size:var(--font-size-md); padding:13px 32px;">
-            <i class="fa-solid fa-envelope" aria-hidden="true" style="margin-right:8px;"></i>Contact HR
+          <p style="font-size:var(--font-size-md); color:var(--color-grey-dim); margin-bottom:var(--space-4);">Ready to view current postings and apply?</p>
+          <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn btn--red" style="font-size:var(--font-size-md); padding:13px 32px; margin-right:var(--space-4);">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" style="margin-right:8px;"></i>VACFSS Careers Portal
           </a>
+          <p style="font-size:var(--font-size-base); color:var(--color-grey-dim); margin-top:var(--space-6);">
+            Have a question about a role first? Email
+            <a href="mailto:employment@vacfss.com" style="color:var(--color-red-primary);">employment@vacfss.com</a>
+          </p>
         </div>
       </div>
     </section>
@@ -554,17 +639,17 @@
           803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8
         </p>
         <p style="margin-top:var(--space-4); margin-bottom:0;">
-          <a href="tel:+16046892421" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">(604) 689-2421</a>
+          <a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a>
         </p>
       </div>
       <div>
-        <h3 class="site-footer__heading">Services</h3>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Children &amp; Youth</a></li>
-          <li><a href="#">Family Support</a></li>
-          <li><a href="caregiver.html">Foster Care</a></li>
-          <li><a href="caregiver.html">Kinship Care</a></li>
-          <li><a href="#">Cultural Programs</a></li>
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
+          <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
       </div>
       <div>
@@ -572,7 +657,7 @@
         <ul class="site-footer__links">
           <li><a href="caregiver.html">Become a Caregiver</a></li>
           <li><a href="yac.html">Youth Advisory Council</a></li>
-          <li><a href="#">Volunteer</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
           <li><a href="#">Donate</a></li>
           <li><a href="careers.html">Careers</a></li>
         </ul>
@@ -580,11 +665,11 @@
       <div>
         <h3 class="site-footer__heading">About VACFSS</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Our Mission</a></li>
-          <li><a href="#">Board of Directors</a></li>
-          <li><a href="#">Annual Reports</a></li>
-          <li><a href="#">News &amp; Events</a></li>
-          <li><a href="#">Accessibility</a></li>
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
         </ul>
         <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
           <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
@@ -600,7 +685,7 @@
       <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
         &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
         &nbsp;·&nbsp; <a href="#">Terms of Use</a>
-        &nbsp;·&nbsp; <a href="#">Accessibility</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
       </p>
     </div>
   </footer>

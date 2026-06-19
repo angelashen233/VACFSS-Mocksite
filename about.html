@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ---- Header / nav (shared) ---- */
+    .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
+    .site-header__logo { flex-shrink: 0; }
+    .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
+    .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input::placeholder { color: var(--color-grey-dim); }
+    .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu__nav { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-bottom: 1px solid var(--color-grey-mark); padding-bottom: var(--space-6); }
+    .mobile-menu__nav li a { display: block; font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); text-decoration: none; padding: var(--space-3) 0; border-bottom: 1px solid #f0f0f0; }
+    .mobile-menu__nav li a:hover, .mobile-menu__nav li a[aria-current="page"] { color: var(--color-red-primary); }
+    .mobile-menu__quick { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .mobile-menu__quick-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: var(--color-red-primary); color: var(--color-white); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: var(--space-3) var(--space-4); border-radius: var(--border-radius-sm); flex: 1; text-align: center; }
+    .mobile-menu__quick-item i { font-size: 1.6rem; }
+    .mobile-menu__social { display: flex; gap: var(--space-3); }
+    .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
+    .mobile-menu__social a:hover { background: var(--color-black); }
+    @media (max-width: 1099px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
+    }
+    @media (min-width: 1100px) {
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
+    }
+
+    /* ---- Hero ---- */
+    .pg-hero {
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      background-image: url('Assets/Stock-images/2017_babyblankets_drums019.JPG');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .pg-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.50) 100%); }
+    .pg-hero__content { position: relative; z-index: 1; max-width: var(--max-width-content); margin-inline: auto; padding: var(--space-16) var(--space-6); }
+    .pg-hero__eyebrow { display: block; color: var(--color-teal); font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-hero__title { color: var(--color-white); font-family: var(--font-heading); font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: var(--space-4); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .pg-hero__sub { color: rgba(255,255,255,0.85); font-size: var(--font-size-md); max-width: 600px; line-height: 1.7; margin: 0; }
+
+    /* ---- Generic sections ---- */
+    .pg-section { padding: var(--space-20) var(--space-6); }
+    .pg-section--white { background: var(--color-white); }
+    .pg-section--cream { background: var(--color-cream); }
+    .pg-section--dark  { background: var(--color-black); }
+    .pg-section--red   { background: var(--color-red-primary); }
+    .pg-inner { max-width: var(--max-width-content); margin-inline: auto; }
+    .pg-eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-eyebrow--red   { color: var(--color-red-primary); }
+    .pg-eyebrow--teal  { color: var(--color-teal); }
+    .pg-eyebrow--white { color: rgba(255,255,255,0.80); }
+    .pg-heading { font-size: clamp(2.4rem, 3.5vw, 3.8rem); margin-bottom: var(--space-5); line-height: 1.15; }
+    .pg-lead { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; max-width: 760px; margin-bottom: var(--space-6); }
+    .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+
+    /* ---- Feature list ---- */
+    .feat-list { list-style: none; padding: 0; margin: var(--space-6) 0 0; max-width: 640px; }
+    .feat-list li { display: flex; align-items: flex-start; gap: var(--space-3); font-size: var(--font-size-md); color: var(--color-grey-dim); margin-bottom: var(--space-4); line-height: 1.55; }
+    .feat-list li i { color: var(--color-teal); font-size: 1.6rem; margin-top: 2px; flex-shrink: 0; }
+
+    /* ---- Vision / Mission quote cards ---- */
+    .vm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-8); margin-top: var(--space-10); }
+    .vm-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); padding: var(--space-10) var(--space-8); border-top: 4px solid var(--color-red-primary); }
+    .vm-card:nth-child(2) { border-top-color: var(--color-teal); }
+    .vm-card__label { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-red-primary); margin-bottom: var(--space-4); }
+    .vm-card:nth-child(2) .vm-card__label { color: #1a8a95; }
+    .vm-card__quote { font-family: var(--font-heading); font-size: clamp(1.8rem, 2.2vw, 2.2rem); line-height: 1.4; color: var(--color-black); margin: 0; }
+
+    /* ---- Values grid ---- */
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-6); margin-top: var(--space-12); }
+    .value-pill { text-align: center; padding: var(--space-8) var(--space-4); }
+    .value-pill__icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(113,203,211,0.15); color: #1a8a95; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto var(--space-4); }
+    .value-pill__name { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); }
+
+    /* ---- Timeline ---- */
+    .timeline { position: relative; margin-top: var(--space-10); padding-left: var(--space-10); border-left: 3px solid var(--color-teal); }
+    .timeline-item { position: relative; padding-bottom: var(--space-10); }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-10) - 9px);
+      top: 4px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--color-red-primary);
+      border: 3px solid var(--color-white);
+      box-shadow: 0 0 0 2px var(--color-teal);
+    }
+    .timeline-item__year { display: block; font-family: var(--font-heading); font-size: var(--font-size-lg); color: var(--color-red-primary); margin-bottom: var(--space-2); }
+    .timeline-item__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.7; margin: 0; max-width: 680px; }
+
+    /* ---- Logo story ---- */
+    .logo-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-10); align-items: center; margin-top: var(--space-10); }
+    @media (min-width: 768px) { .logo-grid { grid-template-columns: 280px 1fr; } }
+    .logo-grid__media { display: flex; align-items: center; justify-content: center; background: var(--color-white); border-radius: var(--border-radius-md); padding: var(--space-8); }
+    .logo-grid__media img { max-width: 100%; }
+    .logo-grid__body p { font-size: var(--font-size-md); color: rgba(255,255,255,0.75); line-height: 1.75; margin: 0; }
+
+    /* ---- Department cards ---- */
+    .dept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .dept-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; }
+    .dept-card__accent { height: 4px; }
+    .dept-card__accent--red  { background: var(--color-red-primary); }
+    .dept-card__accent--teal { background: var(--color-teal); }
+    .dept-card__accent--dark { background: var(--color-black); }
+    .dept-card__body { padding: var(--space-6); flex: 1; }
+    .dept-card__icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: var(--space-4); background: rgba(113,203,211,0.15); color: #1a8a95; }
+    .dept-card__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); color: var(--color-black); }
+    .dept-card__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.65; margin: 0 0 var(--space-3); }
+    .dept-card__link { font-family: var(--font-heading); font-size: var(--font-size-sm); color: var(--color-red-primary); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ---- CTA band ---- */
+    .cta-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); max-width: var(--max-width-content); margin-inline: auto; }
+    .cta-band__text h2 { color: var(--color-white); font-size: clamp(2.2rem, 3vw, 3.2rem); margin-bottom: var(--space-2); }
+    .cta-band__text p  { color: rgba(255,255,255,0.70); font-size: var(--font-size-md); margin: 0; }
+    .cta-band__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="landing.html" class="site-header__logo" aria-label="VACFSS home">
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society">
+        <span class="site-header__title visually-hidden">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
+          <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="about.html" aria-current="page">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
+        <li><a href="caregiver.html">Caregivers</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html" aria-current="page">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-newspaper" aria-hidden="true"></i>News</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports</a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="pg-hero" aria-label="About VACFSS">
+      <div class="pg-hero__content">
+        <span class="pg-hero__eyebrow"><i class="fa-solid fa-feather-pointed" aria-hidden="true" style="margin-right:8px;"></i>Our Story</span>
+        <h1 class="pg-hero__title">About VACFSS</h1>
+        <p class="pg-hero__sub">An urban Indigenous Child and Family Services Agency, strengthening families through restorative, culturally grounded care since 1988.</p>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- WHO WE ARE -->
+    <section class="pg-section pg-section--white" aria-labelledby="who-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-circle-info" aria-hidden="true" style="margin-right:6px;"></i>Who We Are</span>
+        <h2 class="pg-heading" id="who-heading">An Indigenous-Led, Indigenous-Governed Agency</h2>
+        <p class="pg-lead">
+          VACFSS is an urban Indigenous Child and Family Services Agency (ICFSA) operating on the
+          unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish),
+          and səlilwətaɬ (Tsleil-Waututh) Nations. We deliver services through Delegation Agreements
+          with the Provincial Director of Child Welfare — but our governance and accountability
+          remain independent. Our practice is grounded in restorative Indigenous child welfare, with
+          internal policies that exceed the standards set by the provincial government.
+        </p>
+        <ul class="feat-list">
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Independent Indigenous governance and accountability</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Restorative, least-disruptive child welfare practice</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Internal policies that exceed provincial (CFCSA) standards</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Full delegation for child protection since April 2008</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- VISION / MISSION / VALUES -->
+    <section class="pg-section pg-section--cream" aria-labelledby="vm-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-compass" aria-hidden="true" style="margin-right:6px;"></i>What Guides Us</span>
+        <h2 class="pg-heading" id="vm-heading">Vision &amp; Mission</h2>
+        <div class="vm-grid">
+          <div class="vm-card">
+            <span class="vm-card__label">Vision</span>
+            <p class="vm-card__quote">"A balanced and harmonious Aboriginal community."</p>
+          </div>
+          <div class="vm-card">
+            <span class="vm-card__label">Mission</span>
+            <p class="vm-card__quote">"Provide holistic service delivery that culturally and spiritually strengthens Aboriginal families."</p>
+          </div>
+        </div>
+
+        <div class="values-grid" role="list" aria-label="Organizational values">
+          <div class="value-pill" role="listitem">
+            <div class="value-pill__icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <div class="value-pill__name">Respect</div>
+          </div>
+          <div class="value-pill" role="listitem">
+            <div class="value-pill__icon" aria-hidden="true"><i class="fa-solid fa-shield-heart"></i></div>
+            <div class="value-pill__name">Integrity</div>
+          </div>
+          <div class="value-pill" role="listitem">
+            <div class="value-pill__icon" aria-hidden="true"><i class="fa-solid fa-people-roof"></i></div>
+            <div class="value-pill__name">Belonging</div>
+          </div>
+          <div class="value-pill" role="listitem">
+            <div class="value-pill__icon" aria-hidden="true"><i class="fa-solid fa-feather"></i></div>
+            <div class="value-pill__name">Humility</div>
+          </div>
+          <div class="value-pill" role="listitem">
+            <div class="value-pill__icon" aria-hidden="true"><i class="fa-solid fa-seedling"></i></div>
+            <div class="value-pill__name">Strength-Based Practice</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- HISTORY TIMELINE -->
+    <section class="pg-section pg-section--white" aria-labelledby="history-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-timeline" aria-hidden="true" style="margin-right:6px;"></i>Our History</span>
+        <h2 class="pg-heading" id="history-heading">Decades of Growth &amp; Commitment</h2>
+        <p class="pg-lead">From a small grassroots society to a fully delegated Indigenous child welfare agency, our history reflects a steady journey toward Indigenous-led care.</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-item__year">June 1988</span>
+            <p class="timeline-item__desc">Established as the Mamele Benevolent Society, with a mandate to develop Indigenous child welfare and in-home support programs for urban Indigenous families.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">1992</span>
+            <p class="timeline-item__desc">Reincorporated as the Vancouver Aboriginal Child and Family Services Society, delivering family support services, advocacy, cultural support for children in care, and cultural awareness training for caregivers.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">1996</span>
+            <p class="timeline-item__desc">Achieved designation status following community consultations, enabling notification to First Nations when Indigenous children were removed from families in the Lower Mainland.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">1999</span>
+            <p class="timeline-item__desc">Launched the Guardianship Pilot Project and began negotiations with the Ministry for delegated child welfare services.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">December 2001</span>
+            <p class="timeline-item__desc">Signed the Delegation Enabling Agreement (DEA), authorizing VACFSS to deliver delegated Resource and Guardianship services.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">2002 – 2004</span>
+            <p class="timeline-item__desc">Guardianship services established (2002), Resources services launched (2003), and Family Support evolved into Family Preservation and Reunification (2004).</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-item__year">April 2008</span>
+            <p class="timeline-item__desc">Received full child protection function transfer from MCFD — achieving full delegation as an Indigenous Child and Family Services Agency.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- LOGO STORY -->
+    <section class="pg-section pg-section--dark" aria-labelledby="logo-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-paintbrush" aria-hidden="true" style="margin-right:6px;"></i>Our Symbol</span>
+        <h2 class="pg-heading" id="logo-heading" style="color:var(--color-white);">The Story Behind Our Logo</h2>
+        <div class="logo-grid">
+          <div class="logo-grid__media">
+            <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="VACFSS logo, designed by Nisga'a artist Laurence Wilson">
+          </div>
+          <div class="logo-grid__body">
+            <p>
+              Our logo was designed by Nisga'a artist Laurence Wilson in 1993. It translates to
+              "Human and Wolf Child" — symbolizing our mission to strengthen Indigenous families
+              and protect the spirit of every child in our care. The wolf represents loyalty,
+              family, and community — values that remain at the heart of everything VACFSS does.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- CORE DEPARTMENTS -->
+    <section class="pg-section pg-section--cream" aria-labelledby="dept-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-building-shield" aria-hidden="true" style="margin-right:6px;"></i>How We're Organized</span>
+        <h2 class="pg-heading" id="dept-heading">Our Core Departments</h2>
+        <p class="pg-lead">VACFSS delivers services through four core departments, each playing a distinct role in supporting Indigenous children, youth, and families.</p>
+
+        <div class="dept-grid" role="list" aria-label="Core departments">
+          <a href="programs.html#families" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--red"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="dept-card__title">Child Safety Program</div>
+              <p class="dept-card__desc">Collaborative family support and prevention services responding to child safety concerns.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="caregiver.html" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--teal"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-house-chimney-heart"></i></div>
+              <div class="dept-card__title">Resources Program</div>
+              <p class="dept-card__desc">Provides safe alternate care for children while promoting cultural identity and connection.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="programs.html#families" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--dark"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-arrows-to-circle"></i></div>
+              <div class="dept-card__title">Family Preservation &amp; Reunification</div>
+              <p class="dept-card__desc">Culturally-informed in-home supports keeping families together and working toward reunification.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="programs.html#children-youth" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--red"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-link"></i></div>
+              <div class="dept-card__title">Guardianship Program</div>
+              <p class="dept-card__desc">Cares for children under Continuing Custody Orders and supports lifelong, permanent connections.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- CTA -->
+    <section class="pg-section pg-section--red" aria-labelledby="cta-heading">
+      <div class="cta-band">
+        <div class="cta-band__text">
+          <span class="pg-eyebrow pg-eyebrow--white" style="margin-bottom:var(--space-3);">Get To Know Us Further</span>
+          <h2 id="cta-heading">Meet the People Behind VACFSS</h2>
+          <p>Explore our Board of Directors, discover our community partnerships, or join our team.</p>
+        </div>
+        <div class="cta-band__actions">
+          <a href="board.html" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">Board of Directors</a>
+          <a href="partners.html" class="btn" style="background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.50); color:var(--color-white); font-size:var(--font-size-md); padding:13px 28px;">Community Partners</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+      <div>
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" width="220" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">
+          Vancouver Aboriginal Child &amp; Family Services Society<br>
+          803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8
+        </p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;">
+          <a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a>
+        </p>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
+          <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="caregiver.html">Become a Caregiver</a></li>
+          <li><a href="yac.html">Youth Advisory Council</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="about.html" aria-current="page">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__acknowledgement">
+      <p>VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh) Nations.</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
+        &nbsp;·&nbsp; <a href="#">Terms of Use</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

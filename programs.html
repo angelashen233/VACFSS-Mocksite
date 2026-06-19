@@ -12,11 +12,12 @@
     .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
     .site-header__logo { flex-shrink: 0; }
     .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
-    .nav-primary { border-top: none; background: transparent; flex: 1; }
-    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; }
-    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
     .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
-    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: 160px; font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
     .header-search__input::placeholder { color: var(--color-grey-dim); }
     .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
     .mobile-menu.is-open { display: block; }
@@ -29,14 +30,18 @@
     .mobile-menu__social { display: flex; gap: var(--space-3); }
     .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
     .mobile-menu__social a:hover { background: var(--color-black); }
-    @media (max-width: 767px) {
+    @media (max-width: 1099px) {
       .nav-primary { display: none; }
       .header-search { display: none; }
       .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
     }
-    @media (min-width: 768px) {
+    @media (min-width: 1100px) {
       .menu-toggle { display: none; }
       .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
     }
 
     /* ---- Hero ---- */
@@ -177,18 +182,30 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .prog-card:hover, .prog-card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.16);
+      outline: none;
+    }
+    .prog-card:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
     .prog-card__accent { height: 4px; }
     .prog-card__accent--red  { background: var(--color-red-primary); }
     .prog-card__accent--teal { background: var(--color-teal); }
     .prog-card__accent--dark { background: var(--color-black); }
-    .prog-card__body { padding: var(--space-6); flex: 1; }
+    .prog-card__body { padding: var(--space-6); flex: 1; display: flex; flex-direction: column; }
     .prog-card__icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: var(--space-4); }
     .prog-card__icon--red  { background: rgba(228,29,56,0.10);  color: var(--color-red-primary); }
     .prog-card__icon--teal { background: rgba(113,203,211,0.15); color: #1a8a95; }
     .prog-card__icon--dark { background: rgba(0,0,0,0.07);       color: var(--color-black); }
     .prog-card__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); color: var(--color-black); }
     .prog-card__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.65; margin: 0; }
+    .prog-card__learn-more { display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-red-primary); margin-top: var(--space-5); padding-top: 0; }
+    .prog-card__learn-more i { font-size: 1.2rem; transition: transform 0.2s ease; }
+    .prog-card:hover .prog-card__learn-more i { transform: translateX(4px); }
+    .pg-section--dark .prog-card__learn-more { color: var(--color-teal); }
 
     /* Dark section card overrides */
     .pg-section--dark .prog-card { background: rgba(255,255,255,0.06); box-shadow: none; border: 1px solid rgba(255,255,255,0.10); }
@@ -208,7 +225,18 @@
       border-radius: var(--border-radius-md);
       box-shadow: var(--shadow-card);
       padding: var(--space-6);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .group-item:hover, .group-item:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.16);
+      outline: none;
+    }
+    .group-item:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+    .group-item__learn-more { display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-red-primary); margin-top: var(--space-3); }
+    .group-item__learn-more i { font-size: 1.2rem; transition: transform 0.2s ease; }
+    .group-item:hover .group-item__learn-more i { transform: translateX(4px); }
     .group-item__badge { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--color-white); }
     .group-item__badge--red  { background: var(--color-red-primary); }
     .group-item__badge--teal { background: var(--color-teal); }
@@ -223,6 +251,66 @@
     .cta-band__text h2 { color: var(--color-white); font-size: clamp(2.2rem, 3vw, 3.2rem); margin-bottom: var(--space-2); }
     .cta-band__text p  { color: rgba(255,255,255,0.70); font-size: var(--font-size-md); margin: 0; }
     .cta-band__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+
+    /* ---- Program detail modal ---- */
+    .prog-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      overflow-y: auto;
+    }
+    .prog-modal-overlay.is-open { display: flex; }
+    .prog-modal {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+      animation: prog-modal-in 0.2s ease;
+    }
+    @keyframes prog-modal-in {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .prog-modal__close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.55);
+      color: var(--color-white);
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.2s ease;
+    }
+    .prog-modal__close:hover, .prog-modal__close:focus-visible { background: var(--color-red-primary); }
+    .prog-modal__media { width: 100%; height: 280px; overflow: hidden; border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
+    .prog-modal__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prog-modal__body { padding: var(--space-10) var(--space-8); }
+    .prog-modal__eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-red-primary); margin-bottom: var(--space-3); }
+    .prog-modal__title { font-size: clamp(2rem, 2.6vw, 2.6rem); margin-bottom: var(--space-5); line-height: 1.2; }
+    .prog-modal__text { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.8; margin: 0; }
+    body.modal-open { overflow-y: hidden; }
+    @media (max-width: 600px) {
+      .prog-modal__media { height: 180px; }
+      .prog-modal__body { padding: var(--space-8) var(--space-6); }
+    }
   </style>
 </head>
 <body>
@@ -238,12 +326,12 @@
       </a>
       <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
         <ul class="nav-primary__list">
-          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
-          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
           <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
-          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
           <li class="nav-primary__item"><a href="programs.html" aria-current="page">Programs &amp; Services</a></li>
-          <li class="nav-primary__item"><a href="#">About Us</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
         </ul>
       </nav>
       <div class="header-search" role="search">
@@ -257,12 +345,12 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul class="mobile-menu__nav">
-        <li><a href="#">Children &amp; Youth</a></li>
-        <li><a href="#">Families</a></li>
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
         <li><a href="caregiver.html">Caregivers</a></li>
-        <li><a href="#">Indigenous Communities</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
         <li><a href="programs.html" aria-current="page">Programs &amp; Services</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="about.html">About Us</a></li>
       </ul>
       <div class="mobile-menu__quick">
         <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
@@ -338,7 +426,7 @@
 
         <div class="prog-grid" role="list" aria-label="Children and Youth programs">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="guardianship" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></div>
@@ -349,10 +437,11 @@
                 each child build a stable, culturally connected future through adoption, extended
                 family care, or other permanent arrangements.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="yac" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-microphone-lines"></i></div>
@@ -363,10 +452,11 @@
                 conference presentations — including internationally in Australia, Norway,
                 and Taiwan. Two new members are selected annually.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="youth-voices" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-comments"></i></div>
@@ -376,10 +466,11 @@
                 experiences and perspectives — amplifying Indigenous youth voices to drive
                 meaningful change in the child welfare system.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="touching-lands-cy" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-mountain-sun"></i></div>
@@ -389,10 +480,11 @@
                 ancestral home territories — strengthening identity, belonging, and connection
                 to the lands and Nations their families come from.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="ubc-farm" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-seedling"></i></div>
@@ -402,6 +494,7 @@
                 with the UBC Institute for Aboriginal Health's Teaching and Research Garden.
                 Youth develop skills, confidence, and a connection to the land.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -439,7 +532,7 @@
         <h3 class="sub-heading"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i>Core Family Services</h3>
         <div class="prog-grid" role="list" aria-label="Core family services">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="family-wellbeing" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></div>
@@ -449,10 +542,11 @@
                 culturally appropriate child safety and support services — always keeping children
                 within their circle of family and community support where safely possible.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="navigating-safety" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-compass"></i></div>
@@ -462,10 +556,11 @@
                 child safety concerns within Indigenous families — offering compassionate, culturally
                 safe guidance through the child protection process.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="family-preservation" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-arrows-to-circle"></i></div>
@@ -475,10 +570,11 @@
                 journey — keeping families together while addressing safety concerns, and where
                 children have been separated, working toward meaningful reunification.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="client-concerns" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-clipboard-check"></i></div>
@@ -488,6 +584,7 @@
                 belonging, respect, humility, integrity, and strength-based practice.
                 Every family's voice matters in shaping how we serve our community.
               </p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -497,30 +594,33 @@
         <h3 class="sub-heading"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Group Programs</h3>
         <div class="group-list" role="list" aria-label="Group programs">
 
-          <div class="group-item" role="listitem">
+          <div class="group-item" role="listitem" tabindex="0" data-modal="strengthening-families" aria-haspopup="dialog">
             <div class="group-item__badge group-item__badge--red" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
             <div class="group-item__content">
               <span class="group-item__meta">11-Week Program · Facilitated by Indigenous Elders</span>
               <h3>The Strengthening Families Group</h3>
               <p>Parenting education, support, and guidance — alongside children's social and emotional development. Sessions are facilitated by respected Indigenous Elders who weave cultural teachings throughout the program.</p>
+              <span class="group-item__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </div>
 
-          <div class="group-item" role="listitem">
+          <div class="group-item" role="listitem" tabindex="0" data-modal="strengthening-fathers" aria-haspopup="dialog">
             <div class="group-item__badge group-item__badge--teal" aria-hidden="true"><i class="fa-solid fa-person"></i></div>
             <div class="group-item__content">
               <span class="group-item__meta">11-Week Program · Facilitated by Indigenous Elders</span>
               <h3>The Strengthening Fathers Group</h3>
               <p>Explores parenting skills, the traditional role of fathers in Indigenous culture, cultural teachings, parent-child interactions, and the impact of intergenerational trauma — all in a safe space facilitated by respected Elders.</p>
+              <span class="group-item__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </div>
 
-          <div class="group-item" role="listitem">
+          <div class="group-item" role="listitem" tabindex="0" data-modal="sacred-life-givers" aria-haspopup="dialog">
             <div class="group-item__badge group-item__badge--dark" aria-hidden="true"><i class="fa-solid fa-baby"></i></div>
             <div class="group-item__content">
               <span class="group-item__meta">9-Week Program · Offered Twice Annually</span>
               <h3>The Sacred Life-Givers Group</h3>
               <p>Supportive workshops for women with high-risk pregnancies covering cultural concepts of motherhood, self-care strategies, and community support — honouring the sacred role of Indigenous women as life-givers.</p>
+              <span class="group-item__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </div>
 
@@ -530,66 +630,73 @@
         <h3 class="sub-heading"><i class="fa-solid fa-house-chimney-heart" aria-hidden="true"></i>In-Home &amp; Community Support</h3>
         <div class="prog-grid" role="list" aria-label="In-home and community programs">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="pace" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-child-reaching"></i></div>
               <div class="prog-card__title">PACE Program</div>
               <p class="prog-card__desc">An early intervention and educational centre supporting young children facing social, emotional, or behavioural challenges — equipping families with tools to thrive.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="watari" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-comments"></i></div>
               <div class="prog-card__title">Watari Counselling Services</div>
               <p class="prog-card__desc">One-to-one support for high-risk youth and individuals through outreach, activity-based counselling, and advocacy around education and employment.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="family-day" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-heart-pulse"></i></div>
               <div class="prog-card__title">Family Day</div>
               <p class="prog-card__desc">A therapeutic parenting program nurturing positive parent-child relationships through hands-on coaching, structured activities, and skill-building tailored to each family.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="drake-medox" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-kit-medical"></i></div>
               <div class="prog-card__title">Drake Medox Health Services</div>
               <p class="prog-card__desc">Specialized postpartum care workers supporting new families through infant care, breastfeeding, and the early weeks of parenthood with cultural sensitivity.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="pafnw" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-home"></i></div>
               <div class="prog-card__title">Pacific Association of First Nations Women</div>
               <p class="prog-card__desc">Specialized home care delivered in a culturally appropriate and respectful way — supporting Indigenous community wellness through compassionate in-home services.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="big-sisters" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-person-dress"></i></div>
               <div class="prog-card__title">Big Sisters — Our Little Sisters</div>
               <p class="prog-card__desc">Girls aged 7–17 are matched with caring adult women who provide consistent mentorship, friendship, and positive role modelling — building confidence and belonging.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="big-brothers" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-person-running"></i></div>
               <div class="prog-card__title">Big Brothers</div>
               <p class="prog-card__desc">Boys are supported by volunteer adult male mentors who build meaningful friendships through sports, hobbies, and cultural events — providing consistent positive role models.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -628,30 +735,33 @@
         <h3 class="sub-heading"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i>Types of Caregiving</h3>
         <div class="prog-grid" role="list" aria-label="Caregiver types">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="foster-care" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-house-chimney-user"></i></div>
               <div class="prog-card__title">Foster Care</div>
               <p class="prog-card__desc">Provide a temporary safe and nurturing home for a child who needs to be away from their birth family. Foster caregivers receive training, financial support, and ongoing guidance from a dedicated VACFSS support worker.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="kinship-care" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></div>
               <div class="prog-card__title">Kinship Care</div>
               <p class="prog-card__desc">Children remain connected to extended family, community, and culture through kinship caregivers — grandparents, aunties, uncles, and family friends who provide a familiar, loving environment.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="respite-care" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-clock-rotate-left"></i></div>
               <div class="prog-card__title">Respite Care</div>
               <p class="prog-card__desc">Respite caregivers offer planned, short-term relief for primary foster families — giving caregivers the rest they need while ensuring children receive quality, consistent care.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -660,30 +770,33 @@
         <h3 class="sub-heading"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>Caregiver Support &amp; Resources</h3>
         <div class="prog-grid" role="list" aria-label="Caregiver support resources">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="ifc-platform" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-laptop"></i></div>
               <div class="prog-card__title">Inclusive Foster Care (IFC) Platform</div>
               <p class="prog-card__desc">An online hub for active VACFSS caregivers with educational videos, cultural programming guides, access guidelines, care meeting support, community partner networks, and caregiver newsletters.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="pride-training" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-chalkboard-user"></i></div>
               <div class="prog-card__title">PRIDE Training Program</div>
               <p class="prog-card__desc">All prospective caregivers complete the PRIDE (Parent Resources for Information, Development, and Education) training — preparing them for the rewards and challenges of caring for children who have experienced trauma or disruption.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="cultural-programming" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--dark" aria-hidden="true"><i class="fa-solid fa-drum"></i></div>
               <div class="prog-card__title">Cultural Programming</div>
               <p class="prog-card__desc">Resources and guidance helping caregivers keep children connected to their Indigenous identity, language, and culture — including access to cultural events, Elders, and community gatherings.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -725,39 +838,43 @@
 
         <div class="prog-grid" role="list" aria-label="Indigenous community programs">
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="collaborative-partnerships" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-handshake"></i></div>
               <div class="prog-card__title">Collaborative Partnerships</div>
               <p class="prog-card__desc">VACFSS works Nation-to-Nation with First Nations communities to co-develop culturally appropriate care plans — ensuring children remain connected to their community, family, and heritage throughout their time in care.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="child-safety-ic" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--red"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--red" aria-hidden="true"><i class="fa-solid fa-scale-balanced"></i></div>
               <div class="prog-card__title">Child Safety Program</div>
               <p class="prog-card__desc">A restorative practice approach to child safety that centres children within their circle of support. Emphasizing least-disruptive measures and Indigenous child welfare principles — keeping families together wherever it is safe to do so.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="lifelong-connections" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--teal"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-link"></i></div>
               <div class="prog-card__title">Lifelong Connections</div>
               <p class="prog-card__desc">Lifelong Connections Workers help children and youth in care maintain meaningful relationships with their birth families, extended family, communities, and Nations — building the foundations for a permanently connected future.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
-          <article class="prog-card" role="listitem">
+          <article class="prog-card" role="listitem" tabindex="0" data-modal="touching-lands-ic" aria-haspopup="dialog">
             <div class="prog-card__accent prog-card__accent--dark"></div>
             <div class="prog-card__body">
               <div class="prog-card__icon prog-card__icon--teal" aria-hidden="true"><i class="fa-solid fa-mountain-sun"></i></div>
               <div class="prog-card__title">Touching the Lands of Our Relations</div>
               <p class="prog-card__desc">Enables children and youth in care to visit their home territories — reinforcing identity, strengthening connection to the land, and honouring the bonds between a child and the community they belong to.</p>
+              <span class="prog-card__learn-more">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </article>
 
@@ -784,6 +901,19 @@
 
   </main>
 
+  <!-- ==================== PROGRAM DETAIL MODAL ==================== -->
+  <div class="prog-modal-overlay" id="prog-modal-overlay" aria-hidden="true">
+    <div class="prog-modal" role="dialog" aria-modal="true" aria-labelledby="prog-modal-title">
+      <button type="button" class="prog-modal__close" id="prog-modal-close" aria-label="Close">&times;</button>
+      <div class="prog-modal__media"><img id="prog-modal-img" src="" alt=""></div>
+      <div class="prog-modal__body">
+        <span class="prog-modal__eyebrow" id="prog-modal-eyebrow"></span>
+        <h2 class="prog-modal__title" id="prog-modal-title"></h2>
+        <p class="prog-modal__text" id="prog-modal-text"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__grid">
@@ -806,7 +936,7 @@
           <li><a href="programs.html#families">Family Support</a></li>
           <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
           <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
-          <li><a href="programs.html#families">Cultural Programs</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
       </div>
       <div>
@@ -814,7 +944,7 @@
         <ul class="site-footer__links">
           <li><a href="caregiver.html">Become a Caregiver</a></li>
           <li><a href="yac.html">Youth Advisory Council</a></li>
-          <li><a href="#">Volunteer</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
           <li><a href="#">Donate</a></li>
           <li><a href="careers.html">Careers</a></li>
         </ul>
@@ -822,11 +952,11 @@
       <div>
         <h3 class="site-footer__heading">About VACFSS</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Our Mission</a></li>
-          <li><a href="#">Board of Directors</a></li>
-          <li><a href="#">Annual Reports</a></li>
-          <li><a href="#">News &amp; Events</a></li>
-          <li><a href="#">Accessibility</a></li>
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
         </ul>
         <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
           <a href="#" aria-label="VACFSS on Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
@@ -842,12 +972,44 @@
       <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
         &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
         &nbsp;·&nbsp; <a href="#">Terms of Use</a>
-        &nbsp;·&nbsp; <a href="#">Accessibility</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
       </p>
     </div>
   </footer>
 
   <script>
+    const PROGRAM_DATA = {
+      'guardianship': { eyebrow: 'Children & Youth', title: 'Guardianship Program', image: 'Assets/Stock-images/guardianship.jpg', alt: 'VACFSS guardianship program', text: "Manages the care and well-being of Indigenous children under Continuing Custody Orders. Our Lifelong Connections Workers focus on permanency planning, helping each child build a stable, culturally connected future through adoption, extended family care, or other permanent arrangements. Every plan is built around a child's identity, culture, and lifelong relationships." },
+      'yac': { eyebrow: 'Children & Youth', title: 'Youth Advisory Committee (YAC)', image: 'Assets/Stock-images/YAC-at-caregiver-appreciation-dinner.jpg', alt: 'VACFSS Youth Advisory Committee', text: 'Formed in 2010, the YAC consists of 12 Indigenous youth aged 16+ in or from VACFSS care. Members shape policy through public speaking, advocacy, and conference presentations — including internationally in Australia, Norway, and Taiwan. Two new members are selected annually through an interview process, and the committee collaborates with the provincial MCFD Youth Advisory Committee on system-wide change.' },
+      'youth-voices': { eyebrow: 'Children & Youth', title: 'Youth Voices', image: 'Assets/Stock-images/2024-summer-camp.jpg', alt: 'Youth at a VACFSS summer camp', text: "A storytelling platform where young people in and from VACFSS care share their experiences and perspectives — amplifying Indigenous youth voices to drive meaningful change in the child welfare system. Stories are shared safely and on each young person's own terms, helping shape how VACFSS and the wider system serve youth in care." },
+      'touching-lands-cy': { eyebrow: 'Children & Youth', title: 'Touching the Lands of Our Relations', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Elders at a VACFSS ceremony', text: "A cultural travel initiative enabling children and youth in care to visit their ancestral home territories — strengthening identity, belonging, and connection to the lands and Nations their families come from. These visits are coordinated with First Nations communities and often include time with Elders, extended family, and cultural ceremonies." },
+      'ubc-farm': { eyebrow: 'Children & Youth', title: 'UBC Farm Program', image: 'Assets/Stock-images/VACFSS-25thAnniversary-5.jpg', alt: 'VACFSS youth program', text: "A hands-on employment and learning opportunity for youth aged 12–15, delivered in partnership with the UBC Institute for Aboriginal Health's Teaching and Research Garden. Youth develop practical skills, confidence, and a connection to the land through seasonal farm work, mentorship, and exposure to Indigenous food sovereignty practices." },
+      'family-wellbeing': { eyebrow: 'Families · Core Service', title: 'Child and Family Well-Being', image: 'Assets/Stock-images/resources-team-both-banner-table.JPG', alt: 'VACFSS family support team', text: 'Works collaboratively with families and their First Nations community to provide culturally appropriate child safety and support services — always keeping children within their circle of family and community support where safely possible. This program is the front door for most families connecting with VACFSS for support.' },
+      'navigating-safety': { eyebrow: 'Families · Core Service', title: 'Navigating Child Safety Concerns', image: 'Assets/Stock-images/Child-safety-mural-office.png', alt: 'Child safety mural at the VACFSS office', text: 'Responds to reports from families, community members, and professionals regarding child safety concerns within Indigenous families — offering compassionate, culturally safe guidance through the child protection process. Our practice prioritizes the least disruptive measure and restorative Indigenous child welfare principles at every step.' },
+      'family-preservation': { eyebrow: 'Families · Core Service', title: 'Family Preservation & Reunification', image: 'Assets/Stock-images/Canoe-caregiver-summer-camp.jpg', alt: 'Family at a VACFSS community event', text: "Coordinates culturally-informed programs supporting families through their healing journey — keeping families together while addressing safety concerns, and where children have been separated, working toward meaningful reunification. This work draws on a family's own community, Elders, and cultural practices as sources of strength." },
+      'client-concerns': { eyebrow: 'Families · Core Service', title: 'Client Concerns & Quality Assurance', image: 'Assets/Stock-images/Clark-office-inside.jpg', alt: 'VACFSS office', text: "Manages concerns and ensures service delivery aligns with VACFSS values of belonging, respect, humility, integrity, and strength-based practice. Every family's voice matters in shaping how we serve our community — concerns are reviewed thoughtfully and used to continuously improve our programs." },
+      'strengthening-families': { eyebrow: 'Families · Group Program · 11 Weeks', title: 'The Strengthening Families Group', image: 'Assets/Stock-images/2017_babyblankets_drums019.JPG', alt: 'Cultural teaching circle', text: 'An 11-week program offering parenting education, support, and guidance — alongside support for children\'s social and emotional development. Sessions are facilitated by respected Indigenous Elders who weave cultural teachings, traditional knowledge, and community connection throughout the program.' },
+      'strengthening-fathers': { eyebrow: 'Families · Group Program · 11 Weeks', title: 'The Strengthening Fathers Group', image: 'Assets/Stock-images/Clark-office-inside.jpg', alt: 'VACFSS group program space', text: "Explores parenting skills, the traditional role of fathers in Indigenous culture, cultural teachings, parent-child interactions, and the impact of intergenerational trauma — all in a safe space facilitated by respected Elders. The group creates a supportive community for fathers to grow in their role." },
+      'sacred-life-givers': { eyebrow: 'Families · Group Program · 9 Weeks, Twice Annually', title: 'The Sacred Life-Givers Group', image: 'Assets/Stock-images/2017_babyblankets_drums019.JPG', alt: 'Cultural teachings for new mothers', text: 'Supportive workshops for women with high-risk pregnancies covering cultural concepts of motherhood, self-care strategies, and community support — honouring the sacred role of Indigenous women as life-givers. Offered twice a year, the group builds a circle of peer and Elder support around expectant mothers.' },
+      'pace': { eyebrow: 'Families · In-Home & Community Support', title: 'PACE Program', image: 'Assets/Stock-images/caregiver-summer-camp-dance-2025.jpg', alt: 'Children at a VACFSS community program', text: 'An early intervention and educational centre supporting young children facing social, emotional, or behavioural challenges — equipping families with tools to thrive. PACE works closely with families to build skills early, before challenges become more difficult to address.' },
+      'watari': { eyebrow: 'Families · In-Home & Community Support', title: 'Watari Counselling Services', image: 'Assets/Stock-images/Clark-office-inside.jpg', alt: 'VACFSS counselling support', text: 'One-to-one support for high-risk youth and individuals through outreach, activity-based counselling, and advocacy around education and employment. Watari meets clients where they are, building trust through consistent, non-judgmental outreach.' },
+      'family-day': { eyebrow: 'Families · In-Home & Community Support', title: 'Family Day', image: 'Assets/Stock-images/caregiver-summer-camp-dance-2025.jpg', alt: 'Family activity at a VACFSS event', text: 'A therapeutic parenting program nurturing positive parent-child relationships through hands-on coaching, structured activities, and skill-building tailored to each family. Sessions take place in real-life settings to help skills carry over into daily routines at home.' },
+      'drake-medox': { eyebrow: 'Families · In-Home & Community Support', title: 'Drake Medox Health Services', image: 'Assets/Stock-images/2017_babyblankets_drums019.JPG', alt: 'Baby blankets and drums at a VACFSS ceremony', text: 'Specialized postpartum care workers supporting new families through infant care, breastfeeding, and the early weeks of parenthood with cultural sensitivity. This in-home support helps new parents build confidence during a vulnerable and important time.' },
+      'pafnw': { eyebrow: 'Families · In-Home & Community Support', title: 'Pacific Association of First Nations Women', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Indigenous community gathering', text: 'Specialized home care delivered in a culturally appropriate and respectful way — supporting Indigenous community wellness through compassionate in-home services. The program is rooted in Indigenous women supporting Indigenous families.' },
+      'big-sisters': { eyebrow: 'Families · In-Home & Community Support', title: 'Big Sisters — Our Little Sisters', image: 'Assets/Stock-images/Canoe-caregiver-summer-camp (2).jpg', alt: 'Mentorship at a VACFSS community event', text: 'Girls aged 7–17 are matched with caring adult women who provide consistent mentorship, friendship, and positive role modelling — building confidence and belonging. Matches often last for years, giving girls a steady, trusted relationship outside their immediate family.' },
+      'big-brothers': { eyebrow: 'Families · In-Home & Community Support', title: 'Big Brothers', image: 'Assets/Stock-images/caregiver-appreciation-dinner.jpg', alt: 'Mentorship event at VACFSS', text: 'Boys are supported by volunteer adult male mentors who build meaningful friendships through sports, hobbies, and cultural events — providing consistent positive role models. The program focuses on building trust gradually through shared activities.' },
+      'foster-care': { eyebrow: 'Caregivers · Types of Caregiving', title: 'Foster Care', image: 'Assets/Stock-images/caregiver-appreciation-dinner.jpg', alt: 'VACFSS caregiver appreciation event', text: 'Provide a temporary safe and nurturing home for a child who needs to be away from their birth family. Foster caregivers receive training, financial support, and ongoing guidance from a dedicated VACFSS support worker, plus access to the Inclusive Foster Care platform and community events.' },
+      'kinship-care': { eyebrow: 'Caregivers · Types of Caregiving', title: 'Kinship Care', image: 'Assets/Stock-images/Canoe-caregiver-summer-camp.jpg', alt: 'Caregiver and youth at a VACFSS summer camp', text: 'Children remain connected to extended family, community, and culture through kinship caregivers — grandparents, aunties, uncles, and family friends who provide a familiar, loving environment. VACFSS supports kinship caregivers with the same training and resources offered to foster caregivers.' },
+      'respite-care': { eyebrow: 'Caregivers · Types of Caregiving', title: 'Respite Care', image: 'Assets/Stock-images/Canoe-caregiver-summer-camp (2).jpg', alt: 'Caregivers and youth at a VACFSS event', text: 'Respite caregivers offer planned, short-term relief for primary foster families — giving caregivers the rest they need while ensuring children receive quality, consistent care. Respite is a vital part of preventing caregiver burnout and supporting long-term, stable placements.' },
+      'ifc-platform': { eyebrow: 'Caregivers · Support & Resources', title: 'Inclusive Foster Care (IFC) Platform', image: 'Assets/Stock-images/Resources-guardianship-office..png', alt: 'VACFSS resources and guardianship office', text: 'An online hub for active VACFSS caregivers with educational videos, cultural programming guides, access guidelines, care meeting support, community partner networks, and caregiver newsletters. IFC keeps caregivers connected and informed between in-person support meetings.' },
+      'pride-training': { eyebrow: 'Caregivers · Support & Resources', title: 'PRIDE Training Program', image: 'Assets/Stock-images/caregiver-appreciation-dinner.jpg', alt: 'Caregiver training session', text: 'All prospective caregivers complete the PRIDE (Parent Resources for Information, Development, and Education) training — preparing them for the rewards and challenges of caring for children who have experienced trauma or disruption. Training covers attachment, trauma-informed care, and cultural connection.' },
+      'cultural-programming': { eyebrow: 'Caregivers · Support & Resources', title: 'Cultural Programming', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Indigenous cultural ceremony', text: 'Resources and guidance helping caregivers keep children connected to their Indigenous identity, language, and culture — including access to cultural events, Elders, and community gatherings. This support helps caregivers raise children with a strong sense of who they are.' },
+      'collaborative-partnerships': { eyebrow: 'Indigenous Communities', title: 'Collaborative Partnerships', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Indigenous community partnership ceremony', text: 'VACFSS works Nation-to-Nation with First Nations communities to co-develop culturally appropriate care plans — ensuring children remain connected to their community, family, and heritage throughout their time in care. Partnerships are built on respect, consultation, and shared decision-making.' },
+      'child-safety-ic': { eyebrow: 'Indigenous Communities', title: 'Child Safety Program', image: 'Assets/Stock-images/Child-safety-mural-office.png', alt: 'Child safety mural at the VACFSS office', text: 'A restorative practice approach to child safety that centres children within their circle of support. Emphasizing least-disruptive measures and Indigenous child welfare principles — keeping families together wherever it is safe to do so, with policies that exceed provincial legislative standards.' },
+      'lifelong-connections': { eyebrow: 'Indigenous Communities', title: 'Lifelong Connections', image: 'Assets/Stock-images/guardianship.jpg', alt: 'VACFSS guardianship and lifelong connections', text: 'Lifelong Connections Workers help children and youth in care maintain meaningful relationships with their birth families, extended family, communities, and Nations — building the foundations for a permanently connected future, regardless of where a child ultimately calls home.' },
+      'touching-lands-ic': { eyebrow: 'Indigenous Communities', title: 'Touching the Lands of Our Relations', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Elders at a VACFSS ceremony', text: 'Enables children and youth in care to visit their home territories — reinforcing identity, strengthening connection to the land, and honouring the bonds between a child and the community they belong to. These trips are coordinated directly with Nations to ensure they are welcomed home.' }
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       // Mobile menu
       const menuToggle = document.querySelector('.menu-toggle');
@@ -879,6 +1041,53 @@
         entries.forEach(e => { if (e.isIntersecting) activate(e.target.id); });
       }, { rootMargin: '-20% 0px -70% 0px' });
       anchors.forEach(a => io.observe(a));
+
+      // Program detail modal
+      const overlay   = document.getElementById('prog-modal-overlay');
+      const modalImg  = document.getElementById('prog-modal-img');
+      const modalEye  = document.getElementById('prog-modal-eyebrow');
+      const modalTitle= document.getElementById('prog-modal-title');
+      const modalText = document.getElementById('prog-modal-text');
+      const closeBtn  = document.getElementById('prog-modal-close');
+      let lastTrigger = null;
+
+      function openModal(key, trigger) {
+        const data = PROGRAM_DATA[key];
+        if (!data) return;
+        lastTrigger = trigger;
+        modalImg.src = data.image;
+        modalImg.alt = data.alt;
+        modalEye.textContent = data.eyebrow;
+        modalTitle.textContent = data.title;
+        modalText.textContent = data.text;
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (lastTrigger) lastTrigger.focus();
+      }
+
+      document.querySelectorAll('[data-modal]').forEach(card => {
+        card.addEventListener('click', () => openModal(card.getAttribute('data-modal'), card));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(card.getAttribute('data-modal'), card);
+          }
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+      });
     });
   </script>
 </body>

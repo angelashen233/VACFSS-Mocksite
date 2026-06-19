@@ -12,11 +12,12 @@
     .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
     .site-header__logo { flex-shrink: 0; }
     .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
-    .nav-primary { border-top: none; background: transparent; flex: 1; }
-    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; }
-    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
     .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
-    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: 160px; font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
     .header-search__input::placeholder { color: var(--color-grey-dim); }
     .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
     .mobile-menu.is-open { display: block; }
@@ -29,14 +30,18 @@
     .mobile-menu__social { display: flex; gap: var(--space-3); }
     .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
     .mobile-menu__social a:hover { background: var(--color-black); }
-    @media (max-width: 767px) {
+    @media (max-width: 1099px) {
       .nav-primary { display: none; }
       .header-search { display: none; }
       .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
     }
-    @media (min-width: 768px) {
+    @media (min-width: 1100px) {
       .menu-toggle { display: none; }
       .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
     }
 
     /* ---- Page hero ---- */
@@ -176,6 +181,11 @@
     .contact-form-panel { background: rgba(255,255,255,0.14); backdrop-filter: blur(4px); border-radius: var(--border-radius-lg); padding: var(--space-10) var(--space-8); }
     .contact-form-panel input, .contact-form-panel select, .contact-form-panel textarea { background: var(--color-white); border-color: transparent; border-radius: var(--border-radius-sm); margin-bottom: var(--space-4); }
     .contact-form-panel label { font-size: var(--font-size-sm); margin-bottom: var(--space-2); }
+    .contact-form-panel fieldset { border: none; padding: 0; margin: 0 0 var(--space-4); }
+    .contact-form-panel legend { font-family: var(--font-heading); font-size: var(--font-size-sm); color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-3); padding: 0; }
+    .contact-form-panel .radio-row { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+    .contact-form-panel .radio-option { display: flex; align-items: center; gap: 6px; color: var(--color-white); font-size: var(--font-size-base); font-family: var(--font-body); text-transform: none; letter-spacing: normal; margin-bottom: 0; }
+    .contact-form-panel .radio-option input[type="radio"] { width: auto; accent-color: var(--color-red-primary); margin: 0; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -190,12 +200,12 @@
       </a>
       <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
         <ul class="nav-primary__list">
-          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
-          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
           <li class="nav-primary__item"><a href="caregiver.html" aria-current="page">Caregivers</a></li>
-          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
           <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
-          <li class="nav-primary__item"><a href="#">About Us</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
         </ul>
       </nav>
       <div class="header-search" role="search">
@@ -209,12 +219,12 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul class="mobile-menu__nav">
-        <li><a href="#">Children &amp; Youth</a></li>
-        <li><a href="#">Families</a></li>
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
         <li><a href="caregiver.html" aria-current="page">Caregivers</a></li>
-        <li><a href="#">Indigenous Communities</a></li>
-        <li><a href="#">Programs &amp; Services</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
       </ul>
       <div class="mobile-menu__quick">
         <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
@@ -500,28 +510,79 @@
             </div>
           </div>
           <div class="contact-form-panel" role="form" aria-labelledby="form-heading">
-            <h3 id="form-heading">Express Your Interest</h3>
+            <h3 id="form-heading">Sign Up for an Information Session</h3>
             <form action="#" method="post" novalidate>
-              <label for="fname">First Name</label>
-              <input type="text" id="fname" name="fname" autocomplete="given-name" required>
-              <label for="lname">Last Name</label>
-              <input type="text" id="lname" name="lname" autocomplete="family-name" required>
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" autocomplete="email" required>
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel">
-              <label for="care-type">Type of Caregiving I'm Interested In</label>
-              <select id="care-type" name="care-type">
+
+              <label for="cg-name">Please enter your first and last name</label>
+              <input type="text" id="cg-name" name="cg-name" autocomplete="name" required>
+
+              <label for="cg-email">Email</label>
+              <input type="email" id="cg-email" name="cg-email" autocomplete="email" required>
+
+              <label for="cg-phone">Phone number</label>
+              <input type="tel" id="cg-phone" name="cg-phone" autocomplete="tel" required>
+
+              <fieldset>
+                <legend>Are you Indigenous? If Yes, please specify</legend>
+                <div class="radio-row">
+                  <label class="radio-option"><input type="radio" name="cg-indigenous" value="no" required> No</label>
+                  <label class="radio-option"><input type="radio" name="cg-indigenous" value="first-nations"> First Nations</label>
+                  <label class="radio-option"><input type="radio" name="cg-indigenous" value="metis"> Metis</label>
+                  <label class="radio-option"><input type="radio" name="cg-indigenous" value="inuit"> Inuit</label>
+                  <label class="radio-option"><input type="radio" name="cg-indigenous" value="other"> Other</label>
+                </div>
+              </fieldset>
+
+              <label for="cg-details">Please provide details</label>
+              <textarea id="cg-details" name="cg-details" rows="3" required></textarea>
+
+              <fieldset>
+                <legend>Do you have a spare bedroom available for a child/youth?</legend>
+                <div class="radio-row">
+                  <label class="radio-option"><input type="radio" name="cg-bedroom" value="yes" required> Yes</label>
+                  <label class="radio-option"><input type="radio" name="cg-bedroom" value="relocate"> No, but wiling to relocate</label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>To apply to be a caregiver you must be one of the following</legend>
+                <div class="radio-row">
+                  <label class="radio-option"><input type="radio" name="cg-citizenship" value="citizen" required> Canadian citizen</label>
+                  <label class="radio-option"><input type="radio" name="cg-citizenship" value="pr"> Permanent Resident</label>
+                </div>
+              </fieldset>
+
+              <label for="cg-city">Please select which city you are currently a resident of</label>
+              <select id="cg-city" name="cg-city" required>
                 <option value="">— Please select —</option>
-                <option value="foster">Foster Care</option>
-                <option value="kinship">Kinship Care</option>
-                <option value="respite">Respite Care</option>
-                <option value="unsure">Not Sure Yet</option>
+                <option>Vancouver</option>
+                <option>North Vancouver</option>
+                <option>Burnaby</option>
+                <option>New Westminster</option>
+                <option>Richmond</option>
+                <option>Coquitlam</option>
+                <option>Port Coquitlam</option>
+                <option>Port Moody</option>
+                <option>Surrey</option>
+                <option>North Delta</option>
               </select>
-              <label for="message">Questions or Comments</label>
-              <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about yourself and your interest…"></textarea>
+
+              <label for="cg-heard">How did you hear about us?</label>
+              <select id="cg-heard" name="cg-heard" required>
+                <option value="">— Please select —</option>
+                <option>Word of mouth</option>
+                <option>Newspaper</option>
+                <option>Website</option>
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Other</option>
+              </select>
+
+              <label for="cg-experience">Please tell us about any experiences you may have working with and caring for children and youth</label>
+              <textarea id="cg-experience" name="cg-experience" rows="4" required></textarea>
+
               <button type="submit" class="btn btn--red" style="width:100%; font-size:var(--font-size-md); padding:13px;">
-                <i class="fa-solid fa-paper-plane" aria-hidden="true" style="margin-right:8px;"></i>Submit Enquiry
+                <i class="fa-solid fa-paper-plane" aria-hidden="true" style="margin-right:8px;"></i>Submit
               </button>
             </form>
           </div>
@@ -536,16 +597,16 @@
       <div>
         <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" width="220" style="margin-bottom:var(--space-4);">
         <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">Vancouver Aboriginal Child &amp; Family Services Society<br>803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8</p>
-        <p style="margin-top:var(--space-4); margin-bottom:0;"><a href="tel:+16046892421" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">(604) 689-2421</a></p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;"><a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a></p>
       </div>
       <div>
-        <h3 class="site-footer__heading">Services</h3>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Children &amp; Youth</a></li>
-          <li><a href="#">Family Support</a></li>
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
           <li><a href="caregiver.html">Foster Care</a></li>
           <li><a href="caregiver.html">Kinship Care</a></li>
-          <li><a href="#">Cultural Programs</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
       </div>
       <div>
@@ -553,7 +614,7 @@
         <ul class="site-footer__links">
           <li><a href="caregiver.html">Become a Caregiver</a></li>
           <li><a href="yac.html">Youth Advisory Council</a></li>
-          <li><a href="#">Volunteer</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
           <li><a href="#">Donate</a></li>
           <li><a href="careers.html">Careers</a></li>
         </ul>
@@ -561,11 +622,11 @@
       <div>
         <h3 class="site-footer__heading">About VACFSS</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Our Mission</a></li>
-          <li><a href="#">Board of Directors</a></li>
-          <li><a href="#">Annual Reports</a></li>
-          <li><a href="#">News &amp; Events</a></li>
-          <li><a href="#">Accessibility</a></li>
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
         </ul>
         <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
           <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
@@ -579,7 +640,7 @@
     </div>
     <div class="site-footer__bottom">
       <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
-        &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Use</a> &nbsp;·&nbsp; <a href="#">Accessibility</a>
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Use</a> &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
       </p>
     </div>
   </footer>

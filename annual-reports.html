@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annual Reports &amp; Publications — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ---- Header / nav (shared) ---- */
+    .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
+    .site-header__logo { flex-shrink: 0; }
+    .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
+    .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input::placeholder { color: var(--color-grey-dim); }
+    .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu__nav { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-bottom: 1px solid var(--color-grey-mark); padding-bottom: var(--space-6); }
+    .mobile-menu__nav li a { display: block; font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); text-decoration: none; padding: var(--space-3) 0; border-bottom: 1px solid #f0f0f0; }
+    .mobile-menu__nav li a:hover, .mobile-menu__nav li a[aria-current="page"] { color: var(--color-red-primary); }
+    .mobile-menu__quick { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .mobile-menu__quick-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: var(--color-red-primary); color: var(--color-white); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: var(--space-3) var(--space-4); border-radius: var(--border-radius-sm); flex: 1; text-align: center; }
+    .mobile-menu__quick-item i { font-size: 1.6rem; }
+    .mobile-menu__social { display: flex; gap: var(--space-3); }
+    .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
+    .mobile-menu__social a:hover { background: var(--color-black); }
+    @media (max-width: 1099px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
+    }
+    @media (min-width: 1100px) {
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
+    }
+
+    /* ---- Hero ---- */
+    .pg-hero {
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      background-image: url('Assets/Stock-images/Clark-office-inside.jpg');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .pg-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.50) 100%); }
+    .pg-hero__content { position: relative; z-index: 1; max-width: var(--max-width-content); margin-inline: auto; padding: var(--space-16) var(--space-6); }
+    .pg-hero__eyebrow { display: block; color: var(--color-teal); font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-hero__title { color: var(--color-white); font-family: var(--font-heading); font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: var(--space-4); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .pg-hero__sub { color: rgba(255,255,255,0.85); font-size: var(--font-size-md); max-width: 600px; line-height: 1.7; margin: 0; }
+
+    /* ---- Generic sections ---- */
+    .pg-section { padding: var(--space-20) var(--space-6); }
+    .pg-section--white { background: var(--color-white); }
+    .pg-section--cream { background: var(--color-cream); }
+    .pg-section--dark  { background: var(--color-black); }
+    .pg-inner { max-width: var(--max-width-content); margin-inline: auto; }
+    .pg-eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-eyebrow--red  { color: var(--color-red-primary); }
+    .pg-eyebrow--teal { color: var(--color-teal); }
+    .pg-heading { font-size: clamp(2.4rem, 3.5vw, 3.8rem); margin-bottom: var(--space-5); line-height: 1.15; }
+    .pg-lead { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; max-width: 760px; margin-bottom: var(--space-4); }
+    .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+
+    /* ---- Featured report ---- */
+    .featured-report {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-8);
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-10);
+      margin-top: var(--space-10);
+    }
+    .featured-report__icon {
+      flex-shrink: 0;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: var(--color-red-primary);
+      color: var(--color-white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.2rem;
+    }
+    .featured-report__body { flex: 1; min-width: 240px; }
+    .featured-report__tag { display: inline-block; background: var(--color-teal); color: var(--color-white); font-family: var(--font-heading); font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 12px; border-radius: var(--border-radius-pill); margin-bottom: var(--space-3); }
+    .featured-report__body h3 { font-size: var(--font-size-xl); margin-bottom: var(--space-3); }
+    .featured-report__body p { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.7; margin-bottom: var(--space-5); }
+
+    /* ---- Report archive grid ---- */
+    .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .report-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); padding: var(--space-8) var(--space-6); text-align: center; }
+    .report-card__year { font-family: var(--font-heading); font-size: clamp(2.4rem, 3vw, 3rem); color: var(--color-red-primary); line-height: 1; margin-bottom: var(--space-2); }
+    .report-card__title { font-family: var(--font-heading); font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); margin-bottom: var(--space-5); }
+    .report-card__link { font-family: var(--font-heading); font-size: var(--font-size-sm); color: var(--color-teal); text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .report-card__link:hover { color: var(--color-red-primary); }
+
+    /* ---- Special publication ---- */
+    .pub-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: var(--space-6);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+    }
+    .pub-card__icon { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; background: rgba(113,203,211,0.18); color: var(--color-teal); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+    .pub-card__body h3 { color: var(--color-white); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-3); }
+    .pub-card__body p { color: rgba(255,255,255,0.72); font-size: var(--font-size-base); line-height: 1.7; margin: 0; }
+
+    /* ---- Request copy CTA ---- */
+    .request-box { text-align: center; max-width: 640px; margin: var(--space-10) auto 0; }
+    .request-box p { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.7; margin-bottom: var(--space-6); }
+    .request-box__actions { display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="landing.html" class="site-header__logo" aria-label="VACFSS home">
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society">
+        <span class="site-header__title visually-hidden">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
+          <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
+        <li><a href="caregiver.html">Caregivers</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-newspaper" aria-hidden="true"></i>News</a>
+        <a href="annual-reports.html" class="mobile-menu__quick-item" aria-current="page"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports</a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="pg-hero" aria-label="Annual Reports and Publications">
+      <div class="pg-hero__content">
+        <span class="pg-hero__eyebrow"><i class="fa-solid fa-file-lines" aria-hidden="true" style="margin-right:8px;"></i>Transparency &amp; Accountability</span>
+        <h1 class="pg-hero__title">Annual Reports &amp; Publications</h1>
+        <p class="pg-hero__sub">VACFSS reports annually to its membership, funders, and the community on its activities and achievements over the past year.</p>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- FEATURED REPORT -->
+    <section class="pg-section pg-section--white" aria-labelledby="featured-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-star" aria-hidden="true" style="margin-right:6px;"></i>Latest Report</span>
+        <h2 class="pg-heading" id="featured-heading">2025 Annual Report</h2>
+        <p class="pg-lead">
+          Our CEO and Board of Directors are pleased to share the 2025 Annual Report. We are proud
+          of the progress we've accomplished and remain committed to strengthening our capacity and
+          providing services to Indigenous families in Vancouver.
+        </p>
+
+        <div class="featured-report">
+          <div class="featured-report__icon" aria-hidden="true"><i class="fa-solid fa-file-pdf"></i></div>
+          <div class="featured-report__body">
+            <span class="featured-report__tag">New</span>
+            <h3>2025 Annual Report</h3>
+            <p>A look back at our activities, achievements, and impact across child safety, family preservation, guardianship, and resources programs over the past year.</p>
+            <a href="https://www.vacfss.com/wp-content/uploads/2025/09/2025-AR-Draft-JH.pdf" target="_blank" rel="noopener" class="btn btn--red">
+              <i class="fa-solid fa-download" aria-hidden="true" style="margin-right:8px;"></i>Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- ARCHIVE -->
+    <section class="pg-section pg-section--cream" aria-labelledby="archive-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-box-archive" aria-hidden="true" style="margin-right:6px;"></i>Report Archive</span>
+        <h2 class="pg-heading" id="archive-heading">Previous Annual Reports</h2>
+        <p class="pg-lead">Browse our reporting history. Printed copies of any report can be requested directly from our office.</p>
+
+        <div class="report-grid" role="list" aria-label="Annual report archive">
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2024</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202024%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2023</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202023%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2022</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202022%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2021</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202021%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2020</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202020%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2019</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202019%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2018</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202018%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2017</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202017%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+          <article class="report-card" role="listitem">
+            <div class="report-card__year">2016</div>
+            <div class="report-card__title">Annual Report</div>
+            <a href="mailto:info@vacfss.com?subject=Request%3A%202016%20Annual%20Report" class="report-card__link">Request a Copy <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- SPECIAL PUBLICATION -->
+    <section class="pg-section pg-section--dark" aria-labelledby="pub-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-scroll" aria-hidden="true" style="margin-right:6px;"></i>Special Publication</span>
+        <h2 class="pg-heading" id="pub-heading" style="color:var(--color-white);">Truth &amp; Reconciliation Commitments</h2>
+
+        <div class="pub-card">
+          <div class="pub-card__icon" aria-hidden="true"><i class="fa-solid fa-feather-pointed"></i></div>
+          <div class="pub-card__body">
+            <h3>Compliance and Commitment to the TRC 5 Calls to Action for Child Welfare</h3>
+            <p>
+              This publication addresses the Truth and Reconciliation Commission's 94 Calls to
+              Action — specifically the five child welfare-related calls under the Legacy
+              Category — and outlines VACFSS's compliance with and ongoing commitment to these
+              recommendations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- REQUEST A COPY CTA -->
+    <section class="pg-section pg-section--white" aria-labelledby="request-heading">
+      <div class="pg-inner request-box">
+        <span class="pg-eyebrow pg-eyebrow--red" style="text-align:center;"><i class="fa-solid fa-print" aria-hidden="true" style="margin-right:6px;"></i>Printed Copies</span>
+        <h2 class="pg-heading" id="request-heading" style="text-align:center;">Need a Printed Copy?</h2>
+        <p>Printed copies of any annual report can be requested by phone or email. We're happy to mail one to you.</p>
+        <div class="request-box__actions">
+          <a href="tel:+16048757008" class="btn btn--red"><i class="fa-solid fa-phone" aria-hidden="true" style="margin-right:8px;"></i>604.875.7008</a>
+          <a href="mailto:info@vacfss.com" class="btn" style="border-color:var(--color-teal); color:var(--color-teal);"><i class="fa-solid fa-envelope" aria-hidden="true" style="margin-right:8px;"></i>info@vacfss.com</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+      <div>
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" width="220" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">
+          Vancouver Aboriginal Child &amp; Family Services Society<br>
+          803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8
+        </p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;">
+          <a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a>
+        </p>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
+          <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="caregiver.html">Become a Caregiver</a></li>
+          <li><a href="yac.html">Youth Advisory Council</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html" aria-current="page">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__acknowledgement">
+      <p>VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh) Nations.</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
+        &nbsp;·&nbsp; <a href="#">Terms of Use</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

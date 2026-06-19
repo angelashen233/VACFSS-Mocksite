@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ---- Header / nav (shared) ---- */
+    .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
+    .site-header__logo { flex-shrink: 0; }
+    .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
+    .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input::placeholder { color: var(--color-grey-dim); }
+    .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu__nav { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-bottom: 1px solid var(--color-grey-mark); padding-bottom: var(--space-6); }
+    .mobile-menu__nav li a { display: block; font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); text-decoration: none; padding: var(--space-3) 0; border-bottom: 1px solid #f0f0f0; }
+    .mobile-menu__nav li a:hover, .mobile-menu__nav li a[aria-current="page"] { color: var(--color-red-primary); }
+    .mobile-menu__quick { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .mobile-menu__quick-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: var(--color-red-primary); color: var(--color-white); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: var(--space-3) var(--space-4); border-radius: var(--border-radius-sm); flex: 1; text-align: center; }
+    .mobile-menu__quick-item i { font-size: 1.6rem; }
+    .mobile-menu__social { display: flex; gap: var(--space-3); }
+    .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
+    .mobile-menu__social a:hover { background: var(--color-black); }
+    @media (max-width: 1099px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
+    }
+    @media (min-width: 1100px) {
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
+    }
+
+    /* ---- Hero ---- */
+    .pg-hero {
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      background-image: url('Assets/Stock-images/guardianship.jpg');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .pg-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.50) 100%); }
+    .pg-hero__content { position: relative; z-index: 1; max-width: var(--max-width-content); margin-inline: auto; padding: var(--space-16) var(--space-6); }
+    .pg-hero__eyebrow { display: block; color: var(--color-teal); font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-hero__title { color: var(--color-white); font-family: var(--font-heading); font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: var(--space-4); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .pg-hero__sub { color: rgba(255,255,255,0.85); font-size: var(--font-size-md); max-width: 600px; line-height: 1.7; margin: 0; }
+
+    /* ---- Jump nav ---- */
+    .jump-nav { background: var(--color-black); position: sticky; top: 68px; z-index: 150; }
+    .jump-nav__list { display: flex; list-style: none; margin: 0; padding: 0; max-width: var(--max-width-content); margin-inline: auto; overflow-x: auto; }
+    .jump-nav__list a {
+      display: flex; align-items: center; gap: var(--space-2); white-space: nowrap;
+      color: rgba(255,255,255,0.60); font-family: var(--font-heading); font-size: var(--font-size-sm);
+      letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+      padding: var(--space-4) var(--space-5); border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .jump-nav__list a:hover, .jump-nav__list a.is-active { color: var(--color-white); border-bottom-color: var(--color-teal); }
+    .jump-nav__list a i { font-size: 1.3rem; }
+
+    /* ---- Generic sections ---- */
+    .pg-section { padding: var(--space-16) var(--space-6); }
+    .pg-section--white { background: var(--color-white); }
+    .pg-section--cream { background: var(--color-cream); }
+    .pg-inner { max-width: var(--max-width-content); margin-inline: auto; }
+    .pg-eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-eyebrow--red  { color: var(--color-red-primary); }
+    .pg-eyebrow--teal { color: var(--color-teal); }
+    .pg-heading { font-size: clamp(2rem, 3vw, 3rem); margin-bottom: var(--space-3); line-height: 1.15; }
+    .pg-lead { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.7; max-width: 760px; margin-bottom: var(--space-2); }
+    .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+    .section-anchor { display: block; height: 0; visibility: hidden; margin-top: -140px; padding-top: 140px; }
+
+    /* ---- Disclaimer note ---- */
+    .res-note { display: flex; gap: var(--space-3); align-items: flex-start; background: rgba(113,203,211,0.10); border: 1px solid rgba(113,203,211,0.35); border-radius: var(--border-radius-md); padding: var(--space-5) var(--space-6); margin-top: var(--space-6); max-width: 760px; }
+    .res-note i { color: #1a8a95; font-size: 1.8rem; margin-top: 2px; flex-shrink: 0; }
+    .res-note p { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.6; margin: 0; }
+
+    /* ---- Resource cards ---- */
+    .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-5); margin-top: var(--space-8); }
+    .res-card { background: var(--color-white); border-radius: var(--border-radius-sm); box-shadow: var(--shadow-card); padding: var(--space-5) var(--space-6); border-left: 4px solid var(--color-teal); }
+    .res-card__name { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-heading); font-size: var(--font-size-base); color: var(--color-black); text-decoration: none; margin-bottom: var(--space-2); }
+    .res-card__name:hover { color: var(--color-red-primary); }
+    .res-card__name i.fa-arrow-up-right-from-square { font-size: 1.1rem; color: var(--color-teal); flex-shrink: 0; }
+    .res-card__desc { font-size: var(--font-size-sm); color: var(--color-grey-dim); line-height: 1.55; margin: 0; }
+
+    /* alt accent per section */
+    #housing .res-card, #education .res-card { border-left-color: var(--color-red-primary); }
+    #wellness .res-card { border-left-color: var(--color-teal); }
+    #finance .res-card { border-left-color: var(--color-black); }
+    #advocacy .res-card { border-left-color: var(--color-red-primary); }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="landing.html" class="site-header__logo" aria-label="VACFSS home">
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society">
+        <span class="site-header__title visually-hidden">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
+          <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
+        <li><a href="caregiver.html">Caregivers</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-newspaper" aria-hidden="true"></i>News</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports</a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="pg-hero" aria-label="Resources">
+      <div class="pg-hero__content">
+        <span class="pg-hero__eyebrow"><i class="fa-solid fa-book-open" aria-hidden="true" style="margin-right:8px;"></i>Support &amp; Information</span>
+        <h1 class="pg-hero__title">Resources</h1>
+        <p class="pg-hero__sub">A directory of trusted resources for children, youth, and families navigating housing, education, health, and more.</p>
+      </div>
+    </section>
+
+    <!-- JUMP NAV -->
+    <nav class="jump-nav" aria-label="Jump to resource category">
+      <ul class="jump-nav__list">
+        <li><a href="#general"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>General Support</a></li>
+        <li><a href="#housing"><i class="fa-solid fa-house" aria-hidden="true"></i>Housing</a></li>
+        <li><a href="#education"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Education</a></li>
+        <li><a href="#wellness"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>Wellness</a></li>
+        <li><a href="#finance"><i class="fa-solid fa-utensils" aria-hidden="true"></i>Food, Recreation &amp; Finance</a></li>
+        <li><a href="#advocacy"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Advocacy &amp; Policy</a></li>
+      </ul>
+    </nav>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <div class="pg-section pg-section--white" style="padding-bottom:0;">
+      <div class="pg-inner">
+        <div class="res-note">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <p>These resources are provided by external organizations and are not operated by VACFSS. Listings reflect those shared on the official VACFSS website and are provided for information purposes — please contact each organization directly for current details.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERAL SUPPORT -->
+    <span id="general" class="section-anchor"></span>
+    <section class="pg-section pg-section--white" aria-labelledby="general-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true" style="margin-right:6px;"></i>General Support</span>
+        <h2 class="pg-heading" id="general-heading">General Support</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://rcybc.ca/" target="_blank" rel="noopener">RCY BC <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Supports youth and their families in dealing with the provincial child and youth welfare system.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/" target="_blank" rel="noopener">Aged Out <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Empowers youth in and from government care across BC with practical, peer-informed guidance.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://pcrs.ca/" target="_blank" rel="noopener">Pacific Community Resources Society (PCRS) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Youth and family support, education, employment, and addiction counselling.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vancouveryouth.ca/" target="_blank" rel="noopener">Vancouver Youth Portal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">The City of Vancouver's youth information hub for local programs and services.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://frafca.org/index.php/2017/09/06/2017-aboriginal-prevention-services-guide/" target="_blank" rel="noopener">FRAFCA Prevention Services Guide <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Aboriginal resources covering meals, shelters, treatment, housing, employment, and education.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- HOUSING -->
+    <span id="housing" class="section-anchor"></span>
+    <section class="pg-section pg-section--cream" aria-labelledby="housing-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-house" aria-hidden="true" style="margin-right:6px;"></i>Housing</span>
+        <h2 class="pg-heading" id="housing-heading">Housing</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/housing" target="_blank" rel="noopener">Aged Out Housing <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Information and resources for finding housing in BC.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://unya.bc.ca/programs/#live-in" target="_blank" rel="noopener">Urban Native Youth Association (UNYA) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Housing options and transition programs for Indigenous youth.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://lnhs.ca/luma-native-housing/" target="_blank" rel="noopener">Lu'ma Native Housing <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Application process and housing information for Indigenous families.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vafcs.org/programs/aboriginalshelter/" target="_blank" rel="noopener">Aboriginal Emergency Shelter <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Hot meals and breakfast offered on a first-come basis.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.bchousing.org/housing-assistance" target="_blank" rel="noopener">BC Housing Assistance <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Eligibility and application resources for provincial housing assistance.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.bchousing.org/housing-assistance/rental-housing/subsidized-housing" target="_blank" rel="noopener">Subsidized Housing Program <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">BC Housing's subsidized rental housing options.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://directionsyouthservices.ca/donor/" target="_blank" rel="noopener">Directions Safehouse <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Secure housing for ages 16–18 with permanent housing support.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://vnhs.ca/" target="_blank" rel="noopener">Vancouver Native Housing Society <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Housing services for the urban Indigenous community.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.watari.ca/services/youth-programs/transitioning-to-independence-project--tip--1" target="_blank" rel="noopener">Watari Transitioning to Independence Project (TIP) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Subsidy program for youth at risk of homelessness.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- EDUCATION -->
+    <span id="education" class="section-anchor"></span>
+    <section class="pg-section pg-section--white" aria-labelledby="education-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-graduation-cap" aria-hidden="true" style="margin-right:6px;"></i>Education</span>
+        <h2 class="pg-heading" id="education-heading">Education</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/education" target="_blank" rel="noopener">Aged Out Education <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">High school completion, student loans, fee waivers, and scholarships.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://unya.bc.ca/programs/#education" target="_blank" rel="noopener">UNYA Education Programs <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Native Youth Learning Centre and school support services.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://pcrs.ca/our-services/baristas-employment-training-program/" target="_blank" rel="noopener">PCRS Baristas Training <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Employment training program delivered in collaboration with Starbucks.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www2.gov.bc.ca/gov/content/family-social-supports/youth-and-family-services/teens-in-foster-care/agreements-with-young-adults" target="_blank" rel="noopener">Agreements with Young Adults (AYA) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Provincial program supporting young adults transitioning from care.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.workbc.ca/Employment-Services/Labour-Market-Programs/Bladerunners-Program.aspx" target="_blank" rel="noopener">BladeRunners Program <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Employment program overview, including eligibility and locations across BC.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.storwell.com/bursary-application" target="_blank" rel="noopener">Storwell Foster Children Bursary <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Bursary application and funding for youth from foster care.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://studentaidbc.ca/explore/grants-scholarships/youth-educational-assistance-fund-former-youth-care" target="_blank" rel="noopener">Youth Educational Assistance Fund <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Financial support for former youth in care pursuing education.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/education/find-scholarships-and-bursaries" target="_blank" rel="noopener">Scholarships and Bursaries Guide <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">In-depth guidance for finding scholarships and bursaries.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- MENTAL HEALTH, ADDICTIONS & WELLNESS -->
+    <span id="wellness" class="section-anchor"></span>
+    <section class="pg-section pg-section--cream" aria-labelledby="wellness-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-heart-pulse" aria-hidden="true" style="margin-right:6px;"></i>Wellness</span>
+        <h2 class="pg-heading" id="wellness-heading">Mental Health, Addictions &amp; Wellness</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/health-and-wellness" target="_blank" rel="noopener">Aged Out Health and Wellness <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Medical help, counselling, and stress management resources.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/public-health/harm-reduction/needle-exchange" target="_blank" rel="noopener">VCH Needle Exchange <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Needle disposal and exchange services through Vancouver Coastal Health.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/public-health/harm-reduction/supervised-consumption-sites" target="_blank" rel="noopener">Supervised Injection Sites <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Insite and Powell Street Gateway supervised consumption locations.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/public-health/children-youth-schools/youth-health" target="_blank" rel="noopener">VCH Youth Health Services <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Immunizations, mental health, and pregnancy services for youth.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://unya.bc.ca/programs/#personal" target="_blank" rel="noopener">UNYA Health Programs <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Mediation program and clinical counselling services.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://lnhs.ca/luma-medical-centre/" target="_blank" rel="noopener">Lu'ma Medical Centre <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Culturally integrated primary healthcare for the Indigenous community.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://pcrs.ca/our-services/aboriginal-youth-empowerment-program/" target="_blank" rel="noopener">PCRS Aboriginal Youth Empowerment <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Support for trauma and crime victims among Indigenous youth.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://pcrs.ca/our-services/astra/" target="_blank" rel="noopener">Astra Program <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Assistance for youth changing their relationship with alcohol and drugs.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://fbcyicn.ca/what-we-offer/resources/mental-health-resources" target="_blank" rel="noopener">FBCYICN Mental Health Resources <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Online and phone-based mental health support directory.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://qmunity.ca/" target="_blank" rel="noopener">Qmunity <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Support programs and counselling for LGBTQ2S+ folks.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.watari.ca/" target="_blank" rel="noopener">Watari Counselling Services <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Counselling and outreach support programs for youth and individuals.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/Locations-Services/result?res_id=1438" target="_blank" rel="noopener">Vancouver Urgent Primary Care <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Same-day care for non-emergency medical conditions.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.fraserhealth.ca/news/2019/Jul/bcs-first-mental-health-substance-use-urgent-care-response-centre-opens-in-surrey" target="_blank" rel="noopener">Surrey Mental Health Urgent Care <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Urgent mental health and substance use support centre.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- FOOD, RECREATION & FINANCE -->
+    <span id="finance" class="section-anchor"></span>
+    <section class="pg-section pg-section--white" aria-labelledby="finance-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-utensils" aria-hidden="true" style="margin-right:6px;"></i>Food, Recreation &amp; Finance</span>
+        <h2 class="pg-heading" id="finance-heading">Food, Recreation &amp; Finance</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/money-income" target="_blank" rel="noopener">Aged Out Money and Income <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Employment, income assistance, taxes, and debt guidance.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://agedout.com/personal-life" target="_blank" rel="noopener">Aged Out Personal Life <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Relationships, life skills, and legal assistance resources.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/public-health/nutrition/food-asset-map" target="_blank" rel="noopener">Food Asset Maps <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Low-cost and free food options across Vancouver and Richmond.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://vancouver.ca/files/cov/homeless-and-low-income-resources-clothing-provider-list.pdf" target="_blank" rel="noopener">Free Clothing Resources <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">List of Vancouver organizations offering free clothing.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vch.ca/public-health/nutrition/healthy-eating" target="_blank" rel="noopener">VCH Healthy Eating <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Meal planning tools and nutrition videos.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://unya.bc.ca/programs/#sports" target="_blank" rel="noopener">UNYA Sports and Arts <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Community connection through recreation and arts programming.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://lnhs.ca/aboriginal-youth-mentorship/" target="_blank" rel="noopener">Lu'ma Aboriginal Youth Mentorship <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Mentorship support for youth transitioning from foster care.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="http://www.vafcs.org/programs/recreation/" target="_blank" rel="noopener">Friendship Centre Recreation <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Pow Wow dancing, basketball, and soccer programs.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.fosteringchange.ca/" target="_blank" rel="noopener">Fostering Change <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Policy advocacy and events supporting youth aging out of care.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="https://www.vancity.com/AboutVancity/VisionAndValues/ValuesBasedBanking/FinancialLiteracyAndBasicBanking/" target="_blank" rel="noopener">Vancity Financial Literacy <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Banking and financial education videos and tools.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- ADVOCACY & POLICY -->
+    <span id="advocacy" class="section-anchor"></span>
+    <section class="pg-section pg-section--cream" aria-labelledby="advocacy-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-bullhorn" aria-hidden="true" style="margin-right:6px;"></i>Advocacy &amp; Policy</span>
+        <h2 class="pg-heading" id="advocacy-heading">Advocacy &amp; Policy</h2>
+        <div class="res-grid" role="list">
+          <article class="res-card" role="listitem">
+            <a class="res-card__name" href="yac.html">VACFSS Youth Advisory Committee <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <p class="res-card__desc">Advocates for youth in and from care, including national and international policy collaboration.</p>
+          </article>
+          <article class="res-card" role="listitem">
+            <span class="res-card__name" style="color:var(--color-black);">Equitable Standards for Transitions Report</span>
+            <p class="res-card__desc">A youth-developed report outlining standards for transitions from care to adulthood. Ask your VACFSS worker for a copy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+      <div>
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" width="220" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">
+          Vancouver Aboriginal Child &amp; Family Services Society<br>
+          803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8
+        </p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;">
+          <a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a>
+        </p>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
+          <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li><a href="resources.html" aria-current="page">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="caregiver.html">Become a Caregiver</a></li>
+          <li><a href="yac.html">Youth Advisory Council</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__acknowledgement">
+      <p>VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh) Nations.</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
+        &nbsp;·&nbsp; <a href="#">Terms of Use</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      const anchors  = document.querySelectorAll('.section-anchor');
+      const navLinks = document.querySelectorAll('.jump-nav__list a');
+      const activate = id => {
+        navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+      };
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) activate(e.target.id); });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+      anchors.forEach(a => io.observe(a));
+    });
+  </script>
+</body>
+</html>

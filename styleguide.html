@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VACFSS — CSS Visual Style Guide</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Font Awesome Free 6 · MIT + CC BY 4.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* ── Style-guide-only chrome ──────────────────────────── */
+    .sg-page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .sg-header {
+      background: #000;
+      color: #fff;
+      padding: 48px 24px 40px;
+      margin-bottom: 0;
+    }
+    .sg-header h1 {
+      color: #fff;
+      font-size: 4.4rem;
+      margin-bottom: 8px;
+    }
+    .sg-header p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1.6rem;
+      margin: 0;
+    }
+    .sg-nav {
+      background: #E41D38;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .sg-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: 1120px;
+      margin-inline: auto;
+    }
+    .sg-nav a {
+      color: rgba(255,255,255,0.8);
+      display: block;
+      font-family: "myriadpro-bold", sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: .06em;
+      padding: 14px 16px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color .15s;
+    }
+    .sg-nav a:hover { color: #fff; }
+
+    /* Section wrappers */
+    .sg-section {
+      padding: 56px 0 32px;
+      border-bottom: 1px solid #e0d9d1;
+    }
+    .sg-section:last-child { border-bottom: none; }
+    .sg-section-title {
+      font-size: 1.2rem;
+      font-family: "myriadpro-bold", sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #E41D38;
+      margin-bottom: 4px;
+    }
+    .sg-section h2 {
+      font-size: 3rem;
+      margin-bottom: 32px;
+    }
+
+    /* Colour swatches */
+    .sg-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .sg-swatch {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    }
+    .sg-swatch__block {
+      height: 80px;
+    }
+    .sg-swatch__info {
+      background: #fff;
+      padding: 10px 12px;
+    }
+    .sg-swatch__name {
+      font-family: "myriadpro-bold", sans-serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .sg-swatch__hex {
+      font-family: monospace;
+      font-size: 1.2rem;
+      color: #666;
+    }
+    .sg-swatch__var {
+      font-family: monospace;
+      font-size: 1.0rem;
+      color: #999;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Token table */
+    .sg-token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.3rem;
+    }
+    .sg-token-table th {
+      background: #000;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .sg-token-table td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      vertical-align: middle;
+      font-size: 1.3rem;
+    }
+    .sg-token-table tr:nth-child(even) td { background: #faf7f4; }
+    .sg-token-table code {
+      background: #f0ebe5;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 1.2rem;
+    }
+    .sg-preview-box {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,.1);
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    /* Typography specimens */
+    .sg-type-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: baseline;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid #ebe5de;
+    }
+    .sg-type-row:last-child { border-bottom: none; }
+    .sg-type-label {
+      font-family: monospace;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
+    /* Component demo rows */
+    .sg-demo {
+      background: #fff;
+      border: 1px solid #ebe5de;
+      border-radius: 8px;
+      padding: 32px;
+      margin-bottom: 16px;
+    }
+    .sg-demo--dark {
+      background: #111;
+    }
+    .sg-demo--cream {
+      background: var(--color-cream);
+    }
+    .sg-demo-label {
+      font-family: monospace;
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .sg-flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .sg-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .sg-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    /* Icon grid */
+    .sg-icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+    }
+    .sg-icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 8px 14px;
+      background: #fff;
+      border: 1px solid #ebe5de;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .sg-icon-item i {
+      font-size: 2.2rem;
+      color: #E41D38;
+    }
+    .sg-icon-item--teal i { color: #71CBD3; }
+    .sg-icon-item--dark  i { color: #000; }
+    .sg-icon-item__label {
+      font-family: monospace;
+      font-size: 1.0rem;
+      color: #888;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+    /* Image gallery */
+    .sg-image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .sg-image-item {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    }
+    .sg-image-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .sg-image-item__caption {
+      background: #fff;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      color: #555;
+    }
+    .sg-image-item__caption strong {
+      display: block;
+      font-family: "myriadpro-bold", sans-serif;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: #000;
+      margin-bottom: 2px;
+    }
+    /* VACFSS sidebar icon display */
+    .sg-vacfss-icons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .sg-vacfss-icon {
+      background: #E41D38;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    .sg-vacfss-icon--teal { background: #71CBD3; }
+    .sg-vacfss-icon img {
+      width: auto;
+      height: auto;
+      max-width: 26px;
+      max-height: 24px;
+      display: block;
+    }
+    .sg-vacfss-icon-wrap {
+      text-align: center;
+    }
+    .sg-vacfss-icon-wrap p {
+      font-size: 1.1rem;
+      margin-top: 6px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── GUIDE HEADER ─────────────────────────────────────────── -->
+<header class="sg-header">
+  <div style="max-width:1120px;margin:0 auto;">
+    <p class="sg-section-title" style="color:#71CBD3;margin-bottom:8px;">CSS Visual Style Guide</p>
+    <h1>VACFSS Design System</h1>
+    <p>Vancouver Aboriginal Child and Family Services Society — brand colours, typography, spacing tokens, and UI components. <a href="landing.html" style="color:#fff;text-decoration:underline;">&larr; Back to the live site</a></p>
+  </div>
+</header>
+
+<!-- ── STICKY NAV ───────────────────────────────────────────── -->
+<nav class="sg-nav" aria-label="Style guide sections">
+  <ul>
+    <li><a href="#colours">Colours</a></li>
+    <li><a href="#tokens">Tokens</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#navigation">Navigation</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#hero">Hero Cards</a></li>
+    <li><a href="#tables">Tables</a></li>
+    <li><a href="#footer">Footer</a></li>
+    <li><a href="#utilities">Utilities</a></li>
+    <li><a href="#icons">Icons</a></li>
+    <li><a href="#images">Images</a></li>
+  </ul>
+</nav>
+
+<main class="sg-page">
+
+  <!-- ══════════════════════════════════════════════════════
+       1 · COLOUR PALETTE
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="colours">
+    <p class="sg-section-title">01</p>
+    <h2>Colour Palette</h2>
+
+    <h3>Brand Colours</h3>
+    <div class="sg-swatches" style="margin-bottom:32px;">
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#E41D38;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Red Primary</span>
+          <span class="sg-swatch__hex">#E41D38</span>
+          <span class="sg-swatch__var">--color-red-primary</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#D62426;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Red Link</span>
+          <span class="sg-swatch__hex">#D62426</span>
+          <span class="sg-swatch__var">--color-red-link</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#AA1E2F;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Red Dark</span>
+          <span class="sg-swatch__hex">#AA1E2F</span>
+          <span class="sg-swatch__var">--color-red-dark</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#71CBD3;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Teal</span>
+          <span class="sg-swatch__hex">#71CBD3</span>
+          <span class="sg-swatch__var">--color-teal</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Neutrals</h3>
+    <div class="sg-swatches">
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#000000;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Black</span>
+          <span class="sg-swatch__hex">#000000</span>
+          <span class="sg-swatch__var">--color-black</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#333333;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Dim</span>
+          <span class="sg-swatch__hex">#333333</span>
+          <span class="sg-swatch__var">--color-grey-dim</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#808080;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Grey Border</span>
+          <span class="sg-swatch__hex">#808080</span>
+          <span class="sg-swatch__var">--color-grey-border</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#939598;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Grey Light</span>
+          <span class="sg-swatch__hex">#939598</span>
+          <span class="sg-swatch__var">--color-grey-light</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#CFD1D2;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Placeholder</span>
+          <span class="sg-swatch__hex">#CFD1D2</span>
+          <span class="sg-swatch__var">--color-grey-placeholder</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#EEEEEE;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Disabled</span>
+          <span class="sg-swatch__hex">#EEEEEE</span>
+          <span class="sg-swatch__var">--color-grey-disabled</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#F6EFE7; border:1px solid #e0d9d1;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">Cream (Page BG)</span>
+          <span class="sg-swatch__hex">#F6EFE7</span>
+          <span class="sg-swatch__var">--color-cream</span>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch__block" style="background:#FFFFFF; border:1px solid #e0d9d1;"></div>
+        <div class="sg-swatch__info">
+          <span class="sg-swatch__name">White</span>
+          <span class="sg-swatch__hex">#FFFFFF</span>
+          <span class="sg-swatch__var">--color-white</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       2 · DESIGN TOKENS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="tokens">
+    <p class="sg-section-title">02</p>
+    <h2>Design Tokens</h2>
+
+    <h3>Spacing</h3>
+    <div class="sg-demo" style="margin-bottom:24px;">
+      <table class="sg-token-table">
+        <thead>
+          <tr><th>Token</th><th>Value</th><th>Visual</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--space-1</code></td><td>4px</td><td><div style="height:8px;background:#E41D38;width:4px;"></div></td></tr>
+          <tr><td><code>--space-2</code></td><td>8px</td><td><div style="height:8px;background:#E41D38;width:8px;"></div></td></tr>
+          <tr><td><code>--space-3</code></td><td>12px</td><td><div style="height:8px;background:#E41D38;width:12px;"></div></td></tr>
+          <tr><td><code>--space-4</code></td><td>16px</td><td><div style="height:8px;background:#E41D38;width:16px;"></div></td></tr>
+          <tr><td><code>--space-5</code></td><td>20px</td><td><div style="height:8px;background:#E41D38;width:20px;"></div></td></tr>
+          <tr><td><code>--space-6</code></td><td>24px</td><td><div style="height:8px;background:#E41D38;width:24px;"></div></td></tr>
+          <tr><td><code>--space-8</code></td><td>32px</td><td><div style="height:8px;background:#E41D38;width:32px;"></div></td></tr>
+          <tr><td><code>--space-10</code></td><td>40px</td><td><div style="height:8px;background:#E41D38;width:40px;"></div></td></tr>
+          <tr><td><code>--space-12</code></td><td>48px</td><td><div style="height:8px;background:#E41D38;width:48px;"></div></td></tr>
+          <tr><td><code>--space-16</code></td><td>64px</td><td><div style="height:8px;background:#E41D38;width:64px;"></div></td></tr>
+          <tr><td><code>--space-20</code></td><td>80px</td><td><div style="height:8px;background:#E41D38;width:80px;"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Border Radius</h3>
+    <div class="sg-demo">
+      <div class="sg-flex-row">
+        <div style="text-align:center;">
+          <div style="width:60px;height:60px;background:#E41D38;border-radius:4px;margin:0 auto 8px;"></div>
+          <code style="font-size:1.1rem;">--border-radius-sm<br/>4px</code>
+        </div>
+        <div style="text-align:center;">
+          <div style="width:60px;height:60px;background:#E41D38;border-radius:8px;margin:0 auto 8px;"></div>
+          <code style="font-size:1.1rem;">--border-radius-md<br/>8px</code>
+        </div>
+        <div style="text-align:center;">
+          <div style="width:60px;height:60px;background:#E41D38;border-radius:16px;margin:0 auto 8px;"></div>
+          <code style="font-size:1.1rem;">--border-radius-lg<br/>16px</code>
+        </div>
+        <div style="text-align:center;">
+          <div style="width:60px;height:60px;background:#E41D38;border-radius:999px;margin:0 auto 8px;"></div>
+          <code style="font-size:1.1rem;">--border-radius-pill<br/>999px</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       3 · TYPOGRAPHY
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="typography">
+    <p class="sg-section-title">03</p>
+    <h2>Typography</h2>
+
+    <div class="sg-demo sg-demo--cream">
+      <div class="sg-type-row">
+        <span class="sg-type-label">h1 · 4.4rem<br/>myriadpro-bold</span>
+        <h1 style="margin:0;">Heading Level 1</h1>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">h2 · 3.0rem<br/>myriadpro-bold</span>
+        <h2 style="margin:0;">Heading Level 2</h2>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">h3 · 1.8rem<br/>uppercase</span>
+        <h3 style="margin:0;">Heading Level 3</h3>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">h4 · 1.8rem<br/>italic · red</span>
+        <h4 style="margin:0;">Heading Level 4</h4>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">h5 · 1.8rem</span>
+        <h5 style="margin:0;">Heading Level 5</h5>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">h6 · 1.6rem</span>
+        <h6 style="margin:0;">Heading Level 6</h6>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">body · 1.4rem<br/>myriadpro-regular</span>
+        <p style="margin:0;">Body text — VACFSS is an Indigenous‑led, fully delegated, non‑profit Child and Family Services Agency serving urban Indigenous families in Vancouver.</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">small · 1.2rem</span>
+        <small>Small / caption text used for labels, timestamps, and fine print.</small>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">link</span>
+        <a href="#">Inline hyperlink example</a>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">blockquote</span>
+        <blockquote style="margin:0;">
+          <p>Strengthening Indigenous families, one connection at a time.</p>
+        </blockquote>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-label">mark</span>
+        <p style="margin:0;">Text with a <mark>highlighted phrase</mark> inside a paragraph.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       4 · BUTTONS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="buttons">
+    <p class="sg-section-title">04</p>
+    <h2>Buttons</h2>
+
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <span class="sg-demo-label">.btn — Primary (white bg, red border)</span>
+      <div class="sg-flex-row">
+        <a href="#" class="btn">Get In Touch</a>
+        <a href="#" class="btn">Learn More</a>
+        <button type="button">Sign Up</button>
+      </div>
+    </div>
+
+    <div class="sg-demo" style="background:#E41D38; margin-bottom:16px;">
+      <span class="sg-demo-label" style="color:rgba(255,255,255,.65);">.btn--white — White outline (on coloured bg)</span>
+      <div class="sg-flex-row">
+        <a href="#" class="btn btn--white">Learn More</a>
+        <a href="#" class="btn btn--white">Donate</a>
+      </div>
+    </div>
+
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <span class="sg-demo-label">.btn--red — Solid red</span>
+      <div class="sg-flex-row">
+        <a href="#" class="btn btn--red">Donate</a>
+        <a href="#" class="btn btn--red">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <span class="sg-demo-label">.btn--teal — Solid teal</span>
+      <div class="sg-flex-row">
+        <a href="#" class="btn btn--teal">Caregiver Login</a>
+        <a href="#" class="btn btn--teal">Subscribe</a>
+      </div>
+    </div>
+
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <span class="sg-demo-label">.btn--arrow — Arrow circle (hero card)</span>
+      <div class="sg-flex-row" style="background:#E41D38;padding:20px;border-radius:8px;">
+        <a href="#" class="btn btn--arrow">→</a>
+      </div>
+    </div>
+
+    <div class="sg-demo sg-demo--cream">
+      <span class="sg-demo-label">Disabled states</span>
+      <div class="sg-flex-row">
+        <button type="button" disabled>Disabled Button</button>
+        <a href="#" class="btn" aria-disabled="true" style="pointer-events:none;background:#eee;border-color:transparent;color:#aaa;">Disabled Link</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       5 · FORMS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="forms">
+    <p class="sg-section-title">05</p>
+    <h2>Forms</h2>
+
+    <div class="sg-demo" style="max-width:560px;">
+      <form novalidate>
+        <div class="form-group">
+          <label for="sg-name">Full Name</label>
+          <input type="text" id="sg-name" placeholder="e.g. Jane Smith" />
+        </div>
+        <div class="form-group">
+          <label for="sg-email">Email Address</label>
+          <input type="email" id="sg-email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="sg-select">Service Type</label>
+          <select id="sg-select">
+            <option value="">Select a service…</option>
+            <option>Children &amp; Youth</option>
+            <option>Families</option>
+            <option>Foster Caregiving</option>
+            <option>Indigenous Communities</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sg-message">Message</label>
+          <textarea id="sg-message" rows="4" placeholder="How can we help?"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="sg-demo" style="margin-top:16px; max-width:480px;">
+      <span class="sg-demo-label">Newsletter bar (.newsletter-bar)</span>
+      <div class="newsletter-bar__form">
+        <input type="email" placeholder="Enter your email" />
+        <button type="submit" class="btn btn--red">Sign Up</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       6 · NAVIGATION
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="navigation">
+    <p class="sg-section-title">06</p>
+    <h2>Navigation</h2>
+
+    <h3>Site Header</h3>
+    <div class="sg-demo" style="padding:0; overflow:hidden; margin-bottom:20px;">
+      <header class="site-header" style="position:static;">
+        <a href="#" class="site-header__logo">
+          <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" style="height:56px;width:auto;object-fit:contain;" />
+          <span class="site-header__title visually-hidden">Vancouver Aboriginal Child and Family Services Society</span>
+        </a>
+        <button class="menu-toggle" aria-label="Open menu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+        </button>
+      </header>
+    </div>
+
+    <h3>Access Bar</h3>
+    <div class="sg-demo" style="padding:0; overflow:hidden; margin-bottom:20px;">
+      <div class="access-bar">
+        <span>ACCESS RESOURCES FOR…</span>
+        <div class="access-bar__icon"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div>
+      </div>
+    </div>
+
+    <h3>Primary Nav</h3>
+    <div class="sg-demo" style="padding:0; overflow:hidden; margin-bottom:20px;">
+      <nav class="nav-primary" aria-label="Primary">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="#" aria-current="page">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="#">Foster Caregiving</a></li>
+          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="#">About</a></li>
+          <li class="nav-primary__item"><a href="#">Join Us</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <h3>Breadcrumb</h3>
+    <div class="sg-demo sg-demo--cream">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#">Home</a>
+        <span class="breadcrumb__separator" aria-hidden="true">›</span>
+        <a href="#">About</a>
+        <span class="breadcrumb__separator" aria-hidden="true">›</span>
+        <span aria-current="page">Overview</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       7 · CONTENT CARDS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="cards">
+    <p class="sg-section-title">07</p>
+    <h2>Content Cards</h2>
+
+    <div class="sg-grid-3">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card__image">
+            <img src="Assets/Stock-images/Clark-office-inside.jpg" alt="VACFSS office interior" />
+        </div>
+        <div class="card__body">
+          <span class="card__label">History</span>
+          <h5 class="card__title" style="font-size:1.6rem;">Our Early Beginnings</h5>
+          <p class="card__text">The formation of VACFSS began in June 1988 with a mandate to develop Indigenous child welfare programs.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card__image">
+            <img src="Assets/Stock-images/Resources-guardianship-office..png" alt="VACFSS resources and guardianship office" />
+        </div>
+        <div class="card__body">
+          <span class="card__label">Vision &amp; Mission</span>
+          <h5 class="card__title" style="font-size:1.6rem;">What We Stand For</h5>
+          <p class="card__text">We ensure that the rights, safety, and well-being of Indigenous children and families are upheld and honoured.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card__image">
+            <img src="Assets/Stock-images/Child-safety-mural-office.png" alt="Child safety mural at VACFSS office" />
+        </div>
+        <div class="card__body">
+          <span class="card__label">Programs</span>
+          <h5 class="card__title" style="font-size:1.6rem;">Child Safety Program</h5>
+          <p class="card__text">Working collaboratively with families by engaging their primary system of support and First Nations communities.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       8 · HERO CARDS (full-bleed coloured panels)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="hero">
+    <p class="sg-section-title">08</p>
+    <h2>Hero Section Cards</h2>
+    <p>Full-bleed coloured panels used on the home page to direct visitors by audience group.</p>
+
+    <div class="hero-cards" style="border-radius:8px; overflow:hidden;">
+      <div class="hero-card hero-card--red" style="background-image:url('Assets/Stock-images/YAC-at-caregiver-appreciation-dinner.jpg');">
+        <span class="hero-card__title">Children &amp; Youth</span>
+        <p class="hero-card__text">Find resources and hear from children and youth in care.</p>
+        <a href="#" class="btn--arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="hero-card hero-card--teal" style="background-image:url('Assets/Stock-images/resources-team-both-banner-table.JPG');">
+        <span class="hero-card__title">Families</span>
+        <p class="hero-card__text">For families who have had child safety concerns reported or who are voluntarily seeking support services.</p>
+        <a href="#" class="btn--arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="hero-card hero-card--red" style="background-image:url('Assets/Stock-images/Canoe-caregiver-summer-camp (2).jpg');">
+        <span class="hero-card__title">Caregivers</span>
+        <p class="hero-card__text">Become a caregiver or find resources for current caregivers.</p>
+        <a href="#" class="btn--arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="hero-card hero-card--teal" style="background-image:url('Assets/Stock-images/Elders-roster-ceremony.jpg');">
+        <span class="hero-card__title">Indigenous Communities</span>
+        <p class="hero-card__text">Partnering with VACFSS to support a family or develop a child's plan.</p>
+        <a href="#" class="btn--arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px;">Quick-Access Sidebar Icons</h3>
+    <div class="sg-demo" style="background:#f6efe7;">
+      <span class="sg-demo-label">Fixed strip — .sidebar-actions (shown inline here)</span>
+      <div style="display:flex; gap:2px; width:fit-content;">
+        <a href="#" class="sidebar-actions__item" title="Careers" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/Careers@2x.png" alt="Careers" width="24" height="21" />
+        </a>
+        <a href="#" class="sidebar-actions__item" title="News" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/news@2x.png" alt="News" width="24" height="15" />
+        </a>
+        <a href="#" class="sidebar-actions__item" title="Reports" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/reports@2x.png" alt="Reports" width="21" height="25" />
+        </a>
+        <a href="#" class="sidebar-actions__item" title="Subscribe" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/subscribe@2x.png" alt="Subscribe" width="24" height="20" />
+        </a>
+        <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="Facebook" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/FB@2x.png" alt="Facebook" width="11" height="21" />
+        </a>
+        <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="Instagram" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2019/11/inst@2x.png" alt="Instagram" width="19" height="18" />
+        </a>
+        <a href="#" class="sidebar-actions__item sidebar-actions__item--social" title="LinkedIn" style="position:static;">
+          <img src="https://www.vacfss.com/wp-content/uploads/2022/02/LI@2x.png" alt="LinkedIn" width="20" height="19" />
+        </a>
+      </div>
+      <p style="margin-top:12px; font-size:1.2rem; color:#888;">Red = quick-access actions &nbsp;|&nbsp; Teal = social media</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       9 · TABLES
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="tables">
+    <p class="sg-section-title">09</p>
+    <h2>Tables</h2>
+
+    <div class="sg-demo">
+      <table>
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Audience</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Child Safety</td>
+            <td>Families / Children</td>
+            <td>Active</td>
+          </tr>
+          <tr>
+            <td>Guardianship</td>
+            <td>Children in Care</td>
+            <td>Active</td>
+          </tr>
+          <tr>
+            <td>Family Preservation</td>
+            <td>Families</td>
+            <td>Active</td>
+          </tr>
+          <tr>
+            <td>Resources Program</td>
+            <td>Foster Caregivers</td>
+            <td>Active</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       10 · FOOTER
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="footer">
+    <p class="sg-section-title">10</p>
+    <h2>Footer</h2>
+  </section>
+</main>
+
+<!-- ── LIVE FOOTER PREVIEW ──────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div>
+      <p class="site-footer__heading">About</p>
+      <ul class="site-footer__links">
+        <li><a href="#">Overview</a></li>
+        <li><a href="#">History</a></li>
+        <li><a href="#">Vision &amp; Mission</a></li>
+        <li><a href="#">Board of Directors</a></li>
+        <li><a href="#">Annual Reports &amp; Publications</a></li>
+        <li><a href="#">Policy &amp; Research</a></li>
+        <li><a href="#">Protocols</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="site-footer__heading">Join Us</p>
+      <ul class="site-footer__links">
+        <li><a href="#">Working at VACFSS</a></li>
+        <li><a href="#">Practicum Opportunities</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Become a Member</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="site-footer__heading">Contact</p>
+      <ul class="site-footer__links">
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="site-footer__heading">Culture &amp; Community</p>
+      <ul class="site-footer__links">
+        <li><a href="#">News &amp; Stories</a></li>
+        <li><a href="#">Events Calendar</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="site-footer__acknowledgement">
+    VACFSS acknowledges, with deep respect and gratitude, that our work takes place on the
+    traditional, ancestral, and unceded territory of the hən̓q̓əmin̓əm̓-speaking Musqueam Peoples,
+    the Sḵwx̱wú7mesh (Squamish) and Səl̓ilwətaʔɬ/Sel̓ílwitulh (Tsleil-Waututh) Nations.
+    We recognize the past, present, and future generations of the Coast Salish Peoples who
+    help us steward this land, as well as honour and celebrate this place.
+  </p>  <div style="max-width:1120px;margin-inline:auto;display:flex;gap:10px;margin-bottom:20px;">
+    <a href="https://www.facebook.com/VACFSS/" target="_blank" rel="noopener noreferrer"
+       style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:4px;transition:background .2s;"
+       aria-label="VACFSS on Facebook">
+      <img src="https://www.vacfss.com/wp-content/uploads/2019/11/FB_1@2x.png" alt="" width="11" height="22" aria-hidden="true" />
+    </a>
+    <a href="https://www.instagram.com/vacfss/" target="_blank" rel="noopener noreferrer"
+       style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:4px;transition:background .2s;"
+       aria-label="VACFSS on Instagram">
+      <img src="https://www.vacfss.com/wp-content/uploads/2019/11/inst@2x.png" alt="" width="19" height="18" aria-hidden="true" />
+    </a>
+    <a href="https://www.linkedin.com/company/vancouver-aboriginal-child-and-family-services-society/" target="_blank" rel="noopener noreferrer"
+       style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:4px;transition:background .2s;"
+       aria-label="VACFSS on LinkedIn">
+      <img src="https://www.vacfss.com/wp-content/uploads/2022/01/linkedin-1.png" alt="" width="22" height="22" aria-hidden="true" />
+    </a>
+  </div>  <p class="site-footer__bottom">
+    © 2026 VACFSS &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms &amp; Conditions</a>
+  </p>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════
+     11 · UTILITY CLASSES (back in main)
+═══════════════════════════════════════════════════════════ -->
+<main class="sg-page">
+  <section class="sg-section" id="utilities">
+    <p class="sg-section-title">11</p>
+    <h2>Utility Classes</h2>
+
+    <h3>Text Colours</h3>
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <div class="sg-flex-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+        <span class="text-red" style="font-size:1.6rem;">.text-red — #E41D38</span>
+        <span class="text-teal" style="font-size:1.6rem;">.text-teal — #71CBD3</span>
+        <span class="text-black" style="font-size:1.6rem;">.text-black — #000000</span>
+        <span class="text-muted" style="font-size:1.6rem;">.text-muted — #333333</span>
+      </div>
+    </div>
+    <div class="sg-demo sg-demo--dark" style="margin-bottom:16px;">
+      <span class="text-white" style="font-size:1.6rem;">.text-white — #FFFFFF</span>
+    </div>
+
+    <h3>Background Colours</h3>
+    <div class="sg-flex-row" style="margin-bottom:24px;">
+      <div class="bg-cream" style="padding:16px 24px; border:1px solid #ddd; border-radius:6px; font-size:1.3rem;">.bg-cream</div>
+      <div class="bg-red text-white" style="padding:16px 24px; border-radius:6px; font-size:1.3rem;">.bg-red</div>
+      <div class="bg-teal text-white" style="padding:16px 24px; border-radius:6px; font-size:1.3rem;">.bg-teal</div>
+      <div class="bg-black text-white" style="padding:16px 24px; border-radius:6px; font-size:1.3rem;">.bg-black</div>
+      <div class="bg-white" style="padding:16px 24px; border:1px solid #ddd; border-radius:6px; font-size:1.3rem;">.bg-white</div>
+    </div>
+
+    <h3>Line Break / Divider</h3>
+    <div class="sg-demo sg-demo--cream">
+      <p>Content above the divider.</p>
+      <div class="line-break"></div>
+      <p style="margin-top:16px;">Content below the divider.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       12 · ICONS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="icons">
+    <p class="sg-section-title">12</p>
+    <h2>Icons</h2>
+    <p>Font Awesome Free 6 (MIT + CC&nbsp;BY&nbsp;4.0) provides all UI icons. VACFSS site icon assets are white PNG files served from vacfss.com.</p>
+
+    <h3>UI &amp; Navigation</h3>
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <div class="sg-icon-grid">
+        <div class="sg-icon-item"><i class="fa-solid fa-bars"></i><span class="sg-icon-item__label">fa-bars<br/>Menu</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-xmark"></i><span class="sg-icon-item__label">fa-xmark<br/>Close</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-chevron-down"></i><span class="sg-icon-item__label">fa-chevron-down<br/>Dropdown</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-arrow-right"></i><span class="sg-icon-item__label">fa-arrow-right<br/>Hero CTA</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-angle-right"></i><span class="sg-icon-item__label">fa-angle-right<br/>Breadcrumb</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-magnifying-glass"></i><span class="sg-icon-item__label">fa-magnifying-glass<br/>Search</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-house"></i><span class="sg-icon-item__label">fa-house<br/>Home</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-phone"></i><span class="sg-icon-item__label">fa-phone<br/>Contact</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-envelope"></i><span class="sg-icon-item__label">fa-envelope<br/>Email</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-location-dot"></i><span class="sg-icon-item__label">fa-location-dot<br/>Location</span></div>
+      </div>
+    </div>
+
+    <h3>Programs &amp; Services</h3>
+    <div class="sg-demo sg-demo--cream" style="margin-bottom:16px;">
+      <div class="sg-icon-grid">
+        <div class="sg-icon-item"><i class="fa-solid fa-child"></i><span class="sg-icon-item__label">fa-child<br/>Children</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-people-roof"></i><span class="sg-icon-item__label">fa-people-roof<br/>Families</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-hands-holding-child"></i><span class="sg-icon-item__label">fa-hands-holding-child<br/>Caregivers</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-feather-pointed"></i><span class="sg-icon-item__label">fa-feather-pointed<br/>Indigenous</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-shield-halved"></i><span class="sg-icon-item__label">fa-shield-halved<br/>Child Safety</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-heart-circle-check"></i><span class="sg-icon-item__label">fa-heart-circle-check<br/>Well-being</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-circle-nodes"></i><span class="sg-icon-item__label">fa-circle-nodes<br/>Community</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-file-lines"></i><span class="sg-icon-item__label">fa-file-lines<br/>Reports</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-briefcase"></i><span class="sg-icon-item__label">fa-briefcase<br/>Careers</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-newspaper"></i><span class="sg-icon-item__label">fa-newspaper<br/>News</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-calendar-days"></i><span class="sg-icon-item__label">fa-calendar-days<br/>Events</span></div>
+        <div class="sg-icon-item"><i class="fa-solid fa-graduation-cap"></i><span class="sg-icon-item__label">fa-graduation-cap<br/>Practicum</span></div>
+      </div>
+    </div>
+
+    <h3>Social Media (Font Awesome Brands)</h3>
+    <div class="sg-demo sg-demo--dark" style="margin-bottom:24px;">
+      <div class="sg-icon-grid" style="max-width:380px;">
+        <div class="sg-icon-item" style="background:#1a1a1a;border-color:#333;">
+          <i class="fa-brands fa-facebook-f" style="color:#71CBD3;font-size:2.2rem;"></i>
+          <span class="sg-icon-item__label" style="color:#888;">fa-brands<br/>fa-facebook-f</span>
+        </div>
+        <div class="sg-icon-item" style="background:#1a1a1a;border-color:#333;">
+          <i class="fa-brands fa-instagram" style="color:#71CBD3;font-size:2.2rem;"></i>
+          <span class="sg-icon-item__label" style="color:#888;">fa-brands<br/>fa-instagram</span>
+        </div>
+        <div class="sg-icon-item" style="background:#1a1a1a;border-color:#333;">
+          <i class="fa-brands fa-linkedin-in" style="color:#71CBD3;font-size:2.2rem;"></i>
+          <span class="sg-icon-item__label" style="color:#888;">fa-brands<br/>fa-linkedin-in</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>VACFSS Site Icons (Original PNG Assets)</h3>
+    <div class="sg-demo">
+      <p style="font-size:1.3rem;color:#666;margin-bottom:20px;">White PNG icons used in the fixed sidebar strip and social links, shown on their brand-coloured backgrounds.</p>
+      <div class="sg-vacfss-icons">
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/Careers@2x.png" alt="" /></div>
+          <p>Careers</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/news@2x.png" alt="" /></div>
+          <p>News</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/reports@2x.png" alt="" /></div>
+          <p>Reports</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/subscribe@2x.png" alt="" /></div>
+          <p>Subscribe</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon sg-vacfss-icon--teal"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/FB@2x.png" alt="" /></div>
+          <p>Facebook</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon sg-vacfss-icon--teal"><img src="https://www.vacfss.com/wp-content/uploads/2019/11/inst@2x.png" alt="" /></div>
+          <p>Instagram</p>
+        </div>
+        <div class="sg-vacfss-icon-wrap">
+          <div class="sg-vacfss-icon sg-vacfss-icon--teal"><img src="https://www.vacfss.com/wp-content/uploads/2022/02/LI@2x.png" alt="" /></div>
+          <p>LinkedIn</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       13 · IMAGES
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sg-section" id="images">
+    <p class="sg-section-title">13</p>
+    <h2>Images</h2>
+    <p>Key photography and graphic assets served from vacfss.com.</p>
+
+    <h3>Logo</h3>
+    <div class="sg-demo sg-demo--cream" style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;margin-bottom:24px;">
+      <div style="text-align:center;">
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="VACFSS logo" style="height:100px;width:auto;display:block;margin:0 auto 8px;" />
+        <code style="font-size:1.1rem;color:#888;">VACFSS_Logo_Fullname_clear_1200px_310px.png</code>
+      </div>
+      <div style="text-align:center;background:#222;padding:20px;border-radius:8px;">
+        <img src="Assets/VACFSS-Logo-FULL-NAME-whitebg.png" alt="VACFSS full name logo on white background" style="height:100px;width:auto;display:block;margin:0 auto 8px;" />
+        <code style="font-size:1.1rem;color:#888;">VACFSS-Logo-FULL-NAME-whitebg.png</code>
+      </div>
+    </div>
+
+    <h3>Hero / Banner</h3>
+    <div class="sg-image-grid" style="margin-bottom:28px;">
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/resources-team-both-banner-table.JPG" alt="VACFSS home hero" />
+        <div class="sg-image-item__caption"><strong>Home Hero</strong>resources-team-both-banner-table.JPG</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/VACFSS-25thAnniversary-5.jpg" alt="About page banner" />
+        <div class="sg-image-item__caption"><strong>About Page Banner</strong>VACFSS-25thAnniversary-5.jpg</div>
+      </div>
+    </div>
+
+    <h3>Programs</h3>
+    <div class="sg-image-grid" style="margin-bottom:28px;">
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/Child-safety-mural-office.png" alt="Child Safety program" />
+        <div class="sg-image-item__caption"><strong>Child Safety</strong>Child-safety-mural-office.png</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/Resources-guardianship-office..png" alt="Resources program" />
+        <div class="sg-image-item__caption"><strong>Resources Program</strong>Resources-guardianship-office..png</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/Canoe-caregiver-summer-camp.jpg" alt="Family Preservation" />
+        <div class="sg-image-item__caption"><strong>Family Preservation</strong>Canoe-caregiver-summer-camp.jpg</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/guardianship.jpg" alt="Guardianship program" />
+        <div class="sg-image-item__caption"><strong>Guardianship</strong>guardianship.jpg</div>
+      </div>
+    </div>
+
+    <h3>Children &amp; Youth</h3>
+    <div class="sg-image-grid" style="margin-bottom:28px;">
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/YAC-at-caregiver-appreciation-dinner.jpg" alt="Youth and children" />
+        <div class="sg-image-item__caption"><strong>Youth &amp; Children</strong>YAC-at-caregiver-appreciation-dinner.jpg</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/Elders-roster-ceremony.jpg" alt="Touching the Land" />
+        <div class="sg-image-item__caption"><strong>Touching the Land</strong>Elders-roster-ceremony.jpg</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/HJOY-2026/IMG00279.JPG" alt="Youth activities" />
+        <div class="sg-image-item__caption"><strong>Youth Activities</strong>IMG00279.JPG</div>
+      </div>
+    </div>
+
+    <h3>Families</h3>
+    <div class="sg-image-grid">
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/resources-team-both-banner-table.JPG" alt="Indigenous family" />
+        <div class="sg-image-item__caption"><strong>Indigenous Family</strong>resources-team-both-banner-table.JPG</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/caregiver-summer-camp-dance-2025.jpg" alt="Family wellbeing" />
+        <div class="sg-image-item__caption"><strong>Family Wellbeing</strong>caregiver-summer-camp-dance-2025.jpg</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/VACFSS-25thAnniversary-5.jpg" alt="VACFSS values" />
+        <div class="sg-image-item__caption"><strong>Vision &amp; Values</strong>VACFSS-25thAnniversary-5.jpg</div>
+      </div>
+      <div class="sg-image-item">
+        <img src="Assets/Stock-images/Clark-office-inside.jpg" alt="Research and policy" />
+        <div class="sg-image-item__caption"><strong>Research &amp; Policy</strong>Clark-office-inside.jpg</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

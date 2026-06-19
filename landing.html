@@ -573,12 +573,21 @@
       border-top: none;
       background: transparent;
       flex: 1;
+      min-width: 0;
     }
 
     .nav-primary__list {
       justify-content: flex-end;
       max-width: none;
       margin-inline: 0;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .nav-primary__item a {
+      font-size: clamp(1.0rem, 1vw, 1.5rem);
+      padding: var(--space-3) clamp(6px, 1.2vw, 20px);
+      white-space: nowrap;
     }
 
     /* ---- Header search bar (desktop only) ---- */
@@ -591,6 +600,7 @@
       padding: 6px var(--space-3);
       margin-left: var(--space-4);
       flex-shrink: 0;
+      min-width: 0;
     }
 
     .header-search i {
@@ -603,7 +613,7 @@
       background: transparent;
       font-size: var(--font-size-sm);
       outline: none;
-      width: 160px;
+      width: clamp(80px, 8vw, 160px);
       font-family: var(--font-body);
       color: var(--color-black);
     }
@@ -713,7 +723,7 @@
     }
 
     /* ---- Mobile: hide nav + search + sidebar; shrink title ---- */
-    @media (max-width: 767px) {
+    @media (max-width: 1099px) {
       .nav-primary { display: none; }
       .header-search { display: none; }
       .sidebar-actions { display: none; }
@@ -725,10 +735,15 @@
     }
 
     /* ---- Desktop: hide hamburger + sidebar + mobile menu ---- */
-    @media (min-width: 768px) {
+    @media (min-width: 1100px) {
       .menu-toggle { display: none; }
       .sidebar-actions { display: none; }
       .mobile-menu { display: none !important; }
+    }
+
+    /* ---- Medium desktop: hide search bar so nav has room to breathe ---- */
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
     }
 
     /* ---- Red divider stripe ---- */
@@ -874,12 +889,12 @@
       </a>
       <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
         <ul class="nav-primary__list">
-          <li class="nav-primary__item"><a href="#">Children &amp; Youth</a></li>
-          <li class="nav-primary__item"><a href="#">Families</a></li>
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
           <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
-          <li class="nav-primary__item"><a href="#">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
           <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
-          <li class="nav-primary__item"><a href="#">About Us</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
         </ul>
       </nav>
       <div class="header-search" role="search">
@@ -894,12 +909,12 @@
     <!-- ==================== MOBILE MENU ==================== -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul class="mobile-menu__nav">
-        <li><a href="#">Children &amp; Youth</a></li>
-        <li><a href="#">Families</a></li>
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
         <li><a href="caregiver.html">Caregivers</a></li>
-        <li><a href="#">Indigenous Communities</a></li>
-        <li><a href="#">Programs &amp; Services</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
       </ul>
       <div class="mobile-menu__quick">
         <a href="careers.html" class="mobile-menu__quick-item">
@@ -1357,14 +1372,13 @@
       </div>
 
       <div>
-        <h3 class="site-footer__heading">Services</h3>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Children &amp; Youth</a></li>
-          <li><a href="#">Family Support</a></li>
-          <li><a href="#">Foster Care</a></li>
-          <li><a href="#">Kinship Care</a></li>
-          <li><a href="#">Cultural Programs</a></li>
-          <li><a href="#">Prevention Services</a></li>
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="caregiver.html">Foster Care</a></li>
+          <li><a href="caregiver.html">Kinship Care</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
       </div>
 
@@ -1373,20 +1387,20 @@
         <ul class="site-footer__links">
           <li><a href="caregiver.html">Become a Caregiver</a></li>
           <li><a href="yac.html">Youth Advisory Council</a></li>
-          <li><a href="#">Volunteer</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
           <li><a href="#">Donate</a></li>
-          <li><a href="#">Careers</a></li>
+          <li><a href="careers.html">Careers</a></li>
         </ul>
       </div>
 
       <div>
         <h3 class="site-footer__heading">About VACFSS</h3>
         <ul class="site-footer__links">
-          <li><a href="#">Our Mission</a></li>
-          <li><a href="#">Board of Directors</a></li>
-          <li><a href="#">Annual Reports</a></li>
-          <li><a href="#">News &amp; Events</a></li>
-          <li><a href="#">Accessibility</a></li>
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
         </ul>
         <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
           <a href="#" aria-label="VACFSS on Facebook"
@@ -1418,7 +1432,7 @@
       <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
         &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
         &nbsp;·&nbsp; <a href="#">Terms of Use</a>
-        &nbsp;·&nbsp; <a href="#">Accessibility</a>
+        &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
       </p>
     </div>
   </footer>
