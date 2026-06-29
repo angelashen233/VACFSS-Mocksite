@@ -121,7 +121,9 @@
     .logo-grid__body p { font-size: var(--font-size-md); color: rgba(255,255,255,0.75); line-height: 1.75; margin: 0; }
 
     /* ---- Department cards ---- */
-    .dept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .dept-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); margin-top: var(--space-10); }
+    @media (min-width: 640px)  { .dept-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .dept-grid { grid-template-columns: repeat(4, 1fr); } }
     .dept-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; }
     .dept-card__accent { height: 4px; }
     .dept-card__accent--red  { background: var(--color-red-primary); }
@@ -344,7 +346,7 @@
         <p class="pg-lead">VACFSS delivers services through four core departments, each playing a distinct role in supporting Indigenous children, youth, and families.</p>
 
         <div class="dept-grid" role="list" aria-label="Core departments">
-          <a href="programs.html#families" class="dept-card" role="listitem">
+          <a href="child-safety.html" class="dept-card" role="listitem">
             <div class="dept-card__accent dept-card__accent--red"></div>
             <div class="dept-card__body">
               <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></div>
@@ -353,7 +355,7 @@
               <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </a>
-          <a href="caregiver.html" class="dept-card" role="listitem">
+          <a href="resources-program.html" class="dept-card" role="listitem">
             <div class="dept-card__accent dept-card__accent--teal"></div>
             <div class="dept-card__body">
               <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-house-chimney-heart"></i></div>
@@ -362,7 +364,7 @@
               <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </a>
-          <a href="programs.html#families" class="dept-card" role="listitem">
+          <a href="family-preservation.html" class="dept-card" role="listitem">
             <div class="dept-card__accent dept-card__accent--dark"></div>
             <div class="dept-card__body">
               <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-arrows-to-circle"></i></div>
@@ -371,7 +373,7 @@
               <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
           </a>
-          <a href="programs.html#children-youth" class="dept-card" role="listitem">
+          <a href="guardianship.html" class="dept-card" role="listitem">
             <div class="dept-card__accent dept-card__accent--red"></div>
             <div class="dept-card__body">
               <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-link"></i></div>

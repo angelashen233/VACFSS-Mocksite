@@ -150,6 +150,23 @@
     .lp-eyebrow--teal  { color: var(--color-teal); }
     .lp-eyebrow--white { color: rgba(255, 255, 255, 0.80); }
 
+    /* ---- Core programs section ---- */
+    .lp-programs-heading { font-size: clamp(2.4rem, 3.5vw, 4rem); margin-bottom: var(--space-5); line-height: 1.15; }
+    .lp-programs-sub { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; max-width: 680px; margin-bottom: var(--space-10); }
+    .dept-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); margin-top: var(--space-10); }
+    @media (min-width: 640px)  { .dept-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .dept-grid { grid-template-columns: repeat(4, 1fr); } }
+    .dept-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; }
+    .dept-card__accent { height: 4px; }
+    .dept-card__accent--red  { background: var(--color-red-primary); }
+    .dept-card__accent--teal { background: var(--color-teal); }
+    .dept-card__accent--dark { background: var(--color-black); }
+    .dept-card__body { padding: var(--space-6); flex: 1; }
+    .dept-card__icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: var(--space-4); background: rgba(113,203,211,0.15); color: #1a8a95; }
+    .dept-card__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); color: var(--color-black); }
+    .dept-card__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.65; margin: 0 0 var(--space-3); }
+    .dept-card__link { font-family: var(--font-heading); font-size: var(--font-size-sm); color: var(--color-red-primary); text-transform: uppercase; letter-spacing: 0.06em; }
+
     /* ---- Split layout (image + content) ---- */
     .lp-split {
       display: grid;
@@ -558,6 +575,35 @@
       outline-offset: 2px;
     }
 
+    /* ---- Careers highlight band ---- */
+    .lp-careers-band {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      max-width: var(--max-width-content);
+      margin-inline: auto;
+    }
+    .lp-careers-band__text h2 {
+      color: var(--color-white);
+      font-size: clamp(2.2rem, 3vw, 3.2rem);
+      margin-bottom: var(--space-3);
+    }
+    .lp-careers-band__text p {
+      color: rgba(255, 255, 255, 0.80);
+      font-size: var(--font-size-md);
+      line-height: 1.7;
+      margin: 0;
+      max-width: 540px;
+    }
+    .lp-careers-band__actions {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
     /* ---- Single-banner: nav inline inside header ---- */
     .site-header__logo {
       flex-shrink: 0;
@@ -860,7 +906,7 @@
 
   <!-- ==================== SIDEBAR QUICK ACCESS ==================== -->
   <nav class="sidebar-actions" aria-label="Quick access">
-    <a href="#" class="sidebar-actions__item" title="Careers">
+    <a href="careers.html" class="sidebar-actions__item" title="Careers">
       <img src="https://www.vacfss.com/wp-content/uploads/2022/02/Careers@2x.png" alt="Careers" width="24" height="21">
     </a>
     <a href="#" class="sidebar-actions__item" title="News">
@@ -982,6 +1028,55 @@
         </div>
       </div>
     </div>
+
+    <div class="lp-stripe" role="presentation"></div>
+
+    <!-- ========== OUR CORE PROGRAMS ========== -->
+    <section class="lp-section lp-section--cream" aria-labelledby="programs-heading">
+      <div class="lp-section__inner">
+        <span class="lp-eyebrow lp-eyebrow--red"><i class="fa-solid fa-building-shield" aria-hidden="true" style="margin-right:6px;"></i>How We're Organized</span>
+        <h2 class="lp-programs-heading" id="programs-heading">Explore Our Core Programs</h2>
+        <p class="lp-programs-sub">VACFSS delivers services through four core programs, each playing a distinct role in supporting Indigenous children, youth, and families. Select a program below to learn more.</p>
+        <div class="dept-grid" role="list" aria-label="Core programs">
+          <a href="child-safety.html" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--red"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="dept-card__title">Child Safety Program</div>
+              <p class="dept-card__desc">Collaborative family support and prevention services responding to child safety concerns.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="resources-program.html" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--teal"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-house-chimney-heart"></i></div>
+              <div class="dept-card__title">Resources Program</div>
+              <p class="dept-card__desc">Provides safe alternate care for children while promoting cultural identity and connection.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="family-preservation.html" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--dark"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-arrows-to-circle"></i></div>
+              <div class="dept-card__title">Family Preservation &amp; Reunification</div>
+              <p class="dept-card__desc">Culturally-informed in-home supports keeping families together and working toward reunification.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+          <a href="guardianship.html" class="dept-card" role="listitem">
+            <div class="dept-card__accent dept-card__accent--red"></div>
+            <div class="dept-card__body">
+              <div class="dept-card__icon" aria-hidden="true"><i class="fa-solid fa-link"></i></div>
+              <div class="dept-card__title">Guardianship Program</div>
+              <p class="dept-card__desc">Cares for children under Continuing Custody Orders and supports lifelong, permanent connections.</p>
+              <span class="dept-card__link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <div class="lp-stripe" role="presentation"></div>
 
@@ -1359,6 +1454,31 @@
               Learn About Our Partnerships <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left:8px;"></i>
             </a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CAREERS HIGHLIGHT ==================== -->
+    <section id="join-our-team" class="lp-section lp-section--red" aria-labelledby="careers-heading">
+      <div class="lp-careers-band">
+        <div class="lp-careers-band__text">
+          <span class="lp-eyebrow lp-eyebrow--white" style="margin-bottom:var(--space-3);">
+            <i class="fa-solid fa-briefcase" aria-hidden="true" style="margin-right:6px;"></i>Join Our Team
+          </span>
+          <h2 id="careers-heading">Build a Career That Changes Lives</h2>
+          <p>
+            VACFSS is hiring across child safety, administration, IT, and family support roles.
+            Work alongside a culturally grounded team dedicated to strengthening Indigenous
+            families in Vancouver.
+          </p>
+        </div>
+        <div class="lp-careers-band__actions">
+          <a href="careers.html" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">
+            <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-right:8px;"></i>View Open Positions
+          </a>
+          <a href="https://vacfsscareers.easyapply.co/" target="_blank" rel="noopener" class="btn" style="background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.50); color:var(--color-white); font-size:var(--font-size-md); padding:13px 28px;">
+            VACFSS Careers Portal
+          </a>
         </div>
       </div>
     </section>

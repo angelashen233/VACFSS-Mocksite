@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources Program — VACFSS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ---- Header / nav (shared) ---- */
+    .header-wrap { position: sticky; top: 0; z-index: var(--z-sticky); }
+    .site-header__logo { flex-shrink: 0; }
+    .site-header__title { font-size: var(--font-size-base); line-height: 1.3; max-width: 220px; }
+    .nav-primary { border-top: none; background: transparent; flex: 1; min-width: 0; }
+    .nav-primary__list { justify-content: flex-end; max-width: none; margin-inline: 0; flex-wrap: nowrap; min-width: 0; }
+    .nav-primary__item a { font-size: clamp(1.0rem, 1vw, 1.5rem); padding: var(--space-3) clamp(6px, 1.2vw, 20px); white-space: nowrap; }
+    .header-search { display: flex; align-items: center; gap: var(--space-2); background: #f0f0f0; border-radius: var(--border-radius-md); padding: 6px var(--space-3); margin-left: var(--space-4); flex-shrink: 0; min-width: 0; }
+    .header-search i { color: var(--color-grey-dim); font-size: 1.3rem; }
+    .header-search__input { border: none; background: transparent; font-size: var(--font-size-sm); outline: none; width: clamp(80px, 8vw, 160px); font-family: var(--font-body); color: var(--color-black); }
+    .header-search__input::placeholder { color: var(--color-grey-dim); }
+    .mobile-menu { display: none; position: fixed; left: 0; right: 0; background: var(--color-white); box-shadow: 0 8px 28px rgba(0,0,0,0.18); padding: var(--space-6); z-index: 9999; max-height: 80vh; overflow-y: auto; }
+    .mobile-menu.is-open { display: block; }
+    .mobile-menu__nav { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-bottom: 1px solid var(--color-grey-mark); padding-bottom: var(--space-6); }
+    .mobile-menu__nav li a { display: block; font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-black); text-decoration: none; padding: var(--space-3) 0; border-bottom: 1px solid #f0f0f0; }
+    .mobile-menu__nav li a:hover, .mobile-menu__nav li a[aria-current="page"] { color: var(--color-red-primary); }
+    .mobile-menu__quick { display: flex; gap: var(--space-4); margin-bottom: var(--space-5); }
+    .mobile-menu__quick-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: var(--color-red-primary); color: var(--color-white); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: var(--space-3) var(--space-4); border-radius: var(--border-radius-sm); flex: 1; text-align: center; }
+    .mobile-menu__quick-item i { font-size: 1.6rem; }
+    .mobile-menu__social { display: flex; gap: var(--space-3); }
+    .mobile-menu__social a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--color-teal); border-radius: 50%; color: var(--color-white); font-size: 1.4rem; text-decoration: none; }
+    .mobile-menu__social a:hover { background: var(--color-black); }
+    @media (max-width: 1099px) {
+      .nav-primary { display: none; }
+      .header-search { display: none; }
+      .site-header__title { font-size: 1.1rem; max-width: 180px; line-height: 1.3; }
+    }
+    @media (min-width: 1100px) {
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+    @media (min-width: 1100px) and (max-width: 1299px) {
+      .header-search { display: none; }
+    }
+
+    /* ---- Page hero ---- */
+    .pg-hero {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      background-image: url('Assets/Stock-images/Resources-guardianship-office..png');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .pg-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.48) 100%);
+    }
+    .pg-hero__content { position: relative; z-index: 1; max-width: var(--max-width-content); margin-inline: auto; padding: var(--space-16) var(--space-6); }
+    .pg-hero__eyebrow { display: block; color: var(--color-teal); font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-hero__title { color: var(--color-white); font-family: var(--font-heading); font-size: clamp(2.8rem, 5vw, 5rem); line-height: 1.1; margin-bottom: var(--space-4); text-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    .pg-hero__sub { color: rgba(255,255,255,0.85); font-size: var(--font-size-md); max-width: 600px; line-height: 1.7; margin-bottom: var(--space-8); }
+    .pg-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+    /* ---- Sections ---- */
+    .pg-section { padding: var(--space-20) var(--space-6); }
+    .pg-section--white { background: var(--color-white); }
+    .pg-section--cream { background: var(--color-cream); }
+    .pg-section--dark  { background: var(--color-black); }
+    .pg-section--teal  { background: var(--color-teal); }
+    .pg-section--red   { background: var(--color-red-primary); }
+    .pg-inner { max-width: var(--max-width-content); margin-inline: auto; }
+    .pg-eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .pg-eyebrow--red   { color: var(--color-red-primary); }
+    .pg-eyebrow--teal  { color: var(--color-teal); }
+    .pg-eyebrow--white { color: rgba(255,255,255,0.80); }
+    .pg-heading { font-size: clamp(2.4rem, 3.5vw, 4rem); margin-bottom: var(--space-5); line-height: 1.15; }
+    .pg-lead { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; max-width: 680px; margin-bottom: var(--space-10); }
+    .pg-stripe { height: 5px; background: linear-gradient(90deg, var(--color-red-primary) 0%, var(--color-teal) 100%); }
+
+    /* ---- About split ---- */
+    .about-split { display: grid; grid-template-columns: 1fr; gap: 0; }
+    @media (min-width: 768px) { .about-split { grid-template-columns: 1fr 1fr; min-height: 460px; } }
+    .about-split__media { position: relative; min-height: 300px; overflow: hidden; }
+    .about-split__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-split__body { display: flex; flex-direction: column; justify-content: center; padding: var(--space-12) var(--space-10); background: var(--color-white); }
+    .about-split__body h2 { font-size: clamp(2.4rem, 3vw, 3.4rem); margin-bottom: var(--space-5); line-height: 1.2; }
+    .about-split__body p { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.75; margin-bottom: var(--space-5); }
+    @media (max-width: 767px) { .about-split__body { padding: var(--space-10) var(--space-6); } }
+
+    /* ---- Caregiving types ---- */
+    .eligibility-band {
+      background: var(--color-red-primary);
+      border-radius: var(--border-radius-md);
+      padding: var(--space-10) var(--space-8);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    .elig-item { text-align: center; }
+    .elig-item__icon { font-size: 2.6rem; color: rgba(255,255,255,0.85); margin-bottom: var(--space-3); }
+    .elig-item__label { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-white); }
+    .elig-item__desc { font-size: var(--font-size-base); color: rgba(255,255,255,0.78); margin-top: var(--space-2); line-height: 1.5; }
+
+    /* ---- Service cards ---- */
+    .role-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .role-card { background: var(--color-white); border-radius: var(--border-radius-md); box-shadow: var(--shadow-card); overflow: hidden; }
+    .role-card__accent { height: 4px; }
+    .role-card__accent--red  { background: var(--color-red-primary); }
+    .role-card__accent--teal { background: var(--color-teal); }
+    .role-card__accent--dark { background: var(--color-black); }
+    .role-card__body { padding: var(--space-8) var(--space-6); }
+    .role-card__icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin-bottom: var(--space-4); }
+    .role-card__icon--red  { background: rgba(228,29,56,0.10);  color: var(--color-red-primary); }
+    .role-card__icon--teal { background: rgba(113,203,211,0.15); color: #3fa8b2; }
+    .role-card__icon--dark { background: rgba(0,0,0,0.06);       color: var(--color-black); }
+    .role-card__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); }
+    .role-card__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.65; margin-bottom: var(--space-5); }
+    .role-card__activities { list-style: none; padding: 0; margin: 0; }
+    .role-card__activities li { display: flex; align-items: flex-start; gap: var(--space-2); font-size: var(--font-size-sm); color: var(--color-grey-dim); margin-bottom: var(--space-2); }
+    .role-card__activities li i { color: var(--color-teal); margin-top: 3px; flex-shrink: 0; }
+
+    /* ---- Support & resources ---- */
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .benefit-card { background: rgba(255,255,255,0.10); border-radius: var(--border-radius-md); padding: var(--space-8) var(--space-6); text-align: center; }
+    .benefit-card__icon { font-size: 2.8rem; color: var(--color-teal); margin-bottom: var(--space-4); }
+    .benefit-card__title { font-family: var(--font-heading); font-size: var(--font-size-md); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-white); margin-bottom: var(--space-3); }
+    .benefit-card__desc { font-size: var(--font-size-base); color: rgba(255,255,255,0.72); line-height: 1.65; }
+
+    /* ---- How to become a caregiver ---- */
+    .join-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin-top: var(--space-10); }
+    .join-step { text-align: center; padding: var(--space-8) var(--space-5); background: var(--color-cream); border-radius: var(--border-radius-md); }
+    .join-step__num { width: 52px; height: 52px; border-radius: 50%; background: var(--color-teal); color: var(--color-white); font-family: var(--font-heading); font-size: 1.8rem; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); }
+    .join-step__title { font-family: var(--font-heading); font-size: var(--font-size-base); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+    .join-step__desc { font-size: var(--font-size-base); color: var(--color-grey-dim); line-height: 1.6; }
+
+    /* ---- CTA band ---- */
+    .cta-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); max-width: var(--max-width-content); margin-inline: auto; }
+    .cta-band__text h2 { color: var(--color-white); font-size: clamp(2.2rem, 3vw, 3.2rem); margin-bottom: var(--space-2); }
+    .cta-band__text p { color: rgba(255,255,255,0.70); font-size: var(--font-size-md); margin: 0; max-width: 520px; }
+    .cta-band__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="header-wrap">
+    <header class="site-header" role="banner">
+      <a href="landing.html" class="site-header__logo" aria-label="VACFSS home">
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society">
+        <span class="site-header__title visually-hidden">Vancouver Aboriginal Child and Family Services Society</span>
+      </a>
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary navigation">
+        <ul class="nav-primary__list">
+          <li class="nav-primary__item"><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li class="nav-primary__item"><a href="programs.html#families">Families</a></li>
+          <li class="nav-primary__item"><a href="caregiver.html">Caregivers</a></li>
+          <li class="nav-primary__item"><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li class="nav-primary__item"><a href="programs.html">Programs &amp; Services</a></li>
+          <li class="nav-primary__item"><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="header-search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input class="header-search__input" type="search" placeholder="Search…" aria-label="Search VACFSS">
+      </div>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i> Menu
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-menu__nav">
+        <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+        <li><a href="programs.html#families">Families</a></li>
+        <li><a href="caregiver.html">Caregivers</a></li>
+        <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+        <li><a href="programs.html">Programs &amp; Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+      <div class="mobile-menu__quick">
+        <a href="careers.html" class="mobile-menu__quick-item"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-newspaper" aria-hidden="true"></i>News</a>
+        <a href="#" class="mobile-menu__quick-item"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Reports</a>
+      </div>
+      <div class="mobile-menu__social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="pg-hero" aria-label="Resources Program">
+      <div class="pg-hero__content">
+        <span class="pg-hero__eyebrow"><i class="fa-solid fa-house-chimney-heart" aria-hidden="true" style="margin-right:8px;"></i>Caregivers · Core Service</span>
+        <h1 class="pg-hero__title">Safe Homes.<br>Strong Cultural Roots.</h1>
+        <p class="pg-hero__sub">The Resources Program recruits, trains, and supports foster, kinship, and respite caregivers — providing safe alternate care for Indigenous children while promoting cultural identity and connection.</p>
+        <div class="pg-hero__actions">
+          <a href="caregiver.html" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">Become a Caregiver</a>
+          <a href="#what-we-do" class="btn btn--teal" style="font-size:var(--font-size-md); padding:13px 28px;">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- ABOUT -->
+    <section class="pg-section--white" aria-labelledby="about-heading" style="padding:0;">
+      <div class="about-split">
+        <div class="about-split__media">
+          <img src="Assets/Stock-images/Canoe-caregiver-summer-camp.jpg"
+               alt="Caregiver and youth at a VACFSS summer camp" loading="lazy">
+        </div>
+        <div class="about-split__body">
+          <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-circle-info" aria-hidden="true" style="margin-right:6px;"></i>About the Program</span>
+          <h2 id="about-heading">What Is the Resources Program?</h2>
+          <p>The Resources Program provides safe alternate care for Indigenous children who cannot remain at home — recruiting, training, and supporting foster, kinship, and respite caregivers across the community.</p>
+          <p>Wherever possible, children remain connected to extended family, community, and culture through kinship caregivers — grandparents, aunties, uncles, and family friends who provide a familiar, loving environment.</p>
+          <p>Caregivers receive ongoing training, financial support, and guidance from a dedicated VACFSS support worker, plus access to community events and cultural programming that keeps children connected to their identity.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TYPES OF CARE -->
+    <section id="what-we-do" class="pg-section pg-section--cream" aria-labelledby="elig-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-house-user" aria-hidden="true" style="margin-right:6px;"></i>Types of Caregiving</span>
+        <h2 class="pg-heading" id="elig-heading">How Caregivers Support Children</h2>
+        <p class="pg-lead">There are several ways caregivers provide a safe, nurturing home — each suited to a different need in a child's life.</p>
+        <div class="eligibility-band" role="list">
+          <div class="elig-item" role="listitem">
+            <div class="elig-item__icon"><i class="fa-solid fa-house" aria-hidden="true"></i></div>
+            <div class="elig-item__label">Foster Care</div>
+            <p class="elig-item__desc">A temporary, safe, and nurturing home for a child away from their birth family.</p>
+          </div>
+          <div class="elig-item" role="listitem">
+            <div class="elig-item__icon"><i class="fa-solid fa-people-roof" aria-hidden="true"></i></div>
+            <div class="elig-item__label">Kinship Care</div>
+            <p class="elig-item__desc">Children stay connected to extended family, community, and culture through kinship caregivers.</p>
+          </div>
+          <div class="elig-item" role="listitem">
+            <div class="elig-item__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></div>
+            <div class="elig-item__label">Respite Care</div>
+            <p class="elig-item__desc">Planned, short-term relief for primary foster families to prevent burnout.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- SUPPORT & RESOURCES -->
+    <section class="pg-section pg-section--white" aria-labelledby="roles-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-toolbox" aria-hidden="true" style="margin-right:6px;"></i>Support &amp; Resources</span>
+        <h2 class="pg-heading" id="roles-heading">Supporting Caregivers Every Step of the Way</h2>
+        <p class="pg-lead">Caregivers are never on their own — the Resources Program builds a network of training, tools, and cultural connection around every placement.</p>
+        <div class="role-cards" role="list">
+
+          <article class="role-card" role="listitem">
+            <div class="role-card__accent role-card__accent--red"></div>
+            <div class="role-card__body">
+              <div class="role-card__icon role-card__icon--red"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+              <div class="role-card__title">PRIDE Training Program</div>
+              <p class="role-card__desc">All prospective caregivers complete PRIDE training, covering attachment, trauma-informed care, and cultural connection.</p>
+              <ul class="role-card__activities">
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Required before placement</li>
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Prepares caregivers for trauma-informed care</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role-card" role="listitem">
+            <div class="role-card__accent role-card__accent--teal"></div>
+            <div class="role-card__body">
+              <div class="role-card__icon role-card__icon--teal"><i class="fa-solid fa-laptop" aria-hidden="true"></i></div>
+              <div class="role-card__title">Inclusive Foster Care (IFC) Platform</div>
+              <p class="role-card__desc">An online hub for active caregivers with educational videos, care meeting support, and a community partner network.</p>
+              <ul class="role-card__activities">
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Keeps caregivers connected between meetings</li>
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Includes caregiver newsletters</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role-card" role="listitem">
+            <div class="role-card__accent role-card__accent--dark"></div>
+            <div class="role-card__body">
+              <div class="role-card__icon role-card__icon--dark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></div>
+              <div class="role-card__title">Cultural Programming</div>
+              <p class="role-card__desc">Resources helping caregivers keep children connected to their Indigenous identity, language, and culture.</p>
+              <ul class="role-card__activities">
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Access to cultural events and Elders</li>
+                <li><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Community gatherings and ceremonies</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY BECOME A CAREGIVER -->
+    <section class="pg-section pg-section--dark" aria-labelledby="benefits-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--teal"><i class="fa-solid fa-gift" aria-hidden="true" style="margin-right:6px;"></i>Why Caregivers Choose VACFSS</span>
+        <h2 class="pg-heading" id="benefits-heading" style="color:var(--color-white);">What Caregivers Receive</h2>
+        <p class="pg-lead" style="color:rgba(255,255,255,0.70);">Caregivers are supported with training, financial assistance, and a community that celebrates their commitment.</p>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-card__icon"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i></div>
+            <div class="benefit-card__title">Financial Support</div>
+            <p class="benefit-card__desc">Ongoing financial support for the costs of caring for a child.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div>
+            <div class="benefit-card__title">A Dedicated Worker</div>
+            <p class="benefit-card__desc">Ongoing guidance from a dedicated VACFSS support worker.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+            <div class="benefit-card__title">Training &amp; Tools</div>
+            <p class="benefit-card__desc">PRIDE training plus access to the Inclusive Foster Care platform.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon"><i class="fa-solid fa-people-group" aria-hidden="true"></i></div>
+            <div class="benefit-card__title">Community Events</div>
+            <p class="benefit-card__desc">Appreciation dinners, summer camps, and cultural gatherings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pg-stripe" role="presentation"></div>
+
+    <!-- HOW TO BECOME A CAREGIVER -->
+    <section class="pg-section pg-section--cream" aria-labelledby="join-heading">
+      <div class="pg-inner">
+        <span class="pg-eyebrow pg-eyebrow--red"><i class="fa-solid fa-route" aria-hidden="true" style="margin-right:6px;"></i>Getting Started</span>
+        <h2 class="pg-heading" id="join-heading">How to Become a Caregiver</h2>
+        <p class="pg-lead">Becoming a foster, kinship, or respite caregiver starts with a conversation. Here's what the journey looks like.</p>
+        <div class="join-steps" role="list">
+          <div class="join-step" role="listitem">
+            <div class="join-step__num">1</div>
+            <div class="join-step__title">Reach Out</div>
+            <p class="join-step__desc">Connect with our Resources Program team to learn what caregiving involves.</p>
+          </div>
+          <div class="join-step" role="listitem">
+            <div class="join-step__num">2</div>
+            <div class="join-step__title">Home Assessment</div>
+            <p class="join-step__desc">A worker visits to understand your home, family, and capacity to care for a child.</p>
+          </div>
+          <div class="join-step" role="listitem">
+            <div class="join-step__num">3</div>
+            <div class="join-step__title">Complete PRIDE Training</div>
+            <p class="join-step__desc">Prepare for the rewards and challenges of caring for children who have experienced trauma.</p>
+          </div>
+          <div class="join-step" role="listitem">
+            <div class="join-step__num">4</div>
+            <div class="join-step__title">Welcome a Child</div>
+            <p class="join-step__desc">Begin your caregiving journey with ongoing support from VACFSS.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="pg-section pg-section--red" aria-labelledby="cta-heading">
+      <div class="cta-band">
+        <div class="cta-band__text">
+          <span class="pg-eyebrow pg-eyebrow--white" style="margin-bottom:var(--space-3);">Ready to Make a Difference?</span>
+          <h2 id="cta-heading">Become a Caregiver Today</h2>
+          <p>Visit our dedicated caregiver page for full eligibility details, an application form, and stories from current VACFSS caregivers.</p>
+        </div>
+        <div class="cta-band__actions">
+          <a href="caregiver.html" class="btn btn--white" style="font-size:var(--font-size-md); padding:13px 28px;">Become a Caregiver</a>
+          <a href="resources.html" class="btn" style="background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.50); color:var(--color-white); font-size:var(--font-size-md); padding:13px 28px;">Browse Resources</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__grid">
+      <div>
+        <img src="Assets/VACFSS_Logo_Fullname_clear_1200px_310px.png" alt="Vancouver Aboriginal Child and Family Services Society" width="220" style="margin-bottom:var(--space-4);">
+        <p style="color:rgba(255,255,255,0.55); font-size:var(--font-size-sm); line-height:1.7;">Vancouver Aboriginal Child &amp; Family Services Society<br>803 East Hastings Street<br>Vancouver, BC &nbsp;V6A 1R8</p>
+        <p style="margin-top:var(--space-4); margin-bottom:0;"><a href="tel:+17783314500" style="color:var(--color-teal); font-family:var(--font-heading); font-size:var(--font-size-md); text-decoration:none;">778.331.4500</a></p>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Programs &amp; Services</h3>
+        <ul class="site-footer__links">
+          <li><a href="programs.html#children-youth">Children &amp; Youth</a></li>
+          <li><a href="programs.html#families">Family Support</a></li>
+          <li><a href="programs.html#caregivers">Foster &amp; Kinship Care</a></li>
+          <li><a href="programs.html#indigenous-communities">Indigenous Communities</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">Get Involved</h3>
+        <ul class="site-footer__links">
+          <li><a href="caregiver.html">Become a Caregiver</a></li>
+          <li><a href="yac.html">Youth Advisory Council</a></li>
+          <li><a href="practicum.html">Practicum Opportunities</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="site-footer__heading">About VACFSS</h3>
+        <ul class="site-footer__links">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+          <li><a href="partners.html">Community Partners</a></li>
+          <li><a href="annual-reports.html">Annual Reports</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+        <div style="display:flex; gap:var(--space-3); margin-top:var(--space-6);">
+          <a href="#" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,0.12);border-radius:50%;color:var(--color-white);font-size:1.4rem;text-decoration:none;"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__acknowledgement">
+      <p>VACFSS respectfully acknowledges that we operate on the unceded and ancestral territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh (Squamish), and səlilwətaɬ (Tsleil-Waututh) Nations.</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© 2026 Vancouver Aboriginal Child and Family Services Society. All rights reserved.
+        &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Use</a> &nbsp;·&nbsp; <a href="accessibility.html">Accessibility</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const headerWrap = document.querySelector('.header-wrap');
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        mobileMenu.style.top = headerWrap.getBoundingClientRect().bottom + 'px';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

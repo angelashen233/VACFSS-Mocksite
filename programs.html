@@ -306,6 +306,8 @@
     .prog-modal__eyebrow { display: block; font-family: var(--font-heading); font-size: var(--font-size-sm); letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-red-primary); margin-bottom: var(--space-3); }
     .prog-modal__title { font-size: clamp(2rem, 2.6vw, 2.6rem); margin-bottom: var(--space-5); line-height: 1.2; }
     .prog-modal__text { font-size: var(--font-size-md); color: var(--color-grey-dim); line-height: 1.8; margin: 0; }
+    .prog-modal__link { display: none; margin-top: var(--space-8); }
+    .prog-modal__link.is-visible { display: inline-block; }
     body.modal-open { overflow-y: hidden; }
     @media (max-width: 600px) {
       .prog-modal__media { height: 180px; }
@@ -910,6 +912,7 @@
         <span class="prog-modal__eyebrow" id="prog-modal-eyebrow"></span>
         <h2 class="prog-modal__title" id="prog-modal-title"></h2>
         <p class="prog-modal__text" id="prog-modal-text"></p>
+        <a class="prog-modal__link btn btn--red" id="prog-modal-link" href="#">Visit Full Program Page <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
@@ -1010,6 +1013,23 @@
       'touching-lands-ic': { eyebrow: 'Indigenous Communities', title: 'Touching the Lands of Our Relations', image: 'Assets/Stock-images/Elders-roster-ceremony.jpg', alt: 'Elders at a VACFSS ceremony', text: 'Enables children and youth in care to visit their home territories — reinforcing identity, strengthening connection to the land, and honouring the bonds between a child and the community they belong to. These trips are coordinated directly with Nations to ensure they are welcomed home.' }
     };
 
+    // Programs with a dedicated standalone page — shown as a CTA inside the modal
+    const PROGRAM_PAGES = {
+      'family-wellbeing': 'child-safety.html',
+      'navigating-safety': 'child-safety.html',
+      'child-safety-ic': 'child-safety.html',
+      'family-preservation': 'family-preservation.html',
+      'guardianship': 'guardianship.html',
+      'lifelong-connections': 'guardianship.html',
+      'touching-lands-ic': 'guardianship.html',
+      'foster-care': 'resources-program.html',
+      'kinship-care': 'resources-program.html',
+      'respite-care': 'resources-program.html',
+      'ifc-platform': 'resources-program.html',
+      'pride-training': 'resources-program.html',
+      'cultural-programming': 'resources-program.html'
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       // Mobile menu
       const menuToggle = document.querySelector('.menu-toggle');
@@ -1048,6 +1068,7 @@
       const modalEye  = document.getElementById('prog-modal-eyebrow');
       const modalTitle= document.getElementById('prog-modal-title');
       const modalText = document.getElementById('prog-modal-text');
+      const modalLink = document.getElementById('prog-modal-link');
       const closeBtn  = document.getElementById('prog-modal-close');
       let lastTrigger = null;
 
@@ -1060,6 +1081,14 @@
         modalEye.textContent = data.eyebrow;
         modalTitle.textContent = data.title;
         modalText.textContent = data.text;
+        const page = PROGRAM_PAGES[key];
+        if (page) {
+          modalLink.href = page;
+          modalLink.classList.add('is-visible');
+        } else {
+          modalLink.removeAttribute('href');
+          modalLink.classList.remove('is-visible');
+        }
         overlay.classList.add('is-open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
